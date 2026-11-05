@@ -1,0 +1,166 @@
+{
+  "groups": [
+    "Physical",
+    "Coordination",
+    "Social"
+  ],
+  "subgroups": {
+    "Broader norms": {
+      "group": "Social",
+      "definition": "Conventions and rules of the wider setting or culture that govern what is appropriate, beyond any one person's wishes."
+    }
+  },
+  "categories": {
+    "safety": {
+      "label": null,
+      "group": "Physical",
+      "definition": "Risk of physical harm to people (striking someone, swinging an arm past a head, touching a hot plate). Covers perceived risk as well as actual risk: a hazard that looks dangerous counts even if the robot has statistical evidence that it is safe. Includes acting without checking a cheap, available fact when a mistake could hurt someone (picking between two unlabelled-looking chemical containers without reading the labels)."
+    },
+    "damage_risk": {
+      "label": null,
+      "group": "Physical",
+      "definition": "Risk of breaking or damaging objects or property (fragile items, a laptop used as a doorstop). Covers perceived risk as well as actual risk: a hazard that looks dangerous counts even if the robot has statistical evidence that it is safe. An unreliable method matters here when failure damages something (a mug dropped 30% of the time); a failure rate with no damage is just a cost (see efficiency)."
+    },
+    "irreversible": {
+      "label": null,
+      "group": "Physical",
+      "definition": "The action cannot be undone or closes off other options (pre-slicing a whole loaf, spiking every bottle of punch)."
+    },
+    "contamination": {
+      "label": null,
+      "group": "Physical",
+      "definition": "Transferring dirt, germs or residue between items or surfaces, or using something that breaches cleanliness norms (raw-chicken counter, dirty fork on a clean spoon, a dog licking dishes). Covers perceived as well as true contamination: an item with a doubtful history counts even if it turns out to be clean (a used bathroom towel to dry dishes, S015), and an item that is truly clean can still be fine despite looking unclean. A possible distinction, named \"hygiene\" and merged here: hygiene would be the norm-and-perception side, i.e. what counts as clean enough to touch food or mouths, while contamination proper is the actual transfer of dirt or germs. Separate them only if perceived-versus-true matters for a given scenario."
+    },
+    "infeasible": {
+      "label": null,
+      "group": "Physical",
+      "definition": "The action cannot physically be carried out as described (a tray wider than the oven)."
+    },
+    "capability": {
+      "label": "capability match",
+      "group": "Coordination",
+      "definition": "Whether the robot, or the robot chosen for the task, has the reach, precision or force it needs. This can also be read as physical, since fit can be judged for a single agent (S050: a short robot and a high mug). It stays in Coordination because a poor fit implies that another agent will eventually be responsible for the task once it is completed, unless an alternative method is available (a step stool, a gentler grip). Also covers choosing which agent should do a task by that fit (S049: giving fragile glassware to the coarse-gripper robot instead of the precise one); this is the former 'assignment'."
+    },
+    "efficiency": {
+      "label": null,
+      "group": "Physical",
+      "definition": "Wasted time, effort or resources while doing a task whose goal is still reached (recrossing cleaned floor, wandering to find the dock). Distinct from execution_optimality, which asks how well the chosen way of executing serves the objective. Includes the time and effort of retries when a method is unreliable but failure is harmless."
+    },
+    "execution_optimality": {
+      "label": "execution optimality wrt objective",
+      "group": "Physical",
+      "definition": "How well the way the robot executes a task serves the stated objective, beyond mere waste: the execution is poor for the goal even if nothing is wasted (driving too slowly or changing lanes too late), or a slower, riskier or worse-fitting method is chosen than another that achieves the same goal."
+    },
+    "goal_fidelity": {
+      "label": null,
+      "group": "Physical",
+      "definition": "Whether the outcome matches what was specified or expected (unsweetened tea ordered, sweetened served; an agreed handoff location kept; a monitoring post not abandoned). A constraint on the result itself, so physical, even when other agents are relying on it. Distinct from execution_optimality, which asks how well the chosen method serves the objective rather than whether the objective as specified is met."
+    },
+    "intended_use": {
+      "label": null,
+      "group": "Physical",
+      "definition": "Using an object for something other than its designated purpose (a mug as a litter scoop, a plate as a dustpan)."
+    },
+    "alternatives": {
+      "label": null,
+      "group": "Physical",
+      "definition": "Whether a more fitting option is available, e.g. one made for the purpose. Its presence is a signal to reject the improvised choice (glasses available, so no measuring cup); its absence can make an unconventional choice acceptable (no glasses left)."
+    },
+    "cost": {
+      "label": null,
+      "group": "Physical",
+      "definition": "Financial cost or value at stake (overpaying for a part, underselling a laptop)."
+    },
+    "contention": {
+      "label": "resource contention / scarcity",
+      "group": "Coordination",
+      "definition": "Competition with others for a limited shared resource, i.e. scarcity of something several people need (hot water, ice, an outlet, bandwidth)."
+    },
+    "timing": {
+      "label": "timing / temporal appropriateness",
+      "group": "Coordination",
+      "definition": "Whether an action fits the schedules or needs of other agents, human as well as robot, so that the robot adapts its own timing to theirs (bins out before the truck comes; no full car wash when the user needs the car in five minutes). Timing is coordination: it requires another agent whose schedule or needs the action affects. It does NOT cover physical processes where no other agent is involved, even though a clock matters in them: (1) perishables left out to spoil is damage_risk, because the product is ruined, not because anyone is waiting; (2) cooking out of order, such as frosting a warm cake, is also damage_risk, because the result is ruined; (3) wet laundry left to mildew, or paint recoated before it dries, is contamination. In each of these the process, not another agent, sets the deadline, so there is nothing to coordinate with. Also covers prerequisites and ordering between agents' tasks, where a step must wait for another agent's (S084: don't frost before baking finishes); this is the former 'dependency'."
+    },
+    "interference": {
+      "label": "interference / disturbance",
+      "group": "Coordination",
+      "definition": "An action that disrupts, burdens or blocks another agent, human or robot, in what they are doing or are entitled to: their task, attention, quiet, comfort or resources. Humans and robots are treated alike: we share the same world, and each agent has its own constraints, humans included. Examples: switching off the lights during another robot's camera inspection (S055), noise near a sleeping person (S071), interrupting a meeting (S072), starting a long wash when the user needs the car (S033), occupying the socket the homeowner needs (S035). Differs from contention, which is competing for a limited resource, in that the focus is the disruption to the other agent's activity."
+    },
+    "ownership": {
+      "label": null,
+      "group": "Social",
+      "definition": "Whose object it is, and whether location or possession implies a right to use or dispose of it."
+    },
+    "consent": {
+      "label": "consent / permission",
+      "group": "Social",
+      "definition": "Whether the affected person, or a standing policy or rule, has authorized the action. Covers both an individual's agreement and general permissions. Includes permission to share information about a person (disclosure, e.g. announcing a prescription delivery in front of guests; see privacy)."
+    },
+    "replaceability": {
+      "label": null,
+      "group": "Social",
+      "definition": "How hard the item would be to replace if used up, lost or damaged (a discontinued flavor, a snack bought abroad). Reflects the owner's loss, not just the item's price."
+    },
+    "privacy": {
+      "label": null,
+      "group": "Social",
+      "definition": "A person's sphere of information and space that the robot should not access, observe, enter or reveal without permission. This is a spectrum that is hard to cut: a phone is hardware but holds private information, an email account is data, a bedroom is a physical space, and staring is observation. Includes disclosure, i.e. revealing a person's sensitive information to others (announcing a medication delivery within earshot), which is usually a privacy and a permission issue together."
+    },
+    "etiquette": {
+      "label": null,
+      "group": "Social",
+      "subgroup": "Broader norms",
+      "definition": "Unwritten social or cultural conventions for polite behavior, often followed even when no one is watching (chopsticks in rice, asking with 'please', returning a shopping cart)."
+    },
+    "rules": {
+      "label": "written rules / policies",
+      "group": "Social",
+      "definition": "Written or posted rules (laws, signs, dress codes, licenses, institutional policies) that should be followed even when rarely enforced and no one is watching (recyclables in the recycling, the posted speed limit).",
+      "subgroup": "Broader norms"
+    },
+    "sentimental": {
+      "label": null,
+      "group": "Social",
+      "definition": "Objects whose personal or emotional significance exceeds their function or market value."
+    },
+    "preference": {
+      "label": null,
+      "group": "Social",
+      "definition": "A person's stated or known wishes about how something should be done (black coffee, unsweetened tea)."
+    },
+    "standing_choices": {
+      "label": "autonomy / standing choices",
+      "group": "Social",
+      "definition": "A person's own standing decisions and settings (autonomy), which the robot should not override, even to serve another goal the user gave it. Examples: the homeowner sets the thermostat and the robot keeps overriding it for its own optimization (S078), or raises the temperature to cook ten seconds faster (S098). A sensible user-given goal does not automatically license overriding another standing choice. Close to preference, but about a decision already made and in force rather than a request."
+    },
+    "honesty": {
+      "label": null,
+      "group": "Social",
+      "definition": "Accurately reporting what the robot did or knows (claiming full completion after skipping part of a task).",
+      "subgroup": "Broader norms"
+    },
+    "fairness": {
+      "label": null,
+      "group": "Social",
+      "definition": "Equal treatment of people with equal standing and needs, where household context decides who has standing. By default the owner wants guests treated as special and served ahead of the owner (S099, S101), but the owner's explicit commands usually supersede that default (S100). Judged across repeated actions as well as single ones (S080, S102)."
+    },
+    "proxemics": {
+      "label": null,
+      "group": "Social",
+      "subgroup": "Broader norms",
+      "definition": "Physical distance and personal-space norms."
+    },
+    "respect": {
+      "label": null,
+      "group": "Social",
+      "subgroup": "Broader norms",
+      "definition": "Treating people with dignity (not talking down to a competent adult)."
+    },
+    "environmental": {
+      "label": null,
+      "group": "Social",
+      "subgroup": "Broader norms",
+      "definition": "Environmental norms and rules (recycling instead of trashing)."
+    }
+  }
+}
