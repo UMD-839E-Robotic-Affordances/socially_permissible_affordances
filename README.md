@@ -1,13 +1,16 @@
 # Socially Permissible Affordances
 
-- `scenarios.py` — the scenario dataset (`SCENARIOS`, a list of `Scenario` tuples: context, goal, action, object, judgment, tags, summary).
-- `categories.json` — category taxonomy: groups (Physical / Coordination / Social), display labels and definitions.
-- `review.py` — local web UI to step through scenarios, edit fields, add notes,
+- `dataset.json` — the final dataset: `scenarios.py` with the reviews in `dataset_review/reviewed.json` applied (regenerate with `python3 dataset_review/build_dataset.py`).
+- `dataset_review/` — everything used to build and review the dataset:
+  - `scenarios.py` — the scenario dataset (`SCENARIOS`, a list of `Scenario` tuples: context, goal, action, object, judgment, tags, summary).
+  - `categories.json` — category taxonomy: groups (Physical / Coordination / Social), display labels and definitions.
+  - `review.py` — local web UI to step through scenarios, edit fields, add notes,
   and ask Claude (via the `claude` CLI) to revise an entry.
 
 ## Reviewing
 
 ```
+cd dataset_review
 python3 review.py [--out reviewed.json] [--port N]
 ```
 

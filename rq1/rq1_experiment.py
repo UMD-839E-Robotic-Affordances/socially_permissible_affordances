@@ -1,6 +1,7 @@
 import json
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 # Make `llm` and `scenarios` importable when run as a script from anywhere:
 #   python rq1/rq1_experiment.py
@@ -9,7 +10,6 @@ sys.path[:0] = [str(ROOT), str(ROOT / "rq1")]
 
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score
 
-import scenarios
 from llm import LLMProvider
 
 # One stateful provider reused for every call. "mock" needs no API key; swap in a
@@ -25,12 +25,13 @@ llm = LLMProvider("mock")
 #           Returns action, confirm it is one of three answers, print flag if not
 #           Record to saved area: answer, does it match our answer
 
-scenario_list = scenarios.SCENARIOS
+with open(ROOT / "dataset.json", encoding="utf-8") as f:
+    scenario_list = [SimpleNamespace(**d) for d in json.load(f)]
 
 current_dir = Path(__file__).resolve().parent
 
 # 2. Go up one level to the root directory, then point to the JSON file
-json_path = current_dir.parent / "categories.json"
+json_path = current_dir.parent / "dataset_review" / "categories.json"
 
 with open(json_path, "r", encoding="utf-8") as file:
     taxonomy = file.read()
