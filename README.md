@@ -1,11 +1,43 @@
 # Socially Permissible Affordances
 
-- `dataset.json` — the final dataset: `scenarios.py` with the reviews in `dataset_review/reviewed.json` applied (regenerate with `python3 dataset_review/build_dataset.py`).
+Research dataset and experiments on whether a consumer robot in a shared space should
+accept, reject, or be uncertain about an action toward a goal.
+
+- `dataset.json` — the final dataset: `dataset_review/scenarios.py` with the reviews in `dataset_review/reviewed.json` applied (regenerate with `python3 dataset_review/build_dataset.py`).
 - `dataset_review/` — everything used to build and review the dataset:
   - `scenarios.py` — the scenario dataset (`SCENARIOS`, a list of `Scenario` tuples: context, goal, action, object, judgment, tags, summary).
   - `categories.json` — category taxonomy: groups (Physical / Coordination / Social), display labels and definitions.
   - `review.py` — local web UI to step through scenarios, edit fields, add notes,
   and ask Claude (via the `claude` CLI) to revise an entry.
+  - `reviewed.json` — saved review progress and notes.
+  - `build_dataset.py` — applies the reviews to the scenarios and writes `dataset.json`.
+- `rq1/` — RQ1 experiment code:
+  - `llm.py` — `LLMProvider`: one interface for Claude, OpenAI and a keyless `"mock"` provider. `call(query)` returns a validated `Judgment` (`accept` / `reject` / `uncertain`).
+  - `model_configs.py` — `CONFIGS`: the valid model / thinking / effort combinations (found by probing the APIs).
+  - `rq1_experiment.py` — runs every scenario with no taxonomy, with the taxonomy, and with taxonomy plus examples; prints accuracy, balanced accuracy and macro-F1 and writes `rq1/results/rq1_results.json` (git-ignored). Uses the mock by default; change the `llm = LLMProvider(...)` line to use a real model.
+  - `test_llm.py` — pytest tests.
+- `setup.sh` — creates `.venv`, installs `requirements.txt`, checks API keys, runs the tests.
+
+## Setup
+
+```
+./setup.sh
+source .venv/bin/activate
+```
+
+API keys are read from the `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` environment variable, or else from
+`~/.secrets/anthropic_api_key` / `~/.secrets/openai_api_key`. If a key file is missing, `setup.sh` asks you to
+paste the key and saves it there with mode 600 (leave empty to skip). Never commit keys.
+
+## Running
+
+```
+pytest rq1                          # offline; uses the mock when no key exists
+RUN_LIVE_LLM=1 pytest rq1 -k live   # also calls the real models (costs money)
+python rq1/rq1_experiment.py        # RQ1 experiment (mock provider by default)
+```
+
+`default_llm()` in `llm.py` picks OpenAI, then Anthropic, if a key exists; with neither it warns and uses the mock.
 
 ## Reviewing
 
@@ -19,3 +51,5 @@ to `reviewed.json` (default); restarting resumes at the first unreviewed scenari
 Needs Python 3.10+ and, for the "Ask Claude" box, the `claude` CLI on your PATH.
 
 The **Categories** tab shows every category with its definition (editable inline) and lets you ask Claude to merge, remove, rename or add categories; it edits `categories.json`, `scenarios.py` and the saved reviews, after saving a backup to `.backups/`.
+
+After reviewing, rerun `python3 dataset_review/build_dataset.py` to refresh `dataset.json`.
