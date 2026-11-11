@@ -1,0 +1,1655 @@
+{
+    "config": {
+        "provider": "anthropic",
+        "model": "claude-haiku-5-5",
+        "effort": "low",
+        "thinking": false,
+        "max_tokens": 16000,
+        "prompt_types": [
+            "none",
+            "taxonomy",
+            "examples"
+        ],
+        "n_scenarios": 117
+    },
+    "results": {
+        "S002": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S005": {
+            "none": {
+                "answer": "accept",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": false
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true
+            }
+        },
+        "S006": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S007": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S008": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S009": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S010": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true
+            }
+        },
+        "S011": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S012": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S013": {
+            "none": {
+                "answer": "accept",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": false
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false
+            }
+        },
+        "S014": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S015": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S016": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S017": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S018": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S019": {
+            "none": {
+                "answer": "reject",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": true
+            }
+        },
+        "S020": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S021": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S022": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S023": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S024": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S025": {
+            "none": {
+                "answer": "uncertain",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": true
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": true
+            }
+        },
+        "S026": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S027": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S028": {
+            "none": {
+                "answer": "reject",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false
+            }
+        },
+        "S029": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S030": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S031": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S032": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S033": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S034": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S035": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S036": {
+            "none": {
+                "answer": "reject",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false
+            }
+        },
+        "S037": {
+            "none": {
+                "answer": "accept",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S038": {
+            "none": {
+                "answer": "accept",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true
+            }
+        },
+        "S039": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S040": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S041": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S042": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S043": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S044": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S045": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false
+            }
+        },
+        "S046": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S047": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S048": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S049": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S050": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S051": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S052": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S053": {
+            "none": {
+                "answer": "reject",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false
+            }
+        },
+        "S054": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false
+            }
+        },
+        "S055": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S056": {
+            "none": {
+                "answer": "accept",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true
+            }
+        },
+        "S057": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S058": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S059": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S060": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S061": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S062": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S063": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S064": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S065": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S066": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S067": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S068": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S069": {
+            "none": {
+                "answer": "uncertain",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": true
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": true
+            }
+        },
+        "S070": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S071": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S072": {
+            "none": {
+                "answer": "accept",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true
+            }
+        },
+        "S073": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S074": {
+            "none": {
+                "answer": "accept",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": false
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false
+            }
+        },
+        "S075": {
+            "none": {
+                "answer": "accept",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true
+            }
+        },
+        "S076": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S077": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S078": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S079": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S080": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S081": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S082": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S083": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S084": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S085": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S086": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S087": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S088": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S089": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S090": {
+            "none": {
+                "answer": "reject",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false
+            }
+        },
+        "S091": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S092": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S093": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S094": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S095": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S096": {
+            "none": {
+                "answer": "reject",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false
+            }
+        },
+        "S097": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S098": {
+            "none": {
+                "answer": "accept",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true
+            }
+        },
+        "S099": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S100": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S101": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S102": {
+            "none": {
+                "answer": "reject",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false
+            }
+        },
+        "S103": {
+            "none": {
+                "answer": "accept",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true
+            }
+        },
+        "S104": {
+            "none": {
+                "answer": "uncertain",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": true
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": true
+            }
+        },
+        "S105": {
+            "none": {
+                "answer": "reject",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false
+            }
+        },
+        "S106": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S107": {
+            "none": {
+                "answer": "accept",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true
+            }
+        },
+        "S108": {
+            "none": {
+                "answer": "reject",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false
+            }
+        },
+        "S109": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S110": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S111": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S112": {
+            "none": {
+                "answer": "reject",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S113": {
+            "none": {
+                "answer": "accept",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true
+            }
+        },
+        "S114": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true
+            }
+        },
+        "S115": {
+            "none": {
+                "answer": "reject",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false
+            }
+        },
+        "S116": {
+            "none": {
+                "answer": "accept",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": false
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false
+            }
+        },
+        "S117": {
+            "none": {
+                "answer": "accept",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": false
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false
+            }
+        },
+        "S118": {
+            "none": {
+                "answer": "accept",
+                "correct": true
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true
+            }
+        },
+        "S119": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true
+            }
+        },
+        "S120": {
+            "none": {
+                "answer": "accept",
+                "correct": false
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false
+            }
+        }
+    }
+}

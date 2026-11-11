@@ -1,3 +1,4 @@
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -8,13 +9,28 @@ from types import SimpleNamespace
 ROOT = Path(__file__).resolve().parent.parent
 sys.path[:0] = [str(ROOT), str(ROOT / "rq1")]
 
+from tqdm import tqdm
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score
 
-from llm import LLMProvider
+from llm import LLMOutputError, LLMProvider
 
-# One stateful provider reused for every call. "mock" needs no API key; swap in a
-# real model (see model_configs.CONFIGS), e.g. LLMProvider(**CONFIGS[0]["kwargs"]).
-llm = LLMProvider("mock")
+# One stateful provider reused for every call. Default "mock" needs no API key.
+#   python rq1/rq1_experiment.py --model claude-haiku-5-5 --effort low
+ap = argparse.ArgumentParser()
+ap.add_argument("--model", default="mock")
+ap.add_argument("--effort", default=None)
+args = ap.parse_args()
+llm = LLMProvider(args.model, effort=args.effort)
+
+
+def ask(text):
+    """Judgment string, or "invalid" (with a warning) if the model's output can't be parsed."""
+    try:
+        return llm.call(text).judgment
+    except LLMOutputError as e:
+        tqdm.write(f"WARNING: invalid model output: {e}")
+        return "invalid"
+
 
 with open(ROOT / "dataset.json", encoding="utf-8") as f:
     scenario_list = [SimpleNamespace(**d) for d in json.load(f)]
@@ -36,27 +52,29 @@ types = ["none", "taxonomy", "examples"]
 
 results = {}
 
-for scenario in scenario_list:
+for scenario in tqdm(scenario_list, desc=args.model, unit="scenario"):
     if scenario.id == "S001" or scenario.id == "S003" or scenario.id == "S004":
         continue
     results[scenario.id] = {}
     scenario_text = f"Scenario: {scenario.context} Goal: {scenario.goal}. Action: {scenario.action}. Relevant Object: {scenario.object}."
     for type in types:
         if type == "none":
-            answer = llm.call(scenario_text)
+            answer = ask(scenario_text)
         elif type == "taxonomy":
-            answer = llm.call(scenario_text+has_tax_text+taxonomy)
+            answer = ask(scenario_text+has_tax_text+taxonomy)
         elif type == "examples":
-            answer = llm.call(scenario_text+has_tax_text+taxonomy+has_ex_text+examples)
-        answer = answer.judgment
+            answer = ask(scenario_text+has_tax_text+taxonomy+has_ex_text+examples)
         results[scenario.id][type] = {"answer": str(answer), "correct": (answer == scenario.judgment)}
 
 
 results_dir = ROOT / "rq1" / "results"
 results_dir.mkdir(exist_ok=True)
-output_file = results_dir / "rq1_results.json"
+tag = args.model + (f"_{args.effort}" if args.effort else "")
+output_file = results_dir / f"rq1_results_{tag}.json"
+config = {"provider": llm.provider, "model": llm.model, "effort": llm.effort, "thinking": llm.thinking,
+          "max_tokens": llm.max_tokens, "prompt_types": types, "n_scenarios": len(results)}
 with open(output_file, "w") as f:
-    json.dump(results, f, indent=4)
+    json.dump({"config": config, "results": results}, f, indent=4)
 
 print("\n--- PERFORMANCE COMPARISON ---")
 print(f"{'Experiment Type':<18} | {'Accuracy':<8} | {'Balanced Acc':<12} | {'F1-Macro':<8}")
@@ -68,6 +86,8 @@ for current_type in types:
     
     # Reconstruct the true labels and predictions for this specific experiment type
     for scenario in scenario_list:
+        if scenario.id not in results:  # skipped (used as few-shot examples)
+            continue
         # Ground truth comes from the scenario object
         actual = scenario.judgment 
         # Prediction comes from your nested results dictionary
