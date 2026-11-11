@@ -6,20 +6,28 @@
     result = llm.call("Scenario: ...  Action: ...")   # -> Judgment
     result.judgment                                   # "accept" | "reject" | "uncertain"
 
-Requires Python 3.12. Only the SDK for the provider you use needs to be installed.
-Credentials come from the environment (ANTHROPIC_API_KEY / OPENAI_API_KEY).
+Only the SDK for the provider you use needs to be installed.
+Credentials: the ANTHROPIC_API_KEY / OPENAI_API_KEY env var if set, otherwise
+the file ~/.secrets/<provider>_api_key (e.g. ~/.secrets/openai_api_key), read
+on demand when the first call is made. If the file is missing, the user is asked
+to paste the key, which is saved there with mode 600 (see ensure_api_key).
 """
 from __future__ import annotations
 
+import getpass
+import os
 import random
 import re
+import sys
+import warnings
+from pathlib import Path
 from typing import Literal, get_args
 
 from pydantic import BaseModel, ValidationError
 
 Verdict = Literal["accept", "reject", "uncertain"]
-Provider = Literal["anthropic", "openai"]
-Effort = Literal["minimal", "low", "medium", "high", "xhigh", "max"]
+Provider = Literal["anthropic", "openai", "mock"]
+Effort = Literal["none", "minimal", "low", "medium", "high", "xhigh", "max"]
 
 
 class Judgment(BaseModel):
@@ -68,21 +76,66 @@ def parse_judgment(text: str) -> Judgment:
     raise LLMOutputError(f"Unparseable model output: {text[:200]!r}")
 
 
-def mock_call(query: str = "", *, rng: random.Random | None = None) -> Judgment:
-    """Stand-in for LLMProvider.call(): a random valid Judgment, no API needed.
+ENV_VARS = {"anthropic": "ANTHROPIC_API_KEY", "openai": "OPENAI_API_KEY"}
 
-    Mimics both accepted raw output formats (bare word, JSON object) and runs
-    them through parse_judgment, so downstream code sees real parsing behavior.
-    Pass a seeded `rng` for reproducible runs.
+
+def key_path(provider: str) -> Path:
+    """Where the provider's key lives: ~/.secrets/<provider>_api_key."""
+    return Path.home() / ".secrets" / f"{provider}_api_key"
+
+
+def ensure_api_key(provider: str, *, optional: bool = False) -> str | None:
+    """Return the provider's API key, loading it on demand.
+
+    Order: env var, then the key file. If the file doesn't exist, ask the user
+    to paste the key, save it to the file (dir 700, file 600) and return it.
+    optional=True lets the user skip with an empty paste (nothing is created).
+    The key is never printed or logged.
     """
-    rng = rng or random
-    word = rng.choice(VERDICTS)
-    raw = word if rng.random() < 0.5 else f'{{"judgment": "{word}"}}'
-    return parse_judgment(raw)
+    if key := os.environ.get(ENV_VARS[provider]):
+        return key
+    path = key_path(provider)
+    if path.exists():
+        if key := path.read_text().strip():
+            return key
+    if not sys.stdin.isatty():
+        if optional:
+            return None
+        raise LLMOutputError(f"No {provider} API key: put it in {path} or set {ENV_VARS[provider]}")
+    hint = " (leave empty to skip)" if optional else ""
+    key = getpass.getpass(f"Paste your {provider} API key{hint}; it will be saved to {path}: ").strip()
+    if not key:
+        if optional:
+            return None
+        raise LLMOutputError(f"No {provider} API key provided")
+    path.parent.mkdir(mode=0o700, exist_ok=True)
+    # Create with 600 from the start so the key is never world-readable, even briefly.
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, "w") as f:
+        f.write(key + "\n")
+    path.chmod(0o600)
+    return key
+
+
+DEFAULT_MODELS = {"openai": "gpt-5-mini", "anthropic": "claude-haiku-5-5"}
+
+
+def default_llm(**kwargs) -> LLMProvider:
+    """An LLMProvider for the first provider with a key available (openai, then
+    anthropic). Only checks that a key exists (env var or file) without reading it.
+    With no key, warns and returns the mock provider.
+    """
+    for provider in ("openai", "anthropic"):
+        if os.environ.get(ENV_VARS[provider]) or key_path(provider).exists():
+            return LLMProvider(DEFAULT_MODELS[provider], **kwargs)
+    warnings.warn("No OpenAI or Anthropic API key found; using the mock LLM.", stacklevel=2)
+    return LLMProvider("mock", **kwargs)
 
 
 def _infer_provider(model: str) -> Provider:
     name = model.lower()
+    if name == "mock":
+        return "mock"
     if name.startswith("claude"):
         return "anthropic"
     if name.startswith(("gpt", "chatgpt", "o1", "o3", "o4")):
@@ -96,6 +149,7 @@ class LLMProvider:
     thinking: Claude only. True sends adaptive thinking. False omits the
         parameter; note that newer Claude models (5.x) think by default, so
         use a low `effort` to make them think less.
+    model: "mock" selects the keyless random provider (see _complete_mock).
     effort: Claude -> output_config.effort. OpenAI -> reasoning_effort
         (only sent when set, since non-reasoning GPT models reject it).
     max_tokens: output cap; reasoning tokens count against it, so keep it generous.
@@ -110,6 +164,7 @@ class LLMProvider:
         max_tokens: int = 16000,
         provider: Provider | None = None,
         system_prompt: str | None = None,
+        rng: random.Random | None = None,
     ) -> None:
         self.model = model
         self.thinking = thinking
@@ -117,21 +172,35 @@ class LLMProvider:
         self.max_tokens = max_tokens
         self.provider: Provider = provider or _infer_provider(model)
         self.system_prompt = system_prompt or build_system_prompt()
+        self._rng = rng or random.Random()  # used by the mock provider only
         self._client = None  # created lazily so unused SDKs needn't be installed
 
     # -- public API ---------------------------------------------------------
 
     def call(self, query: str) -> Judgment:
-        raw = self._complete_anthropic(query) if self.provider == "anthropic" else self._complete_openai(query)
-        return parse_judgment(raw)
+        complete = {
+            "anthropic": self._complete_anthropic,
+            "openai": self._complete_openai,
+            "mock": self._complete_mock,
+        }[self.provider]
+        return parse_judgment(complete(query))
 
     # -- providers ----------------------------------------------------------
+
+    def _complete_mock(self, query: str) -> str:
+        """Random valid raw output, in either accepted format (bare word or JSON).
+
+        No API needed. It goes through parse_judgment like real output; pass a
+        seeded `rng` to the constructor for reproducible runs.
+        """
+        word = self._rng.choice(VERDICTS)
+        return word if self._rng.random() < 0.5 else f'{{"judgment": "{word}"}}'
 
     def _complete_anthropic(self, query: str) -> str:
         if self._client is None:
             import anthropic
 
-            self._client = anthropic.Anthropic()
+            self._client = anthropic.Anthropic(api_key=ensure_api_key("anthropic"))
         kwargs: dict = {}
         if self.thinking:
             kwargs["thinking"] = {"type": "adaptive"}
@@ -152,7 +221,7 @@ class LLMProvider:
         if self._client is None:
             import openai
 
-            self._client = openai.OpenAI()
+            self._client = openai.OpenAI(api_key=ensure_api_key("openai"))
         kwargs: dict = {}
         if self.effort:
             kwargs["reasoning_effort"] = self.effort
