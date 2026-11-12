@@ -1,0 +1,6 @@
+groq>=0.20
+pydantic>=2
+pandas>=2
+numpy>=1.26
+scikit-learn>=1.4
+matplotlib>=3.8
