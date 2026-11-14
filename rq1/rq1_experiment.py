@@ -64,7 +64,7 @@ def format_example(n, sc):
 
 
 by_id = {sc.id: sc for sc in scenario_list}
-examples = " ".join(format_example(n, by_id[i]) for n, i in enumerate(EXAMPLE_IDS, 1))
+examples = "\n".join(format_example(n, by_id[i]) for n, i in enumerate(EXAMPLE_IDS, 1))
 
 # What each prompt type contains. Saved in the results JSON so a results file is
 # self-describing (the meaning of a type name has changed before).
@@ -75,11 +75,13 @@ PROMPT_PARTS = {
     "tax+ex": ["taxonomy", "examples"],
 }
 prompt_types = list(PROMPT_PARTS)
-PART_TEXT = {"taxonomy": has_tax_text + taxonomy, "examples": has_ex_text + examples}
+PART_TEXT = {"taxonomy": has_tax_text.strip() + "\n" + taxonomy, "examples": has_ex_text.strip() + "\n" + examples}
 
 
 def build_prompt(scenario_text, prompt_type):
-    return scenario_text + "".join(PART_TEXT[p] for p in PROMPT_PARTS[prompt_type])
+    """Background parts first (taxonomy, examples), blank-line separated; the scenario to judge comes last."""
+    parts = [PART_TEXT[p] for p in PROMPT_PARTS[prompt_type]]
+    return "\n\n".join(parts + [scenario_text])
 
 
 results = {}
