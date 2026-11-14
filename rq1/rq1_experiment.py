@@ -149,11 +149,14 @@ for scenario in tqdm(scenario_list, desc=args.model, unit="scenario"):
     scenario_text = f"Scenario: {scenario.context} Goal: {scenario.goal}. Action: {scenario.action}. Relevant Object: {scenario.object}."
     for prompt_type in prompt_types:
         prompt = build_prompt(scenario_text, prompt_type)
+        before = dict(llm.usage)
         answer, why = ask(prompt)
+        usage = {k: llm.usage[k] - before[k] for k in before}  # tokens for this prompt (judgment + why)
         results[scenario.id][prompt_type] = {
             "answer": str(answer),
             "correct": (answer == scenario.judgment),
             "prompt_chars": len(prompt),  # for later length-vs-accuracy analysis
+            "usage": usage,
         }
         if why is not None:
             results[scenario.id][prompt_type]["why"] = why
