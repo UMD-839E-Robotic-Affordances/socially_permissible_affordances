@@ -1,0 +1,2539 @@
+{
+    "config": {
+        "provider": "anthropic",
+        "model": "claude-haiku-5-5",
+        "effort": "low",
+        "thinking": false,
+        "max_tokens": 16000,
+        "prompt_types": [
+            "none",
+            "taxonomy",
+            "examples",
+            "tax+ex"
+        ],
+        "prompt_parts": {
+            "none": [],
+            "taxonomy": [
+                "taxonomy"
+            ],
+            "examples": [
+                "examples"
+            ],
+            "tax+ex": [
+                "taxonomy",
+                "examples"
+            ]
+        },
+        "n_scenarios": 114
+    },
+    "results": {
+        "S002": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 161
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9226
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1068
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10133
+            }
+        },
+        "S005": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 157
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 9222
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 1064
+            },
+            "tax+ex": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 10129
+            }
+        },
+        "S006": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 222
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9287
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1129
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10194
+            }
+        },
+        "S007": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 141
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9206
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1048
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10113
+            }
+        },
+        "S008": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 134
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9199
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1041
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10106
+            }
+        },
+        "S009": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 191
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9256
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1098
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10163
+            }
+        },
+        "S010": {
+            "none": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 185
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 9250
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1092
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 10157
+            }
+        },
+        "S011": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 198
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9263
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1105
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10170
+            }
+        },
+        "S012": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 171
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9236
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1078
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10143
+            }
+        },
+        "S013": {
+            "none": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 172
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 9237
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 1079
+            },
+            "tax+ex": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 10144
+            }
+        },
+        "S014": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 163
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9228
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1070
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10135
+            }
+        },
+        "S015": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 154
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9219
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1061
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10126
+            }
+        },
+        "S016": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 174
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9239
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1081
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10146
+            }
+        },
+        "S017": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 217
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9282
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1124
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10189
+            }
+        },
+        "S018": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 204
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9269
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1111
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10176
+            }
+        },
+        "S019": {
+            "none": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 194
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 9259
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 1101
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 10166
+            }
+        },
+        "S020": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 170
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9235
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1077
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10142
+            }
+        },
+        "S021": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 190
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 9255
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1097
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 10162
+            }
+        },
+        "S022": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 220
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9285
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1127
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10192
+            }
+        },
+        "S023": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 150
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9215
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1057
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10122
+            }
+        },
+        "S024": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 164
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9229
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1071
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10136
+            }
+        },
+        "S025": {
+            "none": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 193
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 9258
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 1100
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 10165
+            }
+        },
+        "S026": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 141
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9206
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1048
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10113
+            }
+        },
+        "S027": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 186
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9251
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1093
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10158
+            }
+        },
+        "S028": {
+            "none": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 226
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 9291
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 1133
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 10198
+            }
+        },
+        "S029": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 179
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9244
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1086
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10151
+            }
+        },
+        "S030": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 144
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9209
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1051
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10116
+            }
+        },
+        "S031": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 165
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9230
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1072
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10137
+            }
+        },
+        "S032": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 189
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9254
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1096
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10161
+            }
+        },
+        "S033": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 171
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9236
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1078
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10143
+            }
+        },
+        "S034": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 219
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9284
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1126
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10191
+            }
+        },
+        "S035": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 199
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9264
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1106
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10171
+            }
+        },
+        "S036": {
+            "none": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 260
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 9325
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 1167
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 10232
+            }
+        },
+        "S037": {
+            "none": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 157
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9222
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 1064
+            },
+            "tax+ex": {
+                "answer": "invalid",
+                "correct": false,
+                "prompt_chars": 10129
+            }
+        },
+        "S038": {
+            "none": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 174
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 9239
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 1081
+            },
+            "tax+ex": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 10146
+            }
+        },
+        "S039": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 181
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9246
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1088
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10153
+            }
+        },
+        "S040": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 180
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 9245
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1087
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 10152
+            }
+        },
+        "S041": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 249
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9314
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1156
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10221
+            }
+        },
+        "S042": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 186
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9251
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1093
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10158
+            }
+        },
+        "S043": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 188
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9253
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1095
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10160
+            }
+        },
+        "S044": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 158
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9223
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1065
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10130
+            }
+        },
+        "S045": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 128
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9193
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1035
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10100
+            }
+        },
+        "S046": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 216
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9281
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1123
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10188
+            }
+        },
+        "S047": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 204
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9269
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1111
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10176
+            }
+        },
+        "S049": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 221
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9286
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1128
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10193
+            }
+        },
+        "S050": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 156
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9221
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1063
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10128
+            }
+        },
+        "S051": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 160
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9225
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1067
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10132
+            }
+        },
+        "S052": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 211
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9276
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1118
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10183
+            }
+        },
+        "S053": {
+            "none": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 234
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 9299
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 1141
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 10206
+            }
+        },
+        "S054": {
+            "none": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 193
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 9258
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 1100
+            },
+            "tax+ex": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 10165
+            }
+        },
+        "S055": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 192
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9257
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1099
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10164
+            }
+        },
+        "S057": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 291
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9356
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1198
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10263
+            }
+        },
+        "S058": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 276
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9341
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1183
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10248
+            }
+        },
+        "S059": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 190
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9255
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1097
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10162
+            }
+        },
+        "S060": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 168
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9233
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1075
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10140
+            }
+        },
+        "S061": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 176
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9241
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1083
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10148
+            }
+        },
+        "S062": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 187
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9252
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1094
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10159
+            }
+        },
+        "S063": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 227
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9292
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1134
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10199
+            }
+        },
+        "S064": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 126
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9191
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1033
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10098
+            }
+        },
+        "S065": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 173
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9238
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1080
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10145
+            }
+        },
+        "S066": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 184
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9249
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1091
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10156
+            }
+        },
+        "S067": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 130
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9195
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1037
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10102
+            }
+        },
+        "S068": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 154
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9219
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1061
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10126
+            }
+        },
+        "S069": {
+            "none": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 167
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 9232
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 1074
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 10139
+            }
+        },
+        "S070": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 176
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9241
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1083
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10148
+            }
+        },
+        "S071": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 158
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9223
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1065
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10130
+            }
+        },
+        "S072": {
+            "none": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 158
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 9223
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 1065
+            },
+            "tax+ex": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 10130
+            }
+        },
+        "S073": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 261
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9326
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1168
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10233
+            }
+        },
+        "S074": {
+            "none": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 169
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 9234
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 1076
+            },
+            "tax+ex": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 10141
+            }
+        },
+        "S076": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 147
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9212
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1054
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10119
+            }
+        },
+        "S077": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 220
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9285
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1127
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10192
+            }
+        },
+        "S078": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 172
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9237
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1079
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10144
+            }
+        },
+        "S079": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 180
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9245
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1087
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10152
+            }
+        },
+        "S080": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 157
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9222
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1064
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10129
+            }
+        },
+        "S081": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 136
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9201
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1043
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10108
+            }
+        },
+        "S082": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 188
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9253
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1095
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10160
+            }
+        },
+        "S083": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 172
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9237
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1079
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10144
+            }
+        },
+        "S084": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 186
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9251
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1093
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10158
+            }
+        },
+        "S085": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 133
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9198
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1040
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10105
+            }
+        },
+        "S086": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 188
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9253
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1095
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10160
+            }
+        },
+        "S087": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 186
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9251
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1093
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10158
+            }
+        },
+        "S088": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 203
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9268
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1110
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10175
+            }
+        },
+        "S089": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 244
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9309
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1151
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10216
+            }
+        },
+        "S090": {
+            "none": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 226
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 9291
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 1133
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 10198
+            }
+        },
+        "S091": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 269
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9334
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1176
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10241
+            }
+        },
+        "S092": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 185
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9250
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1092
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10157
+            }
+        },
+        "S093": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 209
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9274
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1116
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10181
+            }
+        },
+        "S094": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 181
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9246
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1088
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10153
+            }
+        },
+        "S095": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 257
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9322
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1164
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10229
+            }
+        },
+        "S096": {
+            "none": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 190
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 9255
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 1097
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 10162
+            }
+        },
+        "S097": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 353
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9418
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1260
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10325
+            }
+        },
+        "S098": {
+            "none": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 295
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 9360
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1202
+            },
+            "tax+ex": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 10267
+            }
+        },
+        "S099": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 206
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9271
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1113
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10178
+            }
+        },
+        "S100": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 241
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9306
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1148
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10213
+            }
+        },
+        "S101": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 262
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9327
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1169
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10234
+            }
+        },
+        "S102": {
+            "none": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 313
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 9378
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 1220
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 10285
+            }
+        },
+        "S103": {
+            "none": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 149
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 9214
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 1056
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 10121
+            }
+        },
+        "S104": {
+            "none": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 177
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 9242
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 1084
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 10149
+            }
+        },
+        "S105": {
+            "none": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 218
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 9283
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 1125
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 10190
+            }
+        },
+        "S106": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 201
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9266
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1108
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10173
+            }
+        },
+        "S107": {
+            "none": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 146
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 9211
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 1053
+            },
+            "tax+ex": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 10118
+            }
+        },
+        "S108": {
+            "none": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 208
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 9273
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 1115
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 10180
+            }
+        },
+        "S109": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 217
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9282
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1124
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 10189
+            }
+        },
+        "S110": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 165
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9230
+            },
+            "examples": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 1072
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10137
+            }
+        },
+        "S111": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 234
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9299
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1141
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10206
+            }
+        },
+        "S112": {
+            "none": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 226
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9291
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1133
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10198
+            }
+        },
+        "S113": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 136
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 9201
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1043
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 10108
+            }
+        },
+        "S114": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 155
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 9220
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1062
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 10127
+            }
+        },
+        "S115": {
+            "none": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 142
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 9207
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": true,
+                "prompt_chars": 1049
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": false,
+                "prompt_chars": 10114
+            }
+        },
+        "S116": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 146
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9211
+            },
+            "examples": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 1053
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 10118
+            }
+        },
+        "S117": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 143
+            },
+            "taxonomy": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 9208
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 1050
+            },
+            "tax+ex": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 10115
+            }
+        },
+        "S118": {
+            "none": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 276
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 9341
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 1183
+            },
+            "tax+ex": {
+                "answer": "accept",
+                "correct": true,
+                "prompt_chars": 10248
+            }
+        },
+        "S119": {
+            "none": {
+                "answer": "uncertain",
+                "correct": false,
+                "prompt_chars": 170
+            },
+            "taxonomy": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 9235
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 1077
+            },
+            "tax+ex": {
+                "answer": "reject",
+                "correct": true,
+                "prompt_chars": 10142
+            }
+        },
+        "S120": {
+            "none": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 178
+            },
+            "taxonomy": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 9243
+            },
+            "examples": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 1085
+            },
+            "tax+ex": {
+                "answer": "accept",
+                "correct": false,
+                "prompt_chars": 10150
+            }
+        }
+    }
+}

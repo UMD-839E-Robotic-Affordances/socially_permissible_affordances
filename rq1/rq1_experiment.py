@@ -25,6 +25,7 @@ ap.add_argument("--model", default="mock")
 ap.add_argument("--effort", default=None)
 ap.add_argument("--limit", type=int, default=None, help="only score the first N scenarios (debugging)")
 ap.add_argument("--log-file", default=None, help="DEBUG log path (default rq1/logs/rq1_<model>_<time>.log)")
+ap.add_argument("--tag", default=None, help="suffix for the results file name, e.g. a commit hash")
 args = ap.parse_args()
 
 # --- Debug logging: every step and variable goes to a file at DEBUG level; the console shows only warnings. ---
@@ -92,26 +93,40 @@ show("n categories", len(_cats["categories"]))
 show("taxonomy text (%d chars)" % len(taxonomy), taxonomy)
 
 has_tax_text = "Here is a taxonomy of decision parameters to determine your action. "
-has_ex_text = "Here are some example scenarios and judgements. "
+# Tells the model how to use the examples, which scenario to judge, and which output format to use.
+has_ex_text = ("Below are examples of how to judge a scenario. Each shows the scenario, the correct response, "
+               "and the reasoning behind it. They are for guidance only: do not judge them. Judge only the final "
+               "scenario, which comes after the examples, and reply in the required output format (a single "
+               "word or the JSON object), not in the format used in the examples.")
+has_ex_nolabel_text = ("Below are examples of how to judge a scenario. Each shows the scenario and the correct "
+                       "response. They are for guidance only: do not judge them. Judge only the final scenario, "
+                       "which comes after the examples, and reply in the required output format (a single word "
+                       "or the JSON object), not in the format used in the examples.")
+final_text = "Now judge this scenario:"
 
 # Few-shot examples come from the dataset itself (single source of truth). These
 # scenarios are excluded from scoring for every prompt type.
 EXAMPLE_IDS = ("S001", "S003", "S004")
 
 
-def format_example(n, sc):
-    return (f"Example {n}: Scenario: {sc.context} Goal: {sc.goal}. Action: {sc.action}. "
-            f"Relevant Object: {sc.object}. Judgement: {sc.judgment.capitalize()}. "
-            f"Taxonomy: {', '.join(sc.tags)}. Reasoning: {sc.summary.rstrip('.')}.")
+def format_example(n, sc, with_labels=True):
+    """with_labels=False: just the scenario and the correct response (no taxonomy tags, no reasoning)."""
+    text = (f"Example {n}: Scenario: {sc.context} Goal: {sc.goal}. Action: {sc.action}. "
+            f"Relevant Object: {sc.object}. Correct response: {sc.judgment}.")
+    if with_labels:
+        text += f" Taxonomy: {', '.join(sc.tags)}. Reasoning: {sc.summary.rstrip('.')}."
+    return text
 
 
 by_id = {sc.id: sc for sc in scenario_list}
 examples = "\n".join(format_example(n, by_id[i]) for n, i in enumerate(EXAMPLE_IDS, 1))
+examples_nolabel = "\n".join(format_example(n, by_id[i], with_labels=False) for n, i in enumerate(EXAMPLE_IDS, 1))
 log.debug("=== STEP 4: few-shot examples ===")
 show("EXAMPLE_IDS (excluded from scoring)", EXAMPLE_IDS)
 for _i in EXAMPLE_IDS:
     show(f"example source {_i}", vars(by_id[_i]))
 show("examples text (%d chars)" % len(examples), examples)
+show("examples_nolabel text (%d chars)" % len(examples_nolabel), examples_nolabel)
 
 # What each prompt type contains. Saved in the results JSON so a results file is
 # self-describing (the meaning of a type name has changed before).
@@ -119,19 +134,28 @@ PROMPT_PARTS = {
     "none": [],
     "taxonomy": ["taxonomy"],
     "examples": ["examples"],
+    "examples_nolabel": ["examples_nolabel"],  # same examples, only scenario + correct response
     "tax+ex": ["taxonomy", "examples"],
 }
 prompt_types = list(PROMPT_PARTS)
 show("PROMPT_PARTS", PROMPT_PARTS)
 show("has_tax_text", has_tax_text)
 show("has_ex_text", has_ex_text)
-PART_TEXT = {"taxonomy": has_tax_text.strip() + "\n" + taxonomy, "examples": has_ex_text.strip() + "\n" + examples}
+show("has_ex_nolabel_text", has_ex_nolabel_text)
+show("final_text", final_text)
+PART_TEXT = {
+    "taxonomy": has_tax_text.strip() + "\n" + taxonomy,
+    "examples": has_ex_text.strip() + "\n" + examples,
+    "examples_nolabel": has_ex_nolabel_text.strip() + "\n" + examples_nolabel,
+}
 
 
 def build_prompt(scenario_text, prompt_type):
-    """Background parts first (taxonomy, examples), blank-line separated; the scenario to judge comes last."""
+    """Background parts first (taxonomy, examples), then the scenario to judge, introduced by final_text."""
     parts = [PART_TEXT[p] for p in PROMPT_PARTS[prompt_type]]
-    return "\n\n".join(parts + [scenario_text])
+    if not parts:
+        return scenario_text
+    return "\n\n".join(parts) + "\n\n" + final_text + "\n" + scenario_text
 
 
 results = {}
@@ -174,7 +198,8 @@ show("results", results)
 # Debug (--limit) runs go to the logs dir so they never overwrite real results.
 results_dir = log_dir if args.limit else ROOT / "rq1" / "results"
 results_dir.mkdir(exist_ok=True)
-tag = args.model + (f"_{args.effort}" if args.effort else "") + (f"_n{args.limit}" if args.limit else "")
+tag = (args.model + (f"_{args.effort}" if args.effort else "") + (f"_n{args.limit}" if args.limit else "")
+       + (f"_{args.tag}" if args.tag else ""))
 output_file = results_dir / f"rq1_results_{tag}.json"
 config = {"provider": llm.provider, "model": llm.model, "effort": llm.effort, "thinking": llm.thinking,
           "max_tokens": llm.max_tokens, "prompt_types": prompt_types, "prompt_parts": PROMPT_PARTS,
