@@ -135,6 +135,8 @@ def save_category(body):
                  "definition": body.get("definition", "").strip()}
         if sub:
             entry["subgroup"] = sub
+        if "reviewer_notes" in c["categories"].get(tag, {}):  # not editable here; keep it
+            entry["reviewer_notes"] = c["categories"][tag]["reviewer_notes"]
         c["categories"][tag] = entry
         write_json(CATS_PATH, c)
     return {"ok": True}

@@ -40,8 +40,14 @@ current_dir = Path(__file__).resolve().parent
 # 2. Go up one level to the root directory, then point to the JSON file
 json_path = current_dir.parent / "dataset_review" / "categories.json"
 
+# Fields meant only for human reviewers are removed so they never reach the model.
+REVIEWER_ONLY = ("reviewer_notes",)
 with open(json_path, "r", encoding="utf-8") as file:
-    taxonomy = file.read()
+    _cats = json.load(file)
+for _meta in _cats["categories"].values():
+    for _k in REVIEWER_ONLY:
+        _meta.pop(_k, None)
+taxonomy = json.dumps(_cats, indent=2, ensure_ascii=False)
 
 has_tax_text = "Here is a taxonomy of decision parameters to determine your action. "
 has_ex_text = "Here are some example scenarios and judgements. "

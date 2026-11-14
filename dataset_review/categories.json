@@ -74,7 +74,8 @@
     "timing": {
       "label": "timing / temporal appropriateness",
       "group": "Coordination",
-      "definition": "Whether an action fits the schedules or needs of other agents, human as well as robot, so that the robot adapts its own timing to theirs. Timing is coordination: it requires another agent whose schedule or needs the action affects. It does NOT cover physical processes where no other agent is involved, even though a clock matters in them: (1) perishables left out to spoil is damage_risk, because the product is ruined, not because anyone is waiting; (2) cooking out of order is also damage_risk, because the result is ruined; (3) wet laundry left to mildew, or paint recoated before it dries, is contamination. In each of these the process, not another agent, sets the deadline, so there is nothing to coordinate with. Also covers prerequisites and ordering between agents' tasks, where a step must wait for another agent's; this is the former 'dependency'."
+      "definition": "Whether an action fits the schedules or needs of other agents, human as well as robot, so that the robot adapts its own timing to theirs. Timing is coordination: it requires another agent whose schedule or needs the action affects. Also covers prerequisites and ordering between agents' tasks, where a step must wait for another agent's task.",
+      "reviewer_notes": "Not shown to the model. Not timing when a physical process, not another agent, sets the deadline: (1) perishables left out to spoil is damage_risk, because the product is ruined, not because anyone is waiting; (2) cooking out of order is also damage_risk, because the result is ruined; (3) wet laundry left to mildew, or paint recoated before it dries, is contamination. Prerequisites and ordering is the former 'dependency' category."
     },
     "interference": {
       "label": "interference / disturbance",
