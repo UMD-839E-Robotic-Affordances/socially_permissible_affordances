@@ -14,7 +14,12 @@ accept, reject, or be uncertain about an action toward a goal.
 - `rq1/` — RQ1 experiment code:
   - `llm.py` — `LLMProvider`: one interface for Claude, OpenAI and a keyless `"mock"` provider. `call(query)` returns a validated `Judgment` (`accept` / `reject` / `uncertain`).
   - `model_configs.py` — `CONFIGS`: the valid model / thinking / effort combinations (found by probing the APIs).
-  - `rq1_experiment.py` — runs every scenario with no taxonomy, with the taxonomy, and with taxonomy plus examples; prints accuracy, balanced accuracy and macro-F1 and writes `rq1/results/rq1_results.json` (git-ignored). Uses the mock by default; change the `llm = LLMProvider(...)` line to use a real model.
+  - `rq1_experiment.py` — runs every scenario under five prompt types (`none`, `taxonomy`, `examples`, `examples_nolabel` (examples with only the correct response), `tax+ex`) and writes `rq1/results/rq1_results_<model>_<effort>[_<tag>].json` (with the config, prompt lengths and answers); prints accuracy, balanced accuracy and macro-F1. Uses the mock by default. Options: `--model`, `--effort`, `--tag`, and `--web-search` / `--max-searches N` (Claude only; gives the model Anthropic's web search tool; off by default and not used in our runs: in a test the model never searched).
+  - `analysis.py` — statistics on a results file (`python rq1/analysis.py <results.json>`).
+  - `scripts/` — one-command runs that do the experiment and then the analysis; results files are tagged with the git hash:
+    - `run_haiku.sh` — Haiku 5.5, effort low, with the follow-up `--why` question (about 1,140 calls, about 15 minutes, about $0.15; `WHY=0` turns it off).
+    - `run_opus.sh` — Opus 5.5, effort medium by default (`EFFORT=max` etc. to change). With `--why` roughly $8–10 ($5–6 without; `WHY=0` turns it off); it asks for confirmation (`YES=1` skips it).
+  - `analyze_why.py` — preliminary look at whether the kind of reason the model gives (theme and framing, hand-labeled in `dataset_with_whys.json`; see `rq1/WHY_THEMES.md`) goes with a correct judgment. It joins the labeled whys with a results file from a `--why` run.
   - `test_llm.py` — pytest tests.
 - `setup.sh` — creates `.venv`, installs `requirements.txt`, checks API keys, runs the tests.
 

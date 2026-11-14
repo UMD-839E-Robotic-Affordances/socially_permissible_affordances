@@ -52,6 +52,25 @@ def test_call_returns_judgment():
     assert result.judgment in VERDICTS
 
 
+def test_call_with_why_returns_judgment_and_follow_up():
+    judgment, why = LLMProvider("mock").call_with_why(PROMPT, "Why?")
+    assert judgment.judgment in VERDICTS
+    assert "factors" in why
+
+
+def test_web_search_tools_only_when_enabled():
+    off = LLMProvider("claude-opus-5-5")
+    on = LLMProvider("claude-opus-5-5", web_search=True, max_searches=2)
+    assert off._web_search_tools() == []
+    (tool,) = on._web_search_tools()
+    assert tool["name"] == "web_search" and tool["max_uses"] == 2 and tool["type"].startswith("web_search_")
+
+
+def test_web_search_not_supported_for_openai():
+    with pytest.raises(NotImplementedError):
+        LLMProvider("gpt-5-mini", web_search=True)
+
+
 def test_ensure_api_key_reads_existing_file(tmp_path, monkeypatch):
     monkeypatch.setenv("HOME", str(tmp_path))
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
