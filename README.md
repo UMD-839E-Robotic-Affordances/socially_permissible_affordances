@@ -18,7 +18,7 @@ accept, reject, or be uncertain about an action toward a goal.
   - `analysis.py` — statistics on a results file (`python rq1/analysis.py <results.json>`).
   - `scripts/` — one-command runs that do the experiment and then the analysis; results files are tagged with the git hash:
     - `run_haiku.sh` — Haiku 5.5, effort low (about 570 calls, about 10 minutes, about $0.10).
-    - `run_opus_no_web.sh` / `run_opus_web.sh` — Opus 5.5, effort max, without / with web search. Expensive (roughly $15–65 and more); they ask for confirmation (`YES=1` skips it).
+    - `run_opus_no_web.sh` / `run_opus_web.sh` — Opus 5.5, effort medium by default (`EFFORT=max` etc. to change), without / with web search. Medium is about $5–6 without search (measured pilot); they ask for confirmation (`YES=1` skips it).
   - `test_llm.py` — pytest tests.
 - `setup.sh` — creates `.venv`, installs `requirements.txt`, checks API keys, runs the tests.
 
