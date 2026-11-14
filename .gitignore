@@ -5,3 +5,4 @@ __pycache__/
 .pytest_cache/
 *.swp
 .venv/
+rq1/logs/

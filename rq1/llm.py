@@ -15,6 +15,7 @@ to paste the key, which is saved there with mode 600 (see ensure_api_key).
 from __future__ import annotations
 
 import getpass
+import logging
 import os
 import random
 import re
@@ -24,6 +25,8 @@ from pathlib import Path
 from typing import Literal, get_args
 
 from pydantic import BaseModel, ValidationError
+
+log = logging.getLogger("rq1.llm")
 
 Verdict = Literal["accept", "reject", "uncertain"]
 Provider = Literal["anthropic", "openai", "mock"]
@@ -64,6 +67,7 @@ def build_system_prompt() -> str:
 
 def parse_judgment(text: str) -> Judgment:
     """Accept a bare verdict word or a JSON object; validate with pydantic."""
+    log.debug("parse_judgment: raw text = %r", text)
     text = text.strip()
     if m := re.search(r"\{.*?\}", text, re.DOTALL):
         try:
@@ -93,10 +97,12 @@ def ensure_api_key(provider: str, *, optional: bool = False) -> str | None:
     The key is never printed or logged.
     """
     if key := os.environ.get(ENV_VARS[provider]):
+        log.debug("ensure_api_key(%s): using env var %s (key not logged)", provider, ENV_VARS[provider])
         return key
     path = key_path(provider)
     if path.exists():
         if key := path.read_text().strip():
+            log.debug("ensure_api_key(%s): loaded from file %s (key not logged)", provider, path)
             return key
     if not sys.stdin.isatty():
         if optional:
@@ -174,6 +180,9 @@ class LLMProvider:
         self.system_prompt = system_prompt or build_system_prompt()
         self._rng = rng or random.Random()  # used by the mock provider only
         self._client = None  # created lazily so unused SDKs needn't be installed
+        log.debug("LLMProvider init: model=%r provider=%r thinking=%r effort=%r max_tokens=%r",
+                  model, self.provider, thinking, effort, max_tokens)
+        log.debug("LLMProvider system_prompt = %r", self.system_prompt)
 
     # -- public API ---------------------------------------------------------
 
@@ -183,7 +192,12 @@ class LLMProvider:
             "openai": self._complete_openai,
             "mock": self._complete_mock,
         }[self.provider]
-        return parse_judgment(complete(query))
+        log.debug("call(): dispatching to %s; query (%d chars) = %r", complete.__name__, len(query), query)
+        raw = complete(query)
+        log.debug("call(): raw completion = %r", raw)
+        result = parse_judgment(raw)
+        log.debug("call(): parsed -> %r", result)
+        return result
 
     # -- providers ----------------------------------------------------------
 
@@ -194,7 +208,9 @@ class LLMProvider:
         seeded `rng` to the constructor for reproducible runs.
         """
         word = self._rng.choice(VERDICTS)
-        return word if self._rng.random() < 0.5 else f'{{"judgment": "{word}"}}'
+        out = word if self._rng.random() < 0.5 else f'{{"judgment": "{word}"}}'
+        log.debug("mock: chose word=%r, emitted %r", word, out)
+        return out
 
     def _complete_anthropic(self, query: str) -> str:
         if self._client is None:
@@ -206,6 +222,7 @@ class LLMProvider:
             kwargs["thinking"] = {"type": "adaptive"}
         if self.effort:
             kwargs["output_config"] = {"effort": self.effort}
+        log.debug("anthropic request: model=%s max_tokens=%s extra=%s", self.model, self.max_tokens, kwargs)
         response = self._client.messages.create(
             model=self.model,
             max_tokens=self.max_tokens,
@@ -213,6 +230,8 @@ class LLMProvider:
             messages=[{"role": "user", "content": query}],
             **kwargs,
         )
+        log.debug("anthropic response: stop_reason=%s usage=%s content_blocks=%s", response.stop_reason,
+                  response.usage, [(b.type, getattr(b, 'text', None)) for b in response.content])
         if response.stop_reason == "refusal":
             raise LLMOutputError(f"{self.model} refused: {response.stop_details}")
         return "".join(b.text for b in response.content if b.type == "text")
@@ -225,6 +244,7 @@ class LLMProvider:
         kwargs: dict = {}
         if self.effort:
             kwargs["reasoning_effort"] = self.effort
+        log.debug("openai request: model=%s max_completion_tokens=%s extra=%s", self.model, self.max_tokens, kwargs)
         response = self._client.chat.completions.create(
             model=self.model,
             max_completion_tokens=self.max_tokens,
@@ -235,6 +255,7 @@ class LLMProvider:
             **kwargs,
         )
         choice = response.choices[0]
+        log.debug("openai response: finish_reason=%s usage=%s", choice.finish_reason, response.usage)
         if getattr(choice.message, "refusal", None):
             raise LLMOutputError(f"{self.model} refused: {choice.message.refusal}")
         return choice.message.content or ""
