@@ -81,6 +81,9 @@ def parse_judgment(text: str) -> Judgment:
     raise LLMOutputError(f"Unparseable model output: {text[:200]!r}")
 
 
+WEB_SEARCH_TOOL_TYPE = "web_search_20250305"
+MAX_PAUSE_TURNS = 3
+
 ENV_VARS = {"anthropic": "ANTHROPIC_API_KEY", "openai": "OPENAI_API_KEY"}
 
 
@@ -158,6 +161,9 @@ class LLMProvider:
     effort: Claude -> output_config.effort. OpenAI -> reasoning_effort
         (only sent when set, since non-reasoning GPT models reject it).
     max_tokens: output cap; reasoning tokens count against it, so keep it generous.
+    web_search: Claude only. True gives the model Anthropic's server-side web search
+        tool (at most `max_searches` searches per call); False leaves the tool out.
+        Not supported for OpenAI (it needs the Responses API).
     """
 
     def __init__(
@@ -170,15 +176,21 @@ class LLMProvider:
         provider: Provider | None = None,
         system_prompt: str | None = None,
         rng: random.Random | None = None,
+        web_search: bool = False,
+        max_searches: int = 3,
     ) -> None:
         self.model = model
         self.thinking = thinking
         self.effort = effort
         self.max_tokens = max_tokens
+        self.web_search = web_search
+        self.max_searches = max_searches
         self.provider: Provider = provider or _infer_provider(model)
         self.system_prompt = system_prompt or build_system_prompt()
         self._rng = rng or random.Random()  # used by the mock provider only
         self._client = None  # created lazily so unused SDKs needn't be installed
+        if web_search and self.provider == "openai":
+            raise NotImplementedError("web_search is only implemented for Claude models")
 
     # -- public API ---------------------------------------------------------
 
@@ -201,6 +213,13 @@ class LLMProvider:
         word = self._rng.choice(VERDICTS)
         return word if self._rng.random() < 0.5 else f'{{"judgment": "{word}"}}'
 
+    def _web_search_tools(self) -> list[dict]:
+        """The `tools` list for the request: empty unless web search is enabled."""
+        if not self.web_search:
+            return []
+        # Basic web search tool version; newer models also accept web_search_20260209.
+        return [{"type": WEB_SEARCH_TOOL_TYPE, "name": "web_search", "max_uses": self.max_searches}]
+
     def _complete_anthropic(self, query: str) -> str:
         if self._client is None:
             import anthropic
@@ -211,16 +230,32 @@ class LLMProvider:
             kwargs["thinking"] = {"type": "adaptive"}
         if self.effort:
             kwargs["output_config"] = {"effort": self.effort}
-        response = self._client.messages.create(
-            model=self.model,
-            max_tokens=self.max_tokens,
-            system=self.system_prompt,
-            messages=[{"role": "user", "content": query}],
-            **kwargs,
-        )
+        if tools := self._web_search_tools():
+            kwargs["tools"] = tools
+        messages = [{"role": "user", "content": query}]
+        # Server-side tools can pause a long turn (pause_turn); resend to let it continue.
+        for _ in range(MAX_PAUSE_TURNS + 1):
+            response = self._client.messages.create(
+                model=self.model,
+                max_tokens=self.max_tokens,
+                system=self.system_prompt,
+                messages=messages,
+                **kwargs,
+            )
+            if response.stop_reason != "pause_turn":
+                break
+            messages = [*messages[:1], {"role": "assistant", "content": response.content}]
         if response.stop_reason == "refusal":
             raise LLMOutputError(f"{self.model} refused: {response.stop_details}")
-        return "".join(b.text for b in response.content if b.type == "text")
+        # With web search the model may write text before and between searches; only the
+        # text after the last tool block is the answer.
+        text_parts: list[str] = []
+        for block in response.content:
+            if block.type == "text":
+                text_parts.append(block.text)
+            else:
+                text_parts = []
+        return "".join(text_parts)
 
     def _complete_openai(self, query: str) -> str:
         if self._client is None:

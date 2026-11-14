@@ -14,7 +14,11 @@ accept, reject, or be uncertain about an action toward a goal.
 - `rq1/` — RQ1 experiment code:
   - `llm.py` — `LLMProvider`: one interface for Claude, OpenAI and a keyless `"mock"` provider. `call(query)` returns a validated `Judgment` (`accept` / `reject` / `uncertain`).
   - `model_configs.py` — `CONFIGS`: the valid model / thinking / effort combinations (found by probing the APIs).
-  - `rq1_experiment.py` — runs every scenario under five prompt types (`none`, `taxonomy`, `examples`, `examples_nolabel` (examples with only the correct response), `tax+ex`); prints accuracy, balanced accuracy and macro-F1 and writes `rq1/results/rq1_results.json` (git-ignored). Uses the mock by default; change the `llm = LLMProvider(...)` line to use a real model.
+  - `rq1_experiment.py` — runs every scenario under five prompt types (`none`, `taxonomy`, `examples`, `examples_nolabel` (examples with only the correct response), `tax+ex`) and writes `rq1/results/rq1_results_<model>_<effort>[_<tag>].json` (with the config, prompt lengths and answers); prints accuracy, balanced accuracy and macro-F1. Uses the mock by default. Options: `--model`, `--effort`, `--tag`, and `--web-search` / `--max-searches N` (Claude only; gives the model Anthropic's web search tool, off by default).
+  - `analysis.py` — statistics on a results file (`python rq1/analysis.py <results.json>`).
+  - `scripts/` — one-command runs that do the experiment and then the analysis; results files are tagged with the git hash:
+    - `run_haiku.sh` — Haiku 5.5, effort low (about 570 calls, about 10 minutes, about $0.10).
+    - `run_opus_no_web.sh` / `run_opus_web.sh` — Opus 5.5, effort max, without / with web search. Expensive (roughly $15–65 and more); they ask for confirmation (`YES=1` skips it).
   - `test_llm.py` — pytest tests.
 - `setup.sh` — creates `.venv`, installs `requirements.txt`, checks API keys, runs the tests.
 

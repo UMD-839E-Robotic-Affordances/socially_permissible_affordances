@@ -20,8 +20,10 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--model", default="mock")
 ap.add_argument("--effort", default=None)
 ap.add_argument("--tag", default=None, help="suffix for the results file name, e.g. a commit hash")
+ap.add_argument("--web-search", action="store_true", help="give the model the web search tool (Claude only)")
+ap.add_argument("--max-searches", type=int, default=3, help="max web searches per call (with --web-search)")
 args = ap.parse_args()
-llm = LLMProvider(args.model, effort=args.effort)
+llm = LLMProvider(args.model, effort=args.effort, web_search=args.web_search, max_searches=args.max_searches)
 
 
 def ask(text):
@@ -129,10 +131,12 @@ results_dir.mkdir(exist_ok=True)
 tag = args.model + (f"_{args.effort}" if args.effort else "") + (f"_{args.tag}" if args.tag else "")
 output_file = results_dir / f"rq1_results_{tag}.json"
 config = {"provider": llm.provider, "model": llm.model, "effort": llm.effort, "thinking": llm.thinking,
-          "max_tokens": llm.max_tokens, "prompt_types": prompt_types, "prompt_parts": PROMPT_PARTS,
+          "max_tokens": llm.max_tokens, "web_search": llm.web_search,
+          "max_searches": llm.max_searches if llm.web_search else None, "prompt_types": prompt_types, "prompt_parts": PROMPT_PARTS,
           "n_scenarios": len(results)}
 with open(output_file, "w") as f:
     json.dump({"config": config, "results": results}, f, indent=4)
+print(f"Results saved to {output_file}")
 
 print("\n--- PERFORMANCE COMPARISON ---")
 print(f"{'Experiment Type':<18} | {'Accuracy':<8} | {'Balanced Acc':<12} | {'F1-Macro':<8}")
