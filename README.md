@@ -14,7 +14,7 @@ accept, reject, or be uncertain about an action toward a goal.
 - `rq1/` — RQ1 experiment code:
   - `llm.py` — `LLMProvider`: one interface for Claude, OpenAI and a keyless `"mock"` provider. `call(query)` returns a validated `Judgment` (`accept` / `reject` / `uncertain`).
   - `model_configs.py` — `CONFIGS`: the valid model / thinking / effort combinations (found by probing the APIs).
-  - `rq1_experiment.py` — runs every scenario with no taxonomy, with the taxonomy, and with taxonomy plus examples; prints accuracy, balanced accuracy and macro-F1 and writes `rq1/results/rq1_results.json` (git-ignored). Uses the mock by default; change the `llm = LLMProvider(...)` line to use a real model.
+  - `rq1_experiment.py` — runs every scenario under five prompt types (`none`, `taxonomy`, `examples`, `examples_nolabel` (examples with only the correct response), `tax+ex`); prints accuracy, balanced accuracy and macro-F1 and writes `rq1/results/rq1_results.json` (git-ignored). Uses the mock by default; change the `llm = LLMProvider(...)` line to use a real model.
   - `test_llm.py` — pytest tests.
 - `setup.sh` — creates `.venv`, installs `requirements.txt`, checks API keys, runs the tests.
 

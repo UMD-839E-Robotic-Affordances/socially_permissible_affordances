@@ -50,7 +50,8 @@ SYSTEM_PROMPT = (
     "The labels mean:\n"
     '- "accept": the action is socially permissible for you to do.\n'
     '- "reject": the action is not socially permissible for you to do.\n'
-    '- "uncertain": whether it is socially permissible depends on information that is missing or unclear.'
+    '- "uncertain": use this only when the scenario leaves out a key fact that could change the answer. '
+    'Do not use it when the action is clearly permissible or clearly not, even if some details are unknown.'
 )
 
 # {{ }} are literal braces in an f-string.

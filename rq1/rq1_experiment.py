@@ -51,21 +51,34 @@ for _meta in _cats["categories"].values():
 taxonomy = json.dumps(_cats, indent=2, ensure_ascii=False)
 
 has_tax_text = "Here is a taxonomy of decision parameters to determine your action. "
-has_ex_text = "Here are some example scenarios and judgements. "
+# Tells the model how to use the examples, which scenario to judge, and which output format to use.
+has_ex_text = ("Below are examples of how to judge a scenario. Each shows the scenario, the correct response, "
+               "and the reasoning behind it. They are for guidance only: do not judge them. Judge only the final "
+               "scenario, which comes after the examples, and reply in the required output format (a single "
+               "word or the JSON object), not in the format used in the examples.")
+has_ex_nolabel_text = ("Below are examples of how to judge a scenario. Each shows the scenario and the correct "
+                       "response. They are for guidance only: do not judge them. Judge only the final scenario, "
+                       "which comes after the examples, and reply in the required output format (a single word "
+                       "or the JSON object), not in the format used in the examples.")
+final_text = "Now judge this scenario:"
 
 # Few-shot examples come from the dataset itself (single source of truth). These
 # scenarios are excluded from scoring for every prompt type.
 EXAMPLE_IDS = ("S001", "S003", "S004")
 
 
-def format_example(n, sc):
-    return (f"Example {n}: Scenario: {sc.context} Goal: {sc.goal}. Action: {sc.action}. "
-            f"Relevant Object: {sc.object}. Judgement: {sc.judgment.capitalize()}. "
-            f"Taxonomy: {', '.join(sc.tags)}. Reasoning: {sc.summary.rstrip('.')}.")
+def format_example(n, sc, with_labels=True):
+    """with_labels=False: just the scenario and the correct response (no taxonomy tags, no reasoning)."""
+    text = (f"Example {n}: Scenario: {sc.context} Goal: {sc.goal}. Action: {sc.action}. "
+            f"Relevant Object: {sc.object}. Correct response: {sc.judgment}.")
+    if with_labels:
+        text += f" Taxonomy: {', '.join(sc.tags)}. Reasoning: {sc.summary.rstrip('.')}."
+    return text
 
 
 by_id = {sc.id: sc for sc in scenario_list}
 examples = "\n".join(format_example(n, by_id[i]) for n, i in enumerate(EXAMPLE_IDS, 1))
+examples_nolabel = "\n".join(format_example(n, by_id[i], with_labels=False) for n, i in enumerate(EXAMPLE_IDS, 1))
 
 # What each prompt type contains. Saved in the results JSON so a results file is
 # self-describing (the meaning of a type name has changed before).
@@ -73,16 +86,23 @@ PROMPT_PARTS = {
     "none": [],
     "taxonomy": ["taxonomy"],
     "examples": ["examples"],
+    "examples_nolabel": ["examples_nolabel"],  # same examples, only scenario + correct response
     "tax+ex": ["taxonomy", "examples"],
 }
 prompt_types = list(PROMPT_PARTS)
-PART_TEXT = {"taxonomy": has_tax_text.strip() + "\n" + taxonomy, "examples": has_ex_text.strip() + "\n" + examples}
+PART_TEXT = {
+    "taxonomy": has_tax_text.strip() + "\n" + taxonomy,
+    "examples": has_ex_text.strip() + "\n" + examples,
+    "examples_nolabel": has_ex_nolabel_text.strip() + "\n" + examples_nolabel,
+}
 
 
 def build_prompt(scenario_text, prompt_type):
-    """Background parts first (taxonomy, examples), blank-line separated; the scenario to judge comes last."""
+    """Background parts first (taxonomy, examples), then the scenario to judge, introduced by final_text."""
     parts = [PART_TEXT[p] for p in PROMPT_PARTS[prompt_type]]
-    return "\n\n".join(parts + [scenario_text])
+    if not parts:
+        return scenario_text
+    return "\n\n".join(parts) + "\n\n" + final_text + "\n" + scenario_text
 
 
 results = {}
