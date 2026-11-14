@@ -19,6 +19,7 @@ from llm import LLMOutputError, LLMProvider
 ap = argparse.ArgumentParser()
 ap.add_argument("--model", default="mock")
 ap.add_argument("--effort", default=None)
+ap.add_argument("--tag", default=None, help="suffix for the results file name, e.g. a commit hash")
 args = ap.parse_args()
 llm = LLMProvider(args.model, effort=args.effort)
 
@@ -105,7 +106,7 @@ for scenario in tqdm(scenario_list, desc=args.model, unit="scenario"):
 
 results_dir = ROOT / "rq1" / "results"
 results_dir.mkdir(exist_ok=True)
-tag = args.model + (f"_{args.effort}" if args.effort else "")
+tag = args.model + (f"_{args.effort}" if args.effort else "") + (f"_{args.tag}" if args.tag else "")
 output_file = results_dir / f"rq1_results_{tag}.json"
 config = {"provider": llm.provider, "model": llm.model, "effort": llm.effort, "thinking": llm.thinking,
           "max_tokens": llm.max_tokens, "prompt_types": prompt_types, "prompt_parts": PROMPT_PARTS,
