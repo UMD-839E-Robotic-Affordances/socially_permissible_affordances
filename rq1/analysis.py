@@ -89,4 +89,6 @@ def main(path):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else ROOT / "rq1/results/rq1_results_claude-haiku-5-5_low.json")
+    # Default: the newest results file (the deprecated/ subfolder holds superseded runs).
+    newest = max((ROOT / "rq1/results").glob("rq1_results_*.json"), key=lambda p: p.stat().st_mtime, default=None)
+    main(sys.argv[1] if len(sys.argv) > 1 else newest)
