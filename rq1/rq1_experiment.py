@@ -112,9 +112,6 @@ show("EXAMPLE_IDS (excluded from scoring)", EXAMPLE_IDS)
 for _i in EXAMPLE_IDS:
     show(f"example source {_i}", vars(by_id[_i]))
 show("examples text (%d chars)" % len(examples), examples)
-=======
-examples = "\n".join(format_example(n, by_id[i]) for n, i in enumerate(EXAMPLE_IDS, 1))
->>>>>>> rq1-prompt-metadata-analysis
 
 # What each prompt type contains. Saved in the results JSON so a results file is
 # self-describing (the meaning of a type name has changed before).
@@ -125,7 +122,6 @@ PROMPT_PARTS = {
     "tax+ex": ["taxonomy", "examples"],
 }
 prompt_types = list(PROMPT_PARTS)
-<<<<<<< HEAD
 show("PROMPT_PARTS", PROMPT_PARTS)
 show("has_tax_text", has_tax_text)
 show("has_ex_text", has_ex_text)
