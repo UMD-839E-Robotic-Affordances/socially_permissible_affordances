@@ -185,6 +185,8 @@ class LLMProvider:
         self.max_tokens = max_tokens
         self.web_search = web_search
         self.max_searches = max_searches
+        # Running token totals over all calls (Claude only), for cost estimates.
+        self.usage = {"calls": 0, "input_tokens": 0, "output_tokens": 0, "web_searches": 0}
         self.provider: Provider = provider or _infer_provider(model)
         self.system_prompt = system_prompt or build_system_prompt()
         self._rng = rng or random.Random()  # used by the mock provider only
@@ -212,6 +214,13 @@ class LLMProvider:
         """
         word = self._rng.choice(VERDICTS)
         return word if self._rng.random() < 0.5 else f'{{"judgment": "{word}"}}'
+
+    def _add_usage(self, usage) -> None:
+        self.usage["calls"] += 1
+        self.usage["input_tokens"] += getattr(usage, "input_tokens", 0) or 0
+        self.usage["output_tokens"] += getattr(usage, "output_tokens", 0) or 0  # includes thinking tokens
+        server = getattr(usage, "server_tool_use", None)
+        self.usage["web_searches"] += getattr(server, "web_search_requests", 0) or 0
 
     def _web_search_tools(self) -> list[dict]:
         """The `tools` list for the request: empty unless web search is enabled."""
@@ -242,6 +251,7 @@ class LLMProvider:
                 messages=messages,
                 **kwargs,
             )
+            self._add_usage(response.usage)
             if response.stop_reason != "pause_turn":
                 break
             messages = [*messages[:1], {"role": "assistant", "content": response.content}]
