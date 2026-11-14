@@ -19,6 +19,7 @@ accept, reject, or be uncertain about an action toward a goal.
   - `scripts/` — one-command runs that do the experiment and then the analysis; results files are tagged with the git hash:
     - `run_haiku.sh` — Haiku 5.5, effort low, with the follow-up `--why` question (about 1,140 calls, about 15 minutes, about $0.15; `WHY=0` turns it off).
     - `run_opus.sh` — Opus 5.5, effort medium by default (`EFFORT=max` etc. to change). With `--why` roughly $8–10 ($5–6 without; `WHY=0` turns it off); it asks for confirmation (`YES=1` skips it).
+  - `analyze_why.py` — preliminary look at whether the kind of reason the model gives (theme and framing, hand-labeled in `dataset_with_whys.json`; see `rq1/WHY_THEMES.md`) goes with a correct judgment. It joins the labeled whys with a results file from a `--why` run.
   - `test_llm.py` — pytest tests.
 - `setup.sh` — creates `.venv`, installs `requirements.txt`, checks API keys, runs the tests.
 
