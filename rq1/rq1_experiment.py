@@ -1,5 +1,6 @@
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -23,18 +24,44 @@ ap.add_argument("--tag", default=None, help="suffix for the results file name, e
 ap.add_argument("--web-search", action="store_true", help="give the model the web search tool (Claude only)")
 ap.add_argument("--max-searches", type=int, default=3, help="max web searches per call (with --web-search)")
 ap.add_argument("--ids", default=None, help="comma-separated scenario ids to score (e.g. a pilot subset)")
+ap.add_argument("--why", action="store_true",
+                help="after each judgment, ask a follow-up 'why' question in the same conversation")
 args = ap.parse_args()
 only_ids = set(args.ids.split(",")) if args.ids else None
 llm = LLMProvider(args.model, effort=args.effort, web_search=args.web_search, max_searches=args.max_searches)
 
 
-def ask(text):
-    """Judgment string, or "invalid" (with a warning) if the model's output can't be parsed."""
+# Follow-up asked in the same conversation with --why. The same text is used for every prompt type, so
+# differences in the stated factors come from the prompt, not from the question. The first sentence
+# overrides the system prompt's one-word format for this reply only.
+WHY_QUESTION = (
+    "For this follow-up only, ignore the earlier output format. Why did you give that judgment? "
+    'Reply with only a JSON object {"factors": [...], "reason": "..."}, where "factors" lists the one to '
+    "three considerations that most influenced your judgment, each a short lowercase label of one or two "
+    'words, and "reason" is one sentence.'
+)
+
+
+def parse_why(text):
+    """The follow-up's JSON object, or None if it can't be parsed."""
+    m = re.search(r"\{.*\}", text, re.DOTALL)
     try:
-        return llm.call(text).judgment
+        d = json.loads(m.group(0)) if m else None
+    except json.JSONDecodeError:
+        return None
+    return d if isinstance(d, dict) and isinstance(d.get("factors"), list) else None
+
+
+def ask(text):
+    """(judgment string, why dict or None). The judgment is "invalid" (with a warning) if unparseable."""
+    try:
+        if not args.why:
+            return llm.call(text).judgment, None
+        judgment, why_text = llm.call_with_why(text, WHY_QUESTION)
+        return judgment.judgment, {"raw": why_text, "parsed": parse_why(why_text)}
     except LLMOutputError as e:
         tqdm.write(f"WARNING: invalid model output: {e}")
-        return "invalid"
+        return "invalid", None
 
 
 with open(ROOT / "dataset.json", encoding="utf-8") as f:
@@ -122,12 +149,14 @@ for scenario in tqdm(scenario_list, desc=args.model, unit="scenario"):
     scenario_text = f"Scenario: {scenario.context} Goal: {scenario.goal}. Action: {scenario.action}. Relevant Object: {scenario.object}."
     for prompt_type in prompt_types:
         prompt = build_prompt(scenario_text, prompt_type)
-        answer = ask(prompt)
+        answer, why = ask(prompt)
         results[scenario.id][prompt_type] = {
             "answer": str(answer),
             "correct": (answer == scenario.judgment),
             "prompt_chars": len(prompt),  # for later length-vs-accuracy analysis
         }
+        if why is not None:
+            results[scenario.id][prompt_type]["why"] = why
 
 
 results_dir = ROOT / "rq1" / "results"
@@ -138,6 +167,7 @@ config = {"provider": llm.provider, "model": llm.model, "effort": llm.effort, "t
           "max_tokens": llm.max_tokens, "web_search": llm.web_search,
           "max_searches": llm.max_searches if llm.web_search else None, "prompt_types": prompt_types, "prompt_parts": PROMPT_PARTS,
           "n_scenarios": len(results), "scenario_ids_filter": sorted(only_ids) if only_ids else None,
+          "why_question": WHY_QUESTION if args.why else None,
           "usage": llm.usage}
 with open(output_file, "w") as f:
     json.dump({"config": config, "results": results}, f, indent=4)

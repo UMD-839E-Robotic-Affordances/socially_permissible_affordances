@@ -186,7 +186,8 @@ class LLMProvider:
         self.web_search = web_search
         self.max_searches = max_searches
         # Running token totals over all calls (Claude only), for cost estimates.
-        self.usage = {"calls": 0, "input_tokens": 0, "output_tokens": 0, "web_searches": 0}
+        self.usage = {"calls": 0, "input_tokens": 0, "output_tokens": 0, "web_searches": 0,
+                      "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0}
         self.provider: Provider = provider or _infer_provider(model)
         self.system_prompt = system_prompt or build_system_prompt()
         self._rng = rng or random.Random()  # used by the mock provider only
@@ -196,22 +197,41 @@ class LLMProvider:
 
     # -- public API ---------------------------------------------------------
 
-    def call(self, query: str) -> Judgment:
-        complete = {
+    def _complete(self):
+        return {
             "anthropic": self._complete_anthropic,
             "openai": self._complete_openai,
             "mock": self._complete_mock,
         }[self.provider]
-        return parse_judgment(complete(query))
+
+    def call(self, query: str) -> Judgment:
+        return parse_judgment(self._complete()([{"role": "user", "content": query}]))
+
+    def call_with_why(self, query: str, question: str) -> tuple[Judgment, str]:
+        """Judgment, then a follow-up `question` (e.g. "why?") in the SAME conversation.
+
+        The API is stateless, so the follow-up request resends the first turn. For Claude the
+        first user message is marked cacheable, so the resend is billed at the cheap cache-read
+        rate (when the prompt is long enough to be cached; see usage["cache_read_input_tokens"]).
+        Raises LLMOutputError if the first answer is invalid (no follow-up is sent).
+        """
+        complete = self._complete()
+        messages = [{"role": "user", "content": query}]
+        raw = complete(messages, cache_first=True)
+        judgment = parse_judgment(raw)
+        messages += [{"role": "assistant", "content": raw}, {"role": "user", "content": question}]
+        return judgment, complete(messages, cache_first=True)
 
     # -- providers ----------------------------------------------------------
 
-    def _complete_mock(self, query: str) -> str:
+    def _complete_mock(self, messages: list[dict], cache_first: bool = False) -> str:
         """Random valid raw output, in either accepted format (bare word or JSON).
 
         No API needed. It goes through parse_judgment like real output; pass a
         seeded `rng` to the constructor for reproducible runs.
         """
+        if len(messages) > 1:  # a follow-up question: canned answer
+            return '{"factors": ["ownership"], "reason": "mock reason"}'
         word = self._rng.choice(VERDICTS)
         return word if self._rng.random() < 0.5 else f'{{"judgment": "{word}"}}'
 
@@ -219,6 +239,8 @@ class LLMProvider:
         self.usage["calls"] += 1
         self.usage["input_tokens"] += getattr(usage, "input_tokens", 0) or 0
         self.usage["output_tokens"] += getattr(usage, "output_tokens", 0) or 0  # includes thinking tokens
+        for k in ("cache_creation_input_tokens", "cache_read_input_tokens"):
+            self.usage[k] += getattr(usage, k, 0) or 0
         server = getattr(usage, "server_tool_use", None)
         self.usage["web_searches"] += getattr(server, "web_search_requests", 0) or 0
 
@@ -229,7 +251,7 @@ class LLMProvider:
         # Basic web search tool version; newer models also accept web_search_20260209.
         return [{"type": WEB_SEARCH_TOOL_TYPE, "name": "web_search", "max_uses": self.max_searches}]
 
-    def _complete_anthropic(self, query: str) -> str:
+    def _complete_anthropic(self, messages: list[dict], cache_first: bool = False) -> str:
         if self._client is None:
             import anthropic
 
@@ -241,7 +263,11 @@ class LLMProvider:
             kwargs["output_config"] = {"effort": self.effort}
         if tools := self._web_search_tools():
             kwargs["tools"] = tools
-        messages = [{"role": "user", "content": query}]
+        base = [dict(m) for m in messages]
+        if cache_first:  # mark the first user message (and the system prompt before it) as cacheable
+            base[0]["content"] = [{"type": "text", "text": base[0]["content"],
+                                   "cache_control": {"type": "ephemeral"}}]
+        messages = base
         # Server-side tools can pause a long turn (pause_turn); resend to let it continue.
         for _ in range(MAX_PAUSE_TURNS + 1):
             response = self._client.messages.create(
@@ -254,7 +280,7 @@ class LLMProvider:
             self._add_usage(response.usage)
             if response.stop_reason != "pause_turn":
                 break
-            messages = [*messages[:1], {"role": "assistant", "content": response.content}]
+            messages = [*base, {"role": "assistant", "content": response.content}]
         if response.stop_reason == "refusal":
             raise LLMOutputError(f"{self.model} refused: {response.stop_details}")
         # With web search the model may write text before and between searches; only the
@@ -267,7 +293,7 @@ class LLMProvider:
                 text_parts = []
         return "".join(text_parts)
 
-    def _complete_openai(self, query: str) -> str:
+    def _complete_openai(self, messages: list[dict], cache_first: bool = False) -> str:
         if self._client is None:
             import openai
 
@@ -278,10 +304,7 @@ class LLMProvider:
         response = self._client.chat.completions.create(
             model=self.model,
             max_completion_tokens=self.max_tokens,
-            messages=[
-                {"role": "system", "content": self.system_prompt},
-                {"role": "user", "content": query},
-            ],
+            messages=[{"role": "system", "content": self.system_prompt}, *messages],
             **kwargs,
         )
         choice = response.choices[0]

@@ -52,6 +52,12 @@ def test_call_returns_judgment():
     assert result.judgment in VERDICTS
 
 
+def test_call_with_why_returns_judgment_and_follow_up():
+    judgment, why = LLMProvider("mock").call_with_why(PROMPT, "Why?")
+    assert judgment.judgment in VERDICTS
+    assert "factors" in why
+
+
 def test_web_search_tools_only_when_enabled():
     off = LLMProvider("claude-opus-5-5")
     on = LLMProvider("claude-opus-5-5", web_search=True, max_searches=2)
