@@ -29,7 +29,7 @@
     "contamination": {
       "label": null,
       "group": "Physical",
-      "definition": "Transferring dirt, germs or residue between items or surfaces, or using something that breaches cleanliness norms. Covers perceived as well as true contamination: an item with a doubtful history counts even if it turns out to be clean, and an item that is truly clean can still be fine despite looking unclean. A possible distinction, named \"hygiene\" and merged here: hygiene would be the norm-and-perception side, i.e. what counts as clean enough to touch food or mouths, while contamination proper is the actual transfer of dirt or germs. Separate them only if perceived-versus-true matters for a given scenario."
+      "definition": "Transferring dirt, germs or residue between items or surfaces, or using something that breaches cleanliness norms. Covers perceived as well as true contamination: an item with a doubtful history counts even if it turns out to be clean, and an item that is truly clean can still be fine despite looking unclean. This includes hygiene: what counts as clean enough to touch food or mouths depends on norms and perception as well as on the actual transfer of dirt or germs."
     },
     "capability": {
       "label": "capability match",
