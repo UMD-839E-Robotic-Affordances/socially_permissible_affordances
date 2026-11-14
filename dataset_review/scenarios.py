@@ -1069,6 +1069,7 @@ SCENARIOS: list[Scenario] = [
         summary="Repeated unequal treatment may indicate unfair prioritization",
     ),
 
+    # TODO: review S102; the scenario is questionable.
     Scenario(
         id="S102",
         context="Robot has access to the user's email account but no approval "
