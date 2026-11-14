@@ -2,7 +2,7 @@
 
 Dataset (files are in `dataset_review/`; rerun `python3 dataset_review/build_dataset.py` afterwards to refresh `dataset.json`):
 
-- [ ] Finish reviewing the remaining scenarios (about 36 of 120 reviewed so far).
+- [ ] Finish reviewing the remaining scenarios (36 of 117 reviewed so far).
 
 RQ1 experiment:
 
