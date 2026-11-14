@@ -84,7 +84,7 @@ def main(path):
             print(f"  {t:<9} chars={int(c.mean())}")
     # TODO: scenario-level length (scenario text length) vs correctness: logistic regression / point-biserial.
 
-    # TODO: accuracy by dataset tag (ownership, consent, ...) and by reviewed flag; needs tags from dataset.json.
+    # TODO: accuracy by dataset tag (ownership, privacy, ...) and by reviewed flag; needs tags from dataset.json.
     # TODO: variance across repeated runs (several results files) -> mean +- sd per metric.
 
 

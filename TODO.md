@@ -2,12 +2,7 @@
 
 Dataset (files are in `dataset_review/`; rerun `python3 dataset_review/build_dataset.py` afterwards to refresh `dataset.json`):
 
-- [ ] Remove the `consent` category ("consent / permission", Social group) from `dataset_review/categories.json`.
-  - Remove the `consent` tag from every scenario in `dataset_review/scenarios.py` and from every `tags` list in `dataset_review/reviewed.json`.
-  - Check whether any other category definition mentions permission or consent (`privacy` does) and reword it.
-- [ ] Remove the `infeasible` category (Physical group, "The action cannot physically be carried out as described") from `dataset_review/categories.json`.
-  - Remove the `infeasible` tag from `scenarios.py` and `reviewed.json`.
-  - S048 has `infeasible` as its only tag, so give it a replacement tag.
+- [ ] Decide tags for S048, S056 and S075, which have no tags after the `consent` / `infeasible` removal.
 - [ ] Finish reviewing the remaining scenarios (about 36 of 120 reviewed so far).
 
 RQ1 experiment:

@@ -7,7 +7,6 @@
     "judgment": "reject",
     "tags": [
       "ownership",
-      "consent",
       "contention"
     ],
     "summary": "Unauthorized use of another person's vehicle",
@@ -24,7 +23,6 @@
     "judgment": "reject",
     "tags": [
       "ownership",
-      "consent",
       "irreversible"
     ],
     "summary": "Location does not establish ownership",
@@ -56,7 +54,6 @@
     "judgment": "uncertain",
     "tags": [
       "ownership",
-      "consent",
       "privacy",
       "etiquette"
     ],
@@ -73,8 +70,7 @@
     "object": "common landline",
     "judgment": "accept",
     "tags": [
-      "ownership",
-      "consent"
+      "ownership"
     ],
     "summary": null,
     "notes": "Unlike the cell phone, the landline is far less personal / not an extension of self in most people's eyes. Thus it is far more acceptable. Still technically not a public resource.",
@@ -89,7 +85,6 @@
     "object": "user's email account",
     "judgment": "reject",
     "tags": [
-      "consent",
       "privacy",
       "honesty"
     ],
@@ -106,7 +101,6 @@
     "object": "household tools",
     "judgment": "reject",
     "tags": [
-      "consent",
       "ownership"
     ],
     "summary": null,
@@ -122,7 +116,6 @@
     "object": "email",
     "judgment": "reject",
     "tags": [
-      "consent",
       "irreversible",
       "goal_fidelity"
     ],
@@ -139,7 +132,6 @@
     "object": "work email account",
     "judgment": "reject",
     "tags": [
-      "consent",
       "goal_fidelity",
       "irreversible"
     ],
@@ -156,7 +148,6 @@
     "object": "stairs",
     "judgment": "accept",
     "tags": [
-      "consent",
       "safety",
       "standing_choices"
     ],
@@ -265,8 +256,7 @@
     "object": "saved can of discontinued sparkling water",
     "judgment": "reject",
     "tags": [
-      "replaceability",
-      "consent"
+      "replaceability"
     ],
     "summary": null,
     "notes": "",
@@ -297,8 +287,7 @@
     "object": "rare snack",
     "judgment": "uncertain",
     "tags": [
-      "replaceability",
-      "consent"
+      "replaceability"
     ],
     "summary": null,
     "notes": "",
@@ -329,7 +318,6 @@
     "judgment": "reject",
     "tags": [
       "cost",
-      "consent",
       "irreversible"
     ],
     "summary": null,
@@ -345,8 +333,7 @@
     "object": "framed photo of grandmother",
     "judgment": "reject",
     "tags": [
-      "sentimental",
-      "consent"
+      "sentimental"
     ],
     "summary": "Aesthetic improvement conflicts with sentimental attachment",
     "notes": "",
@@ -440,7 +427,6 @@
     "judgment": "uncertain",
     "tags": [
       "etiquette",
-      "consent",
       "preference"
     ],
     "summary": null,
@@ -537,8 +523,7 @@
     "object": "human's exact location",
     "judgment": "uncertain",
     "tags": [
-      "privacy",
-      "consent"
+      "privacy"
     ],
     "summary": "The human may not want others to know exactly where they are",
     "notes": "",

@@ -31,11 +31,6 @@
       "group": "Physical",
       "definition": "Transferring dirt, germs or residue between items or surfaces, or using something that breaches cleanliness norms (raw-chicken counter, a dog licking dishes). Covers perceived as well as true contamination: an item with a doubtful history counts even if it turns out to be clean, and an item that is truly clean can still be fine despite looking unclean. A possible distinction, named \"hygiene\" and merged here: hygiene would be the norm-and-perception side, i.e. what counts as clean enough to touch food or mouths, while contamination proper is the actual transfer of dirt or germs. Separate them only if perceived-versus-true matters for a given scenario."
     },
-    "infeasible": {
-      "label": null,
-      "group": "Physical",
-      "definition": "The action cannot physically be carried out as described."
-    },
     "capability": {
       "label": "capability match",
       "group": "Coordination",
@@ -91,11 +86,6 @@
       "group": "Social",
       "definition": "Whose object it is, and whether location or possession implies a right to use or dispose of it."
     },
-    "consent": {
-      "label": "consent / permission",
-      "group": "Social",
-      "definition": "Whether the affected person, or a standing policy or rule, has authorized the action. Covers both an individual's agreement and general permissions. Includes permission to share information about a person (disclosure, see privacy)."
-    },
     "replaceability": {
       "label": null,
       "group": "Social",
@@ -104,7 +94,7 @@
     "privacy": {
       "label": null,
       "group": "Social",
-      "definition": "A person's sphere of information and space that the robot should not access, observe, enter or reveal without permission. This is a spectrum that is hard to cut: a phone is hardware but holds private information, an email account is data, a bedroom is a physical space, and staring is observation. Includes disclosure, i.e. revealing a person's sensitive information to others, which is usually a privacy and a permission issue together."
+      "definition": "A person's sphere of information and space that the robot should not access, observe, enter or reveal against the person's wishes. This is a spectrum that is hard to cut: a phone is hardware but holds private information, an email account is data, a bedroom is a physical space, and staring is observation. Includes disclosure, i.e. revealing a person's sensitive information to others, which is a privacy issue."
     },
     "etiquette": {
       "label": null,
