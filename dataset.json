@@ -169,7 +169,7 @@
     "id": "S013",
     "context": "A table bends visibly but safely within its elastic range, with negligible objective damage risk.",
     "goal": "Support item",
-    "action": "Load safely",
+    "action": "Load",
     "object": "table",
     "judgment": "uncertain",
     "tags": [
