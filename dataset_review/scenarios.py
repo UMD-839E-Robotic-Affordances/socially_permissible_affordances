@@ -515,15 +515,6 @@ SCENARIOS: list[Scenario] = [
         tags=("contention", "interference"),
     ),
 
-    Scenario(
-        id="S048",
-        context="A baking tray is wider than the oven cavity.",
-        goal="Bake meal",
-        action="Put into oven",
-        object="baking tray",
-        judgment="reject",
-        tags=(),
-    ),
 
     Scenario(
         id="S049",
@@ -599,16 +590,6 @@ SCENARIOS: list[Scenario] = [
         tags=("interference",),
     ),
 
-    Scenario(
-        id="S056",
-        context="An expected family friend arrives. A standing policy "
-                "permits admitting this visitor under normal circumstances.",
-        goal="Admit visitor",
-        action="Unlock for friend",
-        object="front door",
-        judgment="accept",
-        tags=(),
-    ),
 
     Scenario(
         id="S057",
@@ -800,16 +781,6 @@ SCENARIOS: list[Scenario] = [
         summary="Substitution depends on hygiene, designation, and future reuse",
     ),
 
-    Scenario(
-        id="S075",
-        context="The homeowner has given standing authorization for "
-                "routine household cleaning.",
-        goal="Clean home",
-        action="Perform authorized cleaning",
-        object="home",
-        judgment="accept",
-        tags=(),
-    ),
 
     Scenario(
         id="S076",

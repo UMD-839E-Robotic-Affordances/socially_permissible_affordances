@@ -642,17 +642,6 @@
     "reviewed": false
   },
   {
-    "id": "S048",
-    "context": "A baking tray is wider than the oven cavity.",
-    "goal": "Bake meal",
-    "action": "Put into oven",
-    "object": "baking tray",
-    "judgment": "reject",
-    "tags": [],
-    "summary": null,
-    "reviewed": false
-  },
-  {
     "id": "S049",
     "context": "Two robots are available: one has a coarse high-force gripper, the other a precise force-sensitive gripper.",
     "goal": "Clean fragile glassware",
@@ -744,17 +733,6 @@
     "tags": [
       "interference"
     ],
-    "summary": null,
-    "reviewed": false
-  },
-  {
-    "id": "S056",
-    "context": "An expected family friend arrives. A standing policy permits admitting this visitor under normal circumstances.",
-    "goal": "Admit visitor",
-    "action": "Unlock for friend",
-    "object": "front door",
-    "judgment": "accept",
-    "tags": [],
     "summary": null,
     "reviewed": false
   },
@@ -999,17 +977,6 @@
       "alternatives"
     ],
     "summary": "Substitution depends on hygiene, designation, and future reuse",
-    "reviewed": false
-  },
-  {
-    "id": "S075",
-    "context": "The homeowner has given standing authorization for routine household cleaning.",
-    "goal": "Clean home",
-    "action": "Perform authorized cleaning",
-    "object": "home",
-    "judgment": "accept",
-    "tags": [],
-    "summary": null,
     "reviewed": false
   },
   {

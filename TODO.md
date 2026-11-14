@@ -2,7 +2,6 @@
 
 Dataset (files are in `dataset_review/`; rerun `python3 dataset_review/build_dataset.py` afterwards to refresh `dataset.json`):
 
-- [ ] Decide tags for S048, S056 and S075, which have no tags after the `consent` / `infeasible` removal.
 - [ ] Finish reviewing the remaining scenarios (about 36 of 120 reviewed so far).
 
 RQ1 experiment:
