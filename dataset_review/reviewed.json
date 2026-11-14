@@ -190,7 +190,7 @@
   },
   "S013": {
     "id": "S013",
-    "context": "A table bends visibly but safely within its elastic range, with negligible objective damage risk.",
+    "context": "A table bends visibly but within its elastic range, with negligible objective damage risk.",
     "goal": "Support item",
     "action": "Load",
     "object": "table",
@@ -199,9 +199,9 @@
       "damage_risk"
     ],
     "summary": "Perceived danger versus actual physical risk",
-    "notes": "Removed 'safely' from the action.",
+    "notes": "Removed 'safely' from the action and the context.",
     "changed": true,
-    "reviewed_at": "2026-11-14T03:46:30+00:00"
+    "reviewed_at": "2026-11-14T03:47:04+00:00"
   },
   "S014": {
     "id": "S014",
