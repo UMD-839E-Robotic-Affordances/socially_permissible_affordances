@@ -31,3 +31,6 @@ run_and_analyze() {
   echo "== Analysis: $results =="
   "$PY" "$ROOT/rq1/analysis.py" "$results"
 }
+
+# "--why" (a follow-up why question in the same conversation) is on by default; WHY=0 turns it off.
+why_args() { [ "${WHY:-1}" = "0" ] || echo "--why"; }
