@@ -34,7 +34,7 @@
     "capability": {
       "label": "capability match",
       "group": "Coordination",
-      "definition": "Whether the robot, or the robot chosen for the task, has the reach, precision or force it needs. This can also be read as physical, since fit can be judged for a single agent. It stays in Coordination because a poor fit implies that another agent will eventually be responsible for the task once it is completed, unless an alternative method is available (a step stool, a gentler grip). Also covers choosing which agent should do a task by that fit; this is the former 'assignment'."
+      "definition": "Whether the robot, or the robot chosen for the task, has the reach, precision or force the task needs. Also covers choosing which agent should do a task based on that fit. Why this is Coordination and not Physical: fit could be judged for a single agent, but a poor fit means another agent will eventually be responsible for the task, unless an alternative method is available."
     },
     "efficiency": {
       "label": null,
