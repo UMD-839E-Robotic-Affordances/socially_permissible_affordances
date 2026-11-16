@@ -39,3 +39,7 @@ run_and_analyze() {
 
 # "--why" (a follow-up why question in the same conversation) is on by default; WHY=0 turns it off.
 why_args() { [ "${WHY:-1}" = "0" ] || echo "--why"; }
+
+# "--structured" (the API constrains the answer to the JSON object {"judgment": ...}, validated with pydantic; Sonnet 5.5
+# otherwise explains itself before its answer) is on by default for all models; STRUCTURED=0 turns it off.
+structured_args() { [ "${STRUCTURED:-1}" = "0" ] || echo "--structured"; }

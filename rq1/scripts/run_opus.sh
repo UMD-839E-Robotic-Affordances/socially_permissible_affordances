@@ -8,4 +8,4 @@ set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
 EFFORT="${EFFORT:-medium}"
 confirm_cost "Opus 5.5, effort $EFFORT: 1,430 calls with --why. Roughly \$10-14 at medium, less at low; more at higher effort."
-run_and_analyze claude-opus-5-5 "$EFFORT" "" $(why_args) "$@"
+run_and_analyze claude-opus-5-5 "$EFFORT" "" $(why_args) $(structured_args) "$@"

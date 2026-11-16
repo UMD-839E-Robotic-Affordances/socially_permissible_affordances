@@ -8,7 +8,7 @@
 # its follow-up "why" answers in a separate rq1_whys_*.json file next to it. If a run stops, the other model still
 # runs, and the summary at the end says which one to resume. To resume one model, run its own script with
 #   --tag <hash> --start-index <N>      e.g.  rq1/scripts/run_haiku.sh --tag 1a2b3c4 --start-index 59
-# One seed (42) is used. Estimated total: about 1,430 calls per model, roughly 1.5 hours and $5-7.
+# One seed (42) is used. Projected total from small samples: about 1,430 calls per model, roughly 1.5 hours and $6.5.
 # Run it from a clean, committed branch, ideally inside tmux or nohup (it takes over an hour).
 set -uo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
@@ -23,7 +23,7 @@ run_one() {  # run_one LABEL MODEL EFFORT
   t0=$(date +%s)
   echo
   echo "################ [$(stamp)] STARTED: $label ($model, effort $effort) ################"
-  if ( set -e; run_and_analyze "$model" "$effort" "" $(why_args) "${EXTRA[@]+"${EXTRA[@]}"}" ); then
+  if ( set -e; run_and_analyze "$model" "$effort" "" $(why_args) $(structured_args) "${EXTRA[@]+"${EXTRA[@]}"}" ); then
     t1=$(date +%s); mins=$(( (t1 - t0) / 60 )); file="rq1/results/rq1_results_${model}_${effort}_${HASH}.json"
     echo "################ [$(stamp)] DONE: $label in ${mins} min ################"
     SUMMARY+=("DONE   $label (${mins} min)  results: $file  whys: ${file/rq1_results_/rq1_whys_}")

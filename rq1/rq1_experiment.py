@@ -32,6 +32,8 @@ ap.add_argument("--why", action="store_true",
 ap.add_argument("--start-index", type=int, default=0,
                 help="resume: skip the first N scenarios (dataset order) and keep the results already saved in the "
                      "output file (use the same --model/--effort/--tag/--seed as the interrupted run)")
+ap.add_argument("--structured", action="store_true",
+                help="Claude only: constrain the answer to a JSON schema ({\"judgment\": ...}), parsed with pydantic")
 ap.add_argument("--log-file", default=None,
                 help="write a DEBUG log of everything sent to and received from the model (off by default)")
 ap.add_argument("--seed", type=int, default=42,
@@ -48,7 +50,8 @@ if args.log_file:  # only our own loggers are verbose; SDK/HTTP libraries stay q
     _rq.propagate = False
 log = logging.getLogger("rq1.experiment")
 log_json("RUN_ARGS", vars(args))
-llm = LLMProvider(args.model, effort=args.effort, web_search=args.web_search, max_searches=args.max_searches)
+llm = LLMProvider(args.model, effort=args.effort, web_search=args.web_search, max_searches=args.max_searches,
+                  structured=args.structured)
 
 
 # Follow-up asked in the same conversation with --why. The same text is used for every prompt type, so
@@ -87,6 +90,7 @@ def select_example(scenario, scenario_list, seed=42):
     candidates = [
         sc for sc in scenario_list
         if sc.id != scenario.id
+        and sc.context != scenario.context  # never use a scenario's identical-context twin (it differs only in the answer)
         and set(sc.tags).intersection(scenario.tags)
     ]
 
@@ -130,6 +134,8 @@ has_ex_nolabel_text = ("Below are examples of how to judge a scenario. Each show
                        "which comes after the examples, and reply in the required output format (a single word "
                        "or the JSON object), not in the format used in the examples.")
 final_text = "Now judge this scenario:"
+# Closing instruction on EVERY prompt (not needed, and left out, in --structured mode, where the API enforces the format).
+answer_format_text = None if args.structured else 'Reply with only one word: "accept", "reject" or "uncertain". Do not explain.'
 
 # Each scenario gets one example drawn from the dataset itself (see select_example); every scenario is scored.
 
@@ -180,10 +186,11 @@ def build_prompt(scenario_text, prompt_type, example=None):
                 example_text = format_example(1, example, with_labels=False)
                 parts.append(has_ex_nolabel_text.strip() + "\n" + example_text)
 
+    tail = "\n\n" + answer_format_text if answer_format_text else ""
     if not parts:
-        return scenario_text
+        return scenario_text + tail
 
-    return "\n\n".join(parts) + "\n\n" + final_text + "\n" + scenario_text
+    return "\n\n".join(parts) + "\n\n" + final_text + "\n" + scenario_text + tail
 
 
 results_dir = ROOT / "rq1" / "results"
@@ -227,7 +234,7 @@ def save(status, stopped_at=None):
     config = {"provider": llm.provider, "model": llm.model, "effort": llm.effort, "thinking": llm.thinking,
               "max_tokens": llm.max_tokens, "web_search": llm.web_search,
               "max_searches": llm.max_searches if llm.web_search else None,
-              "prompt_types": prompt_types, "prompt_parts": PROMPT_PARTS,
+              "prompt_types": prompt_types, "prompt_parts": PROMPT_PARTS, "answer_format_text": answer_format_text, "structured": args.structured,
               "n_scenarios": len(results), "scenario_ids_filter": sorted(only_ids) if only_ids else None,
               "why_question": WHY_QUESTION if args.why else None,
               "why_file": why_file.name if args.why else None,
