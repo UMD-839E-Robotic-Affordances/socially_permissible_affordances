@@ -1,0 +1,1800 @@
+{
+ "model_comparison": {
+  "none": {
+   "acc": {
+    "haiku": 0.7972027972027972,
+    "sonnet": 0.8321678321678322
+   },
+   "fixed": 13,
+   "broke": 8,
+   "p": 0.38331031799316406
+  },
+  "taxonomy": {
+   "acc": {
+    "haiku": 0.7832167832167832,
+    "sonnet": 0.8601398601398601
+   },
+   "fixed": 16,
+   "broke": 5,
+   "p": 0.02660369873046875
+  },
+  "examples": {
+   "acc": {
+    "haiku": 0.7762237762237763,
+    "sonnet": 0.8461538461538461
+   },
+   "fixed": 17,
+   "broke": 7,
+   "p": 0.06391465663909912
+  },
+  "examples_nolabel": {
+   "acc": {
+    "haiku": 0.7902097902097902,
+    "sonnet": 0.8461538461538461
+   },
+   "fixed": 16,
+   "broke": 8,
+   "p": 0.15158963203430176
+  },
+  "tax+ex": {
+   "acc": {
+    "haiku": 0.8321678321678322,
+    "sonnet": 0.8531468531468531
+   },
+   "fixed": 14,
+   "broke": 11,
+   "p": 0.6900379657745361
+  }
+ },
+ "confusion": {
+  "haiku/none": [
+   [
+    33,
+    6,
+    1
+   ],
+   [
+    5,
+    79,
+    4
+   ],
+   [
+    4,
+    9,
+    2
+   ]
+  ],
+  "haiku/taxonomy": [
+   [
+    30,
+    8,
+    2
+   ],
+   [
+    4,
+    79,
+    5
+   ],
+   [
+    3,
+    9,
+    3
+   ]
+  ],
+  "haiku/examples": [
+   [
+    33,
+    6,
+    1
+   ],
+   [
+    8,
+    72,
+    8
+   ],
+   [
+    3,
+    6,
+    6
+   ]
+  ],
+  "haiku/examples_nolabel": [
+   [
+    35,
+    5,
+    0
+   ],
+   [
+    8,
+    73,
+    7
+   ],
+   [
+    3,
+    7,
+    5
+   ]
+  ],
+  "haiku/tax+ex": [
+   [
+    33,
+    7,
+    0
+   ],
+   [
+    4,
+    81,
+    3
+   ],
+   [
+    2,
+    8,
+    5
+   ]
+  ],
+  "sonnet/none": [
+   [
+    36,
+    1,
+    3
+   ],
+   [
+    2,
+    79,
+    7
+   ],
+   [
+    3,
+    8,
+    4
+   ]
+  ],
+  "sonnet/taxonomy": [
+   [
+    34,
+    3,
+    3
+   ],
+   [
+    0,
+    83,
+    5
+   ],
+   [
+    1,
+    8,
+    6
+   ]
+  ],
+  "sonnet/examples": [
+   [
+    33,
+    3,
+    4
+   ],
+   [
+    2,
+    81,
+    5
+   ],
+   [
+    2,
+    6,
+    7
+   ]
+  ],
+  "sonnet/examples_nolabel": [
+   [
+    34,
+    3,
+    3
+   ],
+   [
+    2,
+    80,
+    6
+   ],
+   [
+    2,
+    6,
+    7
+   ]
+  ],
+  "sonnet/tax+ex": [
+   [
+    33,
+    4,
+    3
+   ],
+   [
+    0,
+    84,
+    4
+   ],
+   [
+    2,
+    8,
+    5
+   ]
+  ]
+ },
+ "by_tag": {
+  "haiku": {
+   "ownership": {
+    "n": 11,
+    "per_type": {
+     "none": 0.9090909090909091,
+     "taxonomy": 1.0,
+     "examples": 0.9090909090909091,
+     "examples_nolabel": 1.0,
+     "tax+ex": 0.9090909090909091
+    },
+    "mean": 0.9454545454545455,
+    "ci": [
+     0.8514670569551007,
+     0.9812771240324999
+    ]
+   },
+   "contention": {
+    "n": 10,
+    "per_type": {
+     "none": 0.8,
+     "taxonomy": 0.8,
+     "examples": 1.0,
+     "examples_nolabel": 0.9,
+     "tax+ex": 1.0
+    },
+    "mean": 0.9,
+    "ci": [
+     0.7863950966521162,
+     0.956524876008429
+    ]
+   },
+   "irreversible": {
+    "n": 9,
+    "per_type": {
+     "none": 0.8888888888888888,
+     "taxonomy": 0.8888888888888888,
+     "examples": 0.7777777777777778,
+     "examples_nolabel": 0.7777777777777778,
+     "tax+ex": 0.8888888888888888
+    },
+    "mean": 0.8444444444444443,
+    "ci": [
+     0.712158094887512,
+     0.9225467468867133
+    ]
+   },
+   "privacy": {
+    "n": 10,
+    "per_type": {
+     "none": 0.7,
+     "taxonomy": 0.7,
+     "examples": 0.6,
+     "examples_nolabel": 0.6,
+     "tax+ex": 0.7
+    },
+    "mean": 0.6599999999999999,
+    "ci": [
+     0.5215356854148285,
+     0.7756323036493895
+    ]
+   },
+   "etiquette": {
+    "n": 13,
+    "per_type": {
+     "none": 0.7692307692307693,
+     "taxonomy": 0.8461538461538461,
+     "examples": 0.7692307692307693,
+     "examples_nolabel": 0.8461538461538461,
+     "tax+ex": 0.9230769230769231
+    },
+    "mean": 0.8307692307692308,
+    "ci": [
+     0.721833508048396,
+     0.9027888133386723
+    ]
+   },
+   "honesty": {
+    "n": 5,
+    "per_type": {
+     "none": 0.6,
+     "taxonomy": 0.6,
+     "examples": 0.6,
+     "examples_nolabel": 0.6,
+     "tax+ex": 0.6
+    },
+    "mean": 0.6,
+    "ci": [
+     0.40739127785127344,
+     0.7659694233580909
+    ]
+   },
+   "goal_fidelity": {
+    "n": 9,
+    "per_type": {
+     "none": 0.8888888888888888,
+     "taxonomy": 0.8888888888888888,
+     "examples": 0.8888888888888888,
+     "examples_nolabel": 0.8888888888888888,
+     "tax+ex": 0.8888888888888888
+    },
+    "mean": 0.888888888888889,
+    "ci": [
+     0.7650062450910905,
+     0.9515959956217445
+    ]
+   },
+   "safety": {
+    "n": 15,
+    "per_type": {
+     "none": 0.8,
+     "taxonomy": 0.8,
+     "examples": 0.7333333333333333,
+     "examples_nolabel": 0.8,
+     "tax+ex": 0.8
+    },
+    "mean": 0.7866666666666667,
+    "ci": [
+     0.6811982171013853,
+     0.86419913657992
+    ]
+   },
+   "standing_choices": {
+    "n": 3,
+    "per_type": {
+     "none": 1.0,
+     "taxonomy": 1.0,
+     "examples": 1.0,
+     "examples_nolabel": 1.0,
+     "tax+ex": 1.0
+    },
+    "mean": 1.0,
+    "ci": [
+     0.7961107336956521,
+     1.0
+    ]
+   },
+   "damage_risk": {
+    "n": 15,
+    "per_type": {
+     "none": 0.7333333333333333,
+     "taxonomy": 0.7333333333333333,
+     "examples": 0.6,
+     "examples_nolabel": 0.6666666666666666,
+     "tax+ex": 0.7333333333333333
+    },
+    "mean": 0.6933333333333332,
+    "ci": [
+     0.5816933204791398,
+     0.7861328017710428
+    ]
+   },
+   "intended_use": {
+    "n": 15,
+    "per_type": {
+     "none": 0.6666666666666666,
+     "taxonomy": 0.7333333333333333,
+     "examples": 0.6666666666666666,
+     "examples_nolabel": 0.6666666666666666,
+     "tax+ex": 0.6666666666666666
+    },
+    "mean": 0.6799999999999999,
+    "ci": [
+     0.5678872410148672,
+     0.7745715624594409
+    ]
+   },
+   "contamination": {
+    "n": 12,
+    "per_type": {
+     "none": 0.8333333333333334,
+     "taxonomy": 0.9166666666666666,
+     "examples": 0.8333333333333334,
+     "examples_nolabel": 0.6666666666666666,
+     "tax+ex": 0.8333333333333334
+    },
+    "mean": 0.8166666666666667,
+    "ci": [
+     0.7008000677353371,
+     0.8944231096286387
+    ]
+   },
+   "replaceability": {
+    "n": 4,
+    "per_type": {
+     "none": 0.75,
+     "taxonomy": 0.5,
+     "examples": 0.75,
+     "examples_nolabel": 0.75,
+     "tax+ex": 0.75
+    },
+    "mean": 0.7,
+    "ci": [
+     0.4810232237710206,
+     0.854524726031006
+    ]
+   },
+   "sentimental": {
+    "n": 6,
+    "per_type": {
+     "none": 1.0,
+     "taxonomy": 1.0,
+     "examples": 0.8333333333333334,
+     "examples_nolabel": 0.8333333333333334,
+     "tax+ex": 1.0
+    },
+    "mean": 0.9333333333333333,
+    "ci": [
+     0.7867618227892791,
+     0.9815233646723066
+    ]
+   },
+   "preference": {
+    "n": 8,
+    "per_type": {
+     "none": 0.625,
+     "taxonomy": 0.75,
+     "examples": 0.75,
+     "examples_nolabel": 0.75,
+     "tax+ex": 0.75
+    },
+    "mean": 0.725,
+    "ci": [
+     0.5716474916687543,
+     0.8389214656685692
+    ]
+   },
+   "alternatives": {
+    "n": 28,
+    "per_type": {
+     "none": 0.75,
+     "taxonomy": 0.6785714285714286,
+     "examples": 0.6785714285714286,
+     "examples_nolabel": 0.7142857142857143,
+     "tax+ex": 0.7142857142857143
+    },
+    "mean": 0.7071428571428572,
+    "ci": [
+     0.6270356036881617,
+     0.7761857175429705
+    ]
+   },
+   "cost": {
+    "n": 6,
+    "per_type": {
+     "none": 0.5,
+     "taxonomy": 0.5,
+     "examples": 0.5,
+     "examples_nolabel": 0.5,
+     "tax+ex": 0.6666666666666666
+    },
+    "mean": 0.5333333333333333,
+    "ci": [
+     0.3614201328152505,
+     0.6976787277587178
+    ]
+   },
+   "rules": {
+    "n": 13,
+    "per_type": {
+     "none": 0.7692307692307693,
+     "taxonomy": 0.7692307692307693,
+     "examples": 0.8461538461538461,
+     "examples_nolabel": 0.7692307692307693,
+     "tax+ex": 0.7692307692307693
+    },
+    "mean": 0.7846153846153846,
+    "ci": [
+     0.6703320947133157,
+     0.8671336236895105
+    ]
+   },
+   "timing": {
+    "n": 11,
+    "per_type": {
+     "none": 1.0,
+     "taxonomy": 0.8181818181818182,
+     "examples": 0.9090909090909091,
+     "examples_nolabel": 1.0,
+     "tax+ex": 0.9090909090909091
+    },
+    "mean": 0.9272727272727274,
+    "ci": [
+     0.827398219083632,
+     0.9713564034963114
+    ]
+   },
+   "interference": {
+    "n": 17,
+    "per_type": {
+     "none": 0.8823529411764706,
+     "taxonomy": 0.6470588235294118,
+     "examples": 0.7647058823529411,
+     "examples_nolabel": 0.7647058823529411,
+     "tax+ex": 0.8235294117647058
+    },
+    "mean": 0.776470588235294,
+    "ci": [
+     0.6770628717994043,
+     0.8519685729291915
+    ]
+   },
+   "capability": {
+    "n": 6,
+    "per_type": {
+     "none": 0.8333333333333334,
+     "taxonomy": 0.8333333333333334,
+     "examples": 0.8333333333333334,
+     "examples_nolabel": 0.8333333333333334,
+     "tax+ex": 1.0
+    },
+    "mean": 0.8666666666666668,
+    "ci": [
+     0.7031831605558306,
+     0.9469043057578189
+    ]
+   },
+   "proxemics": {
+    "n": 3,
+    "per_type": {
+     "none": 0.6666666666666666,
+     "taxonomy": 0.6666666666666666,
+     "examples": 1.0,
+     "examples_nolabel": 1.0,
+     "tax+ex": 0.6666666666666666
+    },
+    "mean": 0.7999999999999999,
+    "ci": [
+     0.5481406466534955,
+     0.9295257935638959
+    ]
+   },
+   "efficiency": {
+    "n": 4,
+    "per_type": {
+     "none": 0.25,
+     "taxonomy": 0.5,
+     "examples": 0.5,
+     "examples_nolabel": 0.5,
+     "tax+ex": 0.75
+    },
+    "mean": 0.5,
+    "ci": [
+     0.2992949144298199,
+     0.7007050855701801
+    ]
+   },
+   "execution_optimality": {
+    "n": 6,
+    "per_type": {
+     "none": 0.5,
+     "taxonomy": 0.6666666666666666,
+     "examples": 0.5,
+     "examples_nolabel": 0.6666666666666666,
+     "tax+ex": 0.6666666666666666
+    },
+    "mean": 0.5999999999999999,
+    "ci": [
+     0.42320052498273836,
+     0.7540960567391659
+    ]
+   },
+   "respect": {
+    "n": 4,
+    "per_type": {
+     "none": 1.0,
+     "taxonomy": 1.0,
+     "examples": 1.0,
+     "examples_nolabel": 1.0,
+     "tax+ex": 1.0
+    },
+    "mean": 1.0,
+    "ci": [
+     0.8388698745050667,
+     1.0
+    ]
+   },
+   "environmental": {
+    "n": 3,
+    "per_type": {
+     "none": 0.6666666666666666,
+     "taxonomy": 0.6666666666666666,
+     "examples": 0.6666666666666666,
+     "examples_nolabel": 0.6666666666666666,
+     "tax+ex": 1.0
+    },
+    "mean": 0.7333333333333333,
+    "ci": [
+     0.4804911034231324,
+     0.8910272389681718
+    ]
+   },
+   "fairness": {
+    "n": 4,
+    "per_type": {
+     "none": 0.75,
+     "taxonomy": 1.0,
+     "examples": 1.0,
+     "examples_nolabel": 1.0,
+     "tax+ex": 1.0
+    },
+    "mean": 0.95,
+    "ci": [
+     0.7638641064874331,
+     0.9911187805671268
+    ]
+   }
+  },
+  "sonnet": {
+   "ownership": {
+    "n": 11,
+    "per_type": {
+     "none": 0.7272727272727273,
+     "taxonomy": 0.8181818181818182,
+     "examples": 0.8181818181818182,
+     "examples_nolabel": 0.7272727272727273,
+     "tax+ex": 0.7272727272727273
+    },
+    "mean": 0.7636363636363637,
+    "ci": [
+     0.6365138127856039,
+     0.8563347841254251
+    ]
+   },
+   "contention": {
+    "n": 10,
+    "per_type": {
+     "none": 0.9,
+     "taxonomy": 0.9,
+     "examples": 0.9,
+     "examples_nolabel": 0.9,
+     "tax+ex": 0.8
+    },
+    "mean": 0.8800000000000001,
+    "ci": [
+     0.7619492111337642,
+     0.9438247628937535
+    ]
+   },
+   "irreversible": {
+    "n": 9,
+    "per_type": {
+     "none": 0.8888888888888888,
+     "taxonomy": 0.8888888888888888,
+     "examples": 0.8888888888888888,
+     "examples_nolabel": 0.8888888888888888,
+     "tax+ex": 1.0
+    },
+    "mean": 0.9111111111111111,
+    "ci": [
+     0.792661488316343,
+     0.9648894518657969
+    ]
+   },
+   "privacy": {
+    "n": 10,
+    "per_type": {
+     "none": 0.8,
+     "taxonomy": 0.9,
+     "examples": 0.9,
+     "examples_nolabel": 0.9,
+     "tax+ex": 0.8
+    },
+    "mean": 0.86,
+    "ci": [
+     0.738135428014719,
+     0.9304925473797714
+    ]
+   },
+   "etiquette": {
+    "n": 13,
+    "per_type": {
+     "none": 0.6923076923076923,
+     "taxonomy": 0.6923076923076923,
+     "examples": 0.8461538461538461,
+     "examples_nolabel": 0.7692307692307693,
+     "tax+ex": 0.6923076923076923
+    },
+    "mean": 0.7384615384615385,
+    "ci": [
+     0.6204896660217755,
+     0.8298194493968086
+    ]
+   },
+   "honesty": {
+    "n": 5,
+    "per_type": {
+     "none": 0.8,
+     "taxonomy": 1.0,
+     "examples": 0.8,
+     "examples_nolabel": 1.0,
+     "tax+ex": 0.8
+    },
+    "mean": 0.8800000000000001,
+    "ci": [
+     0.7004380781662651,
+     0.9583325864293191
+    ]
+   },
+   "goal_fidelity": {
+    "n": 9,
+    "per_type": {
+     "none": 0.7777777777777778,
+     "taxonomy": 0.7777777777777778,
+     "examples": 0.8888888888888888,
+     "examples_nolabel": 1.0,
+     "tax+ex": 0.8888888888888888
+    },
+    "mean": 0.8666666666666668,
+    "ci": [
+     0.738224177587027,
+     0.9374293636565033
+    ]
+   },
+   "safety": {
+    "n": 15,
+    "per_type": {
+     "none": 0.8,
+     "taxonomy": 0.8666666666666667,
+     "examples": 0.7333333333333333,
+     "examples_nolabel": 0.7333333333333333,
+     "tax+ex": 0.8
+    },
+    "mean": 0.7866666666666667,
+    "ci": [
+     0.6811982171013853,
+     0.86419913657992
+    ]
+   },
+   "standing_choices": {
+    "n": 3,
+    "per_type": {
+     "none": 1.0,
+     "taxonomy": 1.0,
+     "examples": 0.6666666666666666,
+     "examples_nolabel": 0.6666666666666666,
+     "tax+ex": 0.6666666666666666
+    },
+    "mean": 0.7999999999999999,
+    "ci": [
+     0.5481406466534955,
+     0.9295257935638959
+    ]
+   },
+   "damage_risk": {
+    "n": 15,
+    "per_type": {
+     "none": 0.8666666666666667,
+     "taxonomy": 0.7333333333333333,
+     "examples": 0.7333333333333333,
+     "examples_nolabel": 0.7333333333333333,
+     "tax+ex": 0.7333333333333333
+    },
+    "mean": 0.76,
+    "ci": [
+     0.6522102034171385,
+     0.8424525127124175
+    ]
+   },
+   "intended_use": {
+    "n": 15,
+    "per_type": {
+     "none": 0.8,
+     "taxonomy": 0.8666666666666667,
+     "examples": 0.8,
+     "examples_nolabel": 0.8,
+     "tax+ex": 0.8666666666666667
+    },
+    "mean": 0.8266666666666665,
+    "ci": [
+     0.7256897902417947,
+     0.8958095197671345
+    ]
+   },
+   "contamination": {
+    "n": 12,
+    "per_type": {
+     "none": 0.9166666666666666,
+     "taxonomy": 1.0,
+     "examples": 1.0,
+     "examples_nolabel": 1.0,
+     "tax+ex": 1.0
+    },
+    "mean": 0.9833333333333332,
+    "ci": [
+     0.9114466177322051,
+     0.9970519161391262
+    ]
+   },
+   "replaceability": {
+    "n": 4,
+    "per_type": {
+     "none": 0.75,
+     "taxonomy": 0.75,
+     "examples": 0.75,
+     "examples_nolabel": 0.5,
+     "tax+ex": 0.5
+    },
+    "mean": 0.65,
+    "ci": [
+     0.43285051021946463,
+     0.8188104521320554
+    ]
+   },
+   "sentimental": {
+    "n": 6,
+    "per_type": {
+     "none": 1.0,
+     "taxonomy": 1.0,
+     "examples": 1.0,
+     "examples_nolabel": 1.0,
+     "tax+ex": 1.0
+    },
+    "mean": 1.0,
+    "ci": [
+     0.8864829086095221,
+     1.0
+    ]
+   },
+   "preference": {
+    "n": 8,
+    "per_type": {
+     "none": 0.75,
+     "taxonomy": 0.875,
+     "examples": 0.75,
+     "examples_nolabel": 0.75,
+     "tax+ex": 0.875
+    },
+    "mean": 0.8,
+    "ci": [
+     0.6524239261814333,
+     0.8950013502683314
+    ]
+   },
+   "alternatives": {
+    "n": 28,
+    "per_type": {
+     "none": 0.8214285714285714,
+     "taxonomy": 0.8214285714285714,
+     "examples": 0.8571428571428571,
+     "examples_nolabel": 0.8214285714285714,
+     "tax+ex": 0.7857142857142857
+    },
+    "mean": 0.8214285714285714,
+    "ci": [
+     0.7496682125749768,
+     0.8760200445078142
+    ]
+   },
+   "cost": {
+    "n": 6,
+    "per_type": {
+     "none": 0.6666666666666666,
+     "taxonomy": 0.6666666666666666,
+     "examples": 0.6666666666666666,
+     "examples_nolabel": 0.6666666666666666,
+     "tax+ex": 0.6666666666666666
+    },
+    "mean": 0.6666666666666666,
+    "ci": [
+     0.48779725813830266,
+     0.807697044731538
+    ]
+   },
+   "rules": {
+    "n": 13,
+    "per_type": {
+     "none": 0.8461538461538461,
+     "taxonomy": 0.8461538461538461,
+     "examples": 0.9230769230769231,
+     "examples_nolabel": 0.9230769230769231,
+     "tax+ex": 0.9230769230769231
+    },
+    "mean": 0.8923076923076924,
+    "ci": [
+     0.7939846696853139,
+     0.9468464556807439
+    ]
+   },
+   "timing": {
+    "n": 11,
+    "per_type": {
+     "none": 0.9090909090909091,
+     "taxonomy": 0.9090909090909091,
+     "examples": 0.9090909090909091,
+     "examples_nolabel": 0.9090909090909091,
+     "tax+ex": 1.0
+    },
+    "mean": 0.9272727272727274,
+    "ci": [
+     0.827398219083632,
+     0.9713564034963114
+    ]
+   },
+   "interference": {
+    "n": 17,
+    "per_type": {
+     "none": 0.7647058823529411,
+     "taxonomy": 0.7647058823529411,
+     "examples": 0.8235294117647058,
+     "examples_nolabel": 0.8823529411764706,
+     "tax+ex": 0.8235294117647058
+    },
+    "mean": 0.8117647058823529,
+    "ci": [
+     0.7158877949459186,
+     0.8806795788969659
+    ]
+   },
+   "capability": {
+    "n": 6,
+    "per_type": {
+     "none": 0.8333333333333334,
+     "taxonomy": 0.8333333333333334,
+     "examples": 0.8333333333333334,
+     "examples_nolabel": 0.8333333333333334,
+     "tax+ex": 0.8333333333333334
+    },
+    "mean": 0.8333333333333334,
+    "ci": [
+     0.6643529481431982,
+     0.9266356575964831
+    ]
+   },
+   "proxemics": {
+    "n": 3,
+    "per_type": {
+     "none": 0.6666666666666666,
+     "taxonomy": 1.0,
+     "examples": 0.6666666666666666,
+     "examples_nolabel": 0.6666666666666666,
+     "tax+ex": 1.0
+    },
+    "mean": 0.7999999999999999,
+    "ci": [
+     0.5481406466534955,
+     0.9295257935638959
+    ]
+   },
+   "efficiency": {
+    "n": 4,
+    "per_type": {
+     "none": 0.75,
+     "taxonomy": 1.0,
+     "examples": 0.5,
+     "examples_nolabel": 0.5,
+     "tax+ex": 1.0
+    },
+    "mean": 0.75,
+    "ci": [
+     0.5312949900419365,
+     0.888139947210597
+    ]
+   },
+   "execution_optimality": {
+    "n": 6,
+    "per_type": {
+     "none": 0.6666666666666666,
+     "taxonomy": 0.8333333333333334,
+     "examples": 0.8333333333333334,
+     "examples_nolabel": 0.8333333333333334,
+     "tax+ex": 0.8333333333333334
+    },
+    "mean": 0.8,
+    "ci": [
+     0.6269395261897256,
+     0.9049502189759876
+    ]
+   },
+   "respect": {
+    "n": 4,
+    "per_type": {
+     "none": 1.0,
+     "taxonomy": 1.0,
+     "examples": 1.0,
+     "examples_nolabel": 1.0,
+     "tax+ex": 1.0
+    },
+    "mean": 1.0,
+    "ci": [
+     0.8388698745050667,
+     1.0
+    ]
+   },
+   "environmental": {
+    "n": 3,
+    "per_type": {
+     "none": 1.0,
+     "taxonomy": 1.0,
+     "examples": 0.6666666666666666,
+     "examples_nolabel": 0.6666666666666666,
+     "tax+ex": 1.0
+    },
+    "mean": 0.8666666666666666,
+    "ci": [
+     0.6211750079348376,
+     0.9626395301086407
+    ]
+   },
+   "fairness": {
+    "n": 4,
+    "per_type": {
+     "none": 1.0,
+     "taxonomy": 1.0,
+     "examples": 1.0,
+     "examples_nolabel": 1.0,
+     "tax+ex": 1.0
+    },
+    "mean": 1.0,
+    "ci": [
+     0.8388698745050667,
+     1.0
+    ]
+   }
+  }
+ },
+ "by_group": {
+  "haiku": {
+   "Physical": {
+    "n": 75,
+    "per_type": {
+     "none": 0.7866666666666666,
+     "taxonomy": 0.7733333333333333,
+     "examples": 0.72,
+     "examples_nolabel": 0.72,
+     "tax+ex": 0.8
+    }
+   },
+   "Coordination": {
+    "n": 35,
+    "per_type": {
+     "none": 0.8571428571428571,
+     "taxonomy": 0.7714285714285715,
+     "examples": 0.8571428571428571,
+     "examples_nolabel": 0.8571428571428571,
+     "tax+ex": 0.9142857142857143
+    }
+   },
+   "Social": {
+    "n": 71,
+    "per_type": {
+     "none": 0.8028169014084507,
+     "taxonomy": 0.8169014084507042,
+     "examples": 0.8028169014084507,
+     "examples_nolabel": 0.8169014084507042,
+     "tax+ex": 0.8450704225352113
+    }
+   }
+  },
+  "sonnet": {
+   "Physical": {
+    "n": 75,
+    "per_type": {
+     "none": 0.8266666666666667,
+     "taxonomy": 0.8533333333333334,
+     "examples": 0.8266666666666667,
+     "examples_nolabel": 0.8266666666666667,
+     "tax+ex": 0.8533333333333334
+    }
+   },
+   "Coordination": {
+    "n": 35,
+    "per_type": {
+     "none": 0.8285714285714286,
+     "taxonomy": 0.8285714285714286,
+     "examples": 0.8571428571428571,
+     "examples_nolabel": 0.8857142857142857,
+     "tax+ex": 0.8571428571428571
+    }
+   },
+   "Social": {
+    "n": 71,
+    "per_type": {
+     "none": 0.8309859154929577,
+     "taxonomy": 0.8873239436619719,
+     "examples": 0.8450704225352113,
+     "examples_nolabel": 0.8309859154929577,
+     "tax+ex": 0.8450704225352113
+    }
+   }
+  }
+ },
+ "prompt_pairs": {
+  "haiku/examples->examples_nolabel": {
+   "fixed": 6,
+   "broke": 4,
+   "p": 0.75390625,
+   "ci": [
+    -0.027972027972028024,
+    0.05594405594405605
+   ]
+  },
+  "haiku/taxonomy->tax+ex": {
+   "fixed": 9,
+   "broke": 2,
+   "p": 0.0654296875,
+   "ci": [
+    0.006993006993006978,
+    0.09790209790209792
+   ]
+  },
+  "haiku/examples->tax+ex": {
+   "fixed": 12,
+   "broke": 4,
+   "p": 0.076812744140625,
+   "ci": [
+    0.0,
+    0.11188811188811187
+   ]
+  },
+  "haiku/none->tax+ex": {
+   "fixed": 8,
+   "broke": 3,
+   "p": 0.2265625,
+   "ci": [
+    -0.006993006993006978,
+    0.08391608391608385
+   ]
+  },
+  "sonnet/examples->examples_nolabel": {
+   "fixed": 2,
+   "broke": 2,
+   "p": 1.0,
+   "ci": [
+    -0.027972027972028024,
+    0.027972027972027913
+   ]
+  },
+  "sonnet/taxonomy->tax+ex": {
+   "fixed": 4,
+   "broke": 5,
+   "p": 1.0,
+   "ci": [
+    -0.04895104895104896,
+    0.034965034965035
+   ]
+  },
+  "sonnet/examples->tax+ex": {
+   "fixed": 6,
+   "broke": 5,
+   "p": 1.0,
+   "ci": [
+    -0.034965034965035,
+    0.05594405594405594
+   ]
+  },
+  "sonnet/none->tax+ex": {
+   "fixed": 8,
+   "broke": 5,
+   "p": 0.5810546875,
+   "ci": [
+    -0.027972027972028024,
+    0.06993006993007
+   ]
+  }
+ },
+ "example_effects": {
+  "haiku/examples": {
+   "same_label": {
+    "n": 72,
+    "acc": 0.8333333333333334,
+    "none": 0.875
+   },
+   "diff_label": {
+    "n": 71,
+    "acc": 0.7183098591549296,
+    "none": 0.7183098591549296
+   }
+  },
+  "haiku/examples_nolabel": {
+   "same_label": {
+    "n": 72,
+    "acc": 0.8055555555555556,
+    "none": 0.875
+   },
+   "diff_label": {
+    "n": 71,
+    "acc": 0.7746478873239436,
+    "none": 0.7183098591549296
+   }
+  },
+  "haiku/tax+ex": {
+   "same_label": {
+    "n": 72,
+    "acc": 0.9027777777777778,
+    "none": 0.875
+   },
+   "diff_label": {
+    "n": 71,
+    "acc": 0.7605633802816901,
+    "none": 0.7183098591549296
+   }
+  },
+  "sonnet/examples": {
+   "same_label": {
+    "n": 72,
+    "acc": 0.9027777777777778,
+    "none": 0.875
+   },
+   "diff_label": {
+    "n": 71,
+    "acc": 0.7887323943661971,
+    "none": 0.7887323943661971
+   }
+  },
+  "sonnet/examples_nolabel": {
+   "same_label": {
+    "n": 72,
+    "acc": 0.8888888888888888,
+    "none": 0.875
+   },
+   "diff_label": {
+    "n": 71,
+    "acc": 0.8028169014084507,
+    "none": 0.7887323943661971
+   }
+  },
+  "sonnet/tax+ex": {
+   "same_label": {
+    "n": 72,
+    "acc": 0.9166666666666666,
+    "none": 0.875
+   },
+   "diff_label": {
+    "n": 71,
+    "acc": 0.7887323943661971,
+    "none": 0.7887323943661971
+   }
+  }
+ },
+ "stability": {
+  "haiku": {
+   "same": 112,
+   "all_right": 97,
+   "some_right": 29,
+   "none_right": 17
+  },
+  "sonnet": {
+   "same": 120,
+   "all_right": 112,
+   "some_right": 22,
+   "none_right": 9
+  }
+ },
+ "hard": {
+  "haiku": [
+   "S013",
+   "S028",
+   "S037",
+   "S040",
+   "S074",
+   "S082",
+   "S090",
+   "S102",
+   "S105",
+   "S111",
+   "S115",
+   "S119",
+   "S120",
+   "S124",
+   "S135",
+   "S136",
+   "S137"
+  ],
+  "sonnet": [
+   "S013",
+   "S028",
+   "S069",
+   "S090",
+   "S104",
+   "S111",
+   "S117",
+   "S126",
+   "S135"
+  ],
+  "both": [
+   "S013",
+   "S028",
+   "S090",
+   "S111",
+   "S135"
+  ]
+ },
+ "why_factors": {
+  "haiku": {
+   "distinct": 774,
+   "top": [
+    [
+     "alternatives",
+     88
+    ],
+    [
+     "ownership",
+     58
+    ],
+    [
+     "preference",
+     51
+    ],
+    [
+     "safety",
+     51
+    ],
+    [
+     "interference",
+     48
+    ],
+    [
+     "etiquette",
+     38
+    ],
+    [
+     "privacy",
+     35
+    ],
+    [
+     "timing",
+     34
+    ],
+    [
+     "contamination",
+     32
+    ],
+    [
+     "rules",
+     25
+    ],
+    [
+     "capability match",
+     22
+    ],
+    [
+     "intended_use",
+     22
+    ],
+    [
+     "fairness",
+     20
+    ],
+    [
+     "intended use",
+     19
+    ],
+    [
+     "damage_risk",
+     19
+    ],
+    [
+     "hygiene",
+     19
+    ],
+    [
+     "goal fidelity",
+     17
+    ],
+    [
+     "standing choices",
+     16
+    ],
+    [
+     "respect",
+     16
+    ],
+    [
+     "sentimental",
+     15
+    ],
+    [
+     "food safety",
+     14
+    ],
+    [
+     "replaceability",
+     12
+    ],
+    [
+     "honesty",
+     12
+    ],
+    [
+     "execution optimality",
+     12
+    ],
+    [
+     "damage risk",
+     10
+    ],
+    [
+     "posted speed limit",
+     10
+    ],
+    [
+     "cost",
+     9
+    ],
+    [
+     "consent",
+     8
+    ],
+    [
+     "deception",
+     8
+    ],
+    [
+     "standing_choices",
+     8
+    ]
+   ],
+   "top_wrong": [
+    [
+     "alternatives",
+     21
+    ],
+    [
+     "privacy",
+     12
+    ],
+    [
+     "safety",
+     11
+    ],
+    [
+     "damage_risk",
+     8
+    ],
+    [
+     "preference",
+     8
+    ],
+    [
+     "contamination",
+     7
+    ],
+    [
+     "intended_use",
+     7
+    ],
+    [
+     "interference",
+     6
+    ],
+    [
+     "timing",
+     6
+    ],
+    [
+     "posted speed limit",
+     6
+    ],
+    [
+     "food safety",
+     5
+    ],
+    [
+     "ownership",
+     5
+    ],
+    [
+     "missing information",
+     5
+    ],
+    [
+     "rules",
+     5
+    ],
+    [
+     "deception",
+     5
+    ],
+    [
+     "etiquette",
+     4
+    ],
+    [
+     "clean container",
+     4
+    ],
+    [
+     "fairness",
+     4
+    ],
+    [
+     "honesty",
+     4
+    ],
+    [
+     "safety risk",
+     4
+    ],
+    [
+     "intended use",
+     3
+    ],
+    [
+     "elastic range",
+     3
+    ],
+    [
+     "negligible damage risk",
+     3
+    ],
+    [
+     "replaceability",
+     3
+    ],
+    [
+     "unspecified preferences",
+     3
+    ],
+    [
+     "standing choices",
+     3
+    ],
+    [
+     "appropriate size",
+     3
+    ],
+    [
+     "property damage",
+     3
+    ],
+    [
+     "cost",
+     3
+    ],
+    [
+     "execution optimality",
+     3
+    ]
+   ]
+  },
+  "sonnet": {
+   "distinct": 587,
+   "top": [
+    [
+     "alternatives",
+     69
+    ],
+    [
+     "intended use",
+     67
+    ],
+    [
+     "etiquette",
+     59
+    ],
+    [
+     "safety",
+     56
+    ],
+    [
+     "interference",
+     46
+    ],
+    [
+     "contamination",
+     43
+    ],
+    [
+     "goal fidelity",
+     42
+    ],
+    [
+     "timing",
+     41
+    ],
+    [
+     "preference",
+     40
+    ],
+    [
+     "damage risk",
+     37
+    ],
+    [
+     "ownership",
+     33
+    ],
+    [
+     "rules",
+     33
+    ],
+    [
+     "privacy",
+     32
+    ],
+    [
+     "execution optimality",
+     30
+    ],
+    [
+     "respect",
+     28
+    ],
+    [
+     "standing choices",
+     24
+    ],
+    [
+     "hygiene",
+     20
+    ],
+    [
+     "efficiency",
+     18
+    ],
+    [
+     "honesty",
+     17
+    ],
+    [
+     "fairness",
+     17
+    ],
+    [
+     "sentimental value",
+     15
+    ],
+    [
+     "irreversible",
+     14
+    ],
+    [
+     "contention",
+     13
+    ],
+    [
+     "capability match",
+     13
+    ],
+    [
+     "low risk",
+     13
+    ],
+    [
+     "sentimental",
+     12
+    ],
+    [
+     "posted rule",
+     12
+    ],
+    [
+     "no consent",
+     11
+    ],
+    [
+     "social norms",
+     10
+    ],
+    [
+     "cost",
+     10
+    ]
+   ],
+   "top_wrong": [
+    [
+     "safety",
+     10
+    ],
+    [
+     "preference",
+     9
+    ],
+    [
+     "damage risk",
+     9
+    ],
+    [
+     "alternatives",
+     9
+    ],
+    [
+     "etiquette",
+     8
+    ],
+    [
+     "ownership",
+     7
+    ],
+    [
+     "intended use",
+     7
+    ],
+    [
+     "missing details",
+     7
+    ],
+    [
+     "missing context",
+     6
+    ],
+    [
+     "interference",
+     6
+    ],
+    [
+     "privacy",
+     5
+    ],
+    [
+     "rules",
+     5
+    ],
+    [
+     "timing",
+     5
+    ],
+    [
+     "missing permission",
+     4
+    ],
+    [
+     "no permission",
+     4
+    ],
+    [
+     "respect",
+     4
+    ],
+    [
+     "goal fidelity",
+     4
+    ],
+    [
+     "cost",
+     4
+    ],
+    [
+     "rule compliance",
+     4
+    ],
+    [
+     "permission",
+     3
+    ],
+    [
+     "elastic range",
+     3
+    ],
+    [
+     "replaceability",
+     3
+    ],
+    [
+     "suitable function",
+     3
+    ],
+    [
+     "clean object",
+     3
+    ],
+    [
+     "close proximity",
+     3
+    ],
+    [
+     "politeness norms",
+     3
+    ],
+    [
+     "unfamiliar company",
+     3
+    ],
+    [
+     "net loss",
+     3
+    ],
+    [
+     "urgency",
+     3
+    ],
+    [
+     "owner's property",
+     3
+    ]
+   ]
+  }
+ }
+}
