@@ -1,6 +1,6 @@
 # Themes for the model's "why" answers
 
-Note: `dataset_with_whys.json` was built from the dataset as it was before the review was finished (120 scenarios), so it no longer matches `dataset.json` (141 scenarios). Regenerate it after a new `--why` run.
+Note: `dataset_with_whys.json` was built from the dataset as it was before the review was finished (120 scenarios), so it no longer matches `dataset.json` (143 scenarios). Regenerate it after a new `--why` run.
 
 `dataset_with_whys.json` (repo root, next to `dataset.json`) is a clone of the dataset with a `whys` entry per scenario
 and prompt type. Each entry has the model's follow-up reply (`factors`, `reason`) plus the labels below. The whys come from

@@ -1936,5 +1936,33 @@
     ],
     "summary": "Wrapping protects the vase if the robot falls",
     "reviewed": true
+  },
+  {
+    "id": "S148",
+    "context": "The user needs a replacement phone charger by 6:00pm today. The local store sells one for $25. An online store sells the same charger for $12 with delivery in 5 days.",
+    "goal": "Get a charger",
+    "action": "Buy the charger at the local store",
+    "object": "charger",
+    "judgment": "accept",
+    "tags": [
+      "cost",
+      "alternatives"
+    ],
+    "summary": "Paying more is reasonable when the cheaper option cannot meet the deadline",
+    "reviewed": true
+  },
+  {
+    "id": "S149",
+    "context": "Recyclable items and ordinary trash bins are available, and a posted rule requires recycling. The robot is trying to finish cleaning quickly, for energy efficiency.",
+    "goal": "Clean up",
+    "action": "Put the recyclables in the recycling bin",
+    "object": "recyclables",
+    "judgment": "accept",
+    "tags": [
+      "environmental",
+      "rules"
+    ],
+    "summary": "Recycling is correct even when it takes slightly longer",
+    "reviewed": true
   }
 ]
