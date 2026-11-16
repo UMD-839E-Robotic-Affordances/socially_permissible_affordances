@@ -117,12 +117,13 @@ final_text = "Now judge this scenario:"
 
 
 def format_example(n, sc, with_labels=True):
-    """with_labels=False: just the scenario and the correct response (no taxonomy tags, no reasoning)."""
+    """with_labels=False: just the scenario and the correct response; True also adds the reasoning (never the tags)."""
     text = (f"Example {n}: Scenario: {sc.context} Goal: {sc.goal}. Action: {sc.action}. "
             f"Relevant Object: {sc.object}. Correct response: {sc.judgment}.")
     if with_labels:
         summary = (sc.summary or "").rstrip(".")
-        text += f" Taxonomy: {', '.join(sc.tags)}."
+        # No "Taxonomy:" tags here: the example is chosen because it shares a tag with the scenario being
+        # judged, so showing its tags would reveal part of that scenario's gold category (label leak).
         if summary:
             text += f" Reasoning: {summary}."
     return text
