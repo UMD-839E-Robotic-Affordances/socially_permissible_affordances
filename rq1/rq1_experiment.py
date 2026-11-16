@@ -4,6 +4,7 @@ import logging
 import os
 import random
 import re
+import signal
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -35,21 +36,45 @@ ap.add_argument("--start-index", type=int, default=0,
 ap.add_argument("--structured", action="store_true",
                 help="Claude only: constrain the answer to a JSON schema ({\"judgment\": ...}), parsed with pydantic")
 ap.add_argument("--log-file", default=None,
-                help="write a DEBUG log of everything sent to and received from the model (off by default)")
+                help="DEBUG log of everything sent to and received from the model (default: rq1/logs/rq1_log_<name>.log)")
+ap.add_argument("--no-log", action="store_true", help="turn the debug log off")
+ap.add_argument("--overwrite", action="store_true",
+                help="replace an existing results file with the same name (otherwise a fresh run refuses to start)")
 ap.add_argument("--seed", type=int, default=42,
                 help="seed for reproducible example selection")
 args = ap.parse_args()
 only_ids = set(args.ids.split(",")) if args.ids else None
 
-if args.log_file:  # only our own loggers are verbose; SDK/HTTP libraries stay quiet so request headers never reach the log
-    _h = logging.FileHandler(args.log_file, encoding="utf-8")
+# One descriptive name for this run's files. Every setting that changes the results is in it, so runs that differ never
+# share a file; the scripts also add the git commit and a start time (--tag), so repeats do not either.
+name_parts = [args.model] + ([args.effort] if args.effort else []) + [f"seed{args.seed}"]
+if args.structured:
+    name_parts.append("structured")
+if not args.why:
+    name_parts.append("nowhy")
+if args.web_search:
+    name_parts.append("web")
+if only_ids:
+    name_parts.append(f"subset{len(only_ids)}")
+tag = "_".join(name_parts) + (f"_{args.tag}" if args.tag else "")
+results_dir = ROOT / "rq1" / "results"  # never the deprecated/ subfolder
+output_file = results_dir / f"rq1_results_{tag}.json"
+why_file = results_dir / f"rq1_whys_{tag}.json"  # the follow-up "why" answers live here, not in the results file
+log_dir = ROOT / "rq1" / "logs"
+log_path = Path(args.log_file) if args.log_file else log_dir / f"rq1_log_{tag}.log"
+
+if not args.no_log:  # only our own loggers are verbose; SDK/HTTP libraries stay quiet so request headers never reach the log
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    _h = logging.FileHandler(log_path, encoding="utf-8")  # append mode: a resumed run continues the same log
     _h.setFormatter(logging.Formatter("%(asctime)s %(levelname)-7s %(name)s  %(message)s"))
     _rq = logging.getLogger("rq1")
     _rq.setLevel(logging.DEBUG)
     _rq.addHandler(_h)
     _rq.propagate = False
 log = logging.getLogger("rq1.experiment")
-log_json("RUN_ARGS", vars(args))
+log_json("RUN_ARGS", {**vars(args), "run_name": tag, "results_file": str(output_file), "whys_file": str(why_file)})
+if not args.no_log:
+    print(f"Debug log: {log_path}")
 llm = LLMProvider(args.model, effort=args.effort, web_search=args.web_search, max_searches=args.max_searches,
                   structured=args.structured)
 
@@ -193,11 +218,10 @@ def build_prompt(scenario_text, prompt_type, example=None):
     return "\n\n".join(parts) + "\n\n" + final_text + "\n" + scenario_text + tail
 
 
-results_dir = ROOT / "rq1" / "results"
 results_dir.mkdir(exist_ok=True)
-tag = args.model + (f"_{args.effort}" if args.effort else "") + (f"_{args.tag}" if args.tag else "")
-output_file = results_dir / f"rq1_results_{tag}.json"
-why_file = results_dir / f"rq1_whys_{tag}.json"  # the follow-up "why" answers live here, not in the results file
+if args.start_index == 0 and not args.overwrite and (output_file.exists() or (args.why and why_file.exists())):
+    sys.exit(f"Refusing to overwrite {output_file.name}: it already exists. Resume it with --start-index N, "
+             f"use a different --tag, or pass --overwrite to replace it.")
 
 
 def write_json(path, obj):
@@ -237,9 +261,11 @@ def save(status, stopped_at=None):
               "prompt_types": prompt_types, "prompt_parts": PROMPT_PARTS, "answer_format_text": answer_format_text, "structured": args.structured,
               "n_scenarios": len(results), "scenario_ids_filter": sorted(only_ids) if only_ids else None,
               "why_question": WHY_QUESTION if args.why else None,
-              "why_file": why_file.name if args.why else None,
+              "why_file": why_file.name if args.why else None, "results_file": output_file.name,
+              "log_file": None if args.no_log else str(log_path),
               "usage": usage, "seed": args.seed, "selected_examples": selected_examples,
-              "status": status, "start_index": args.start_index, "stopped_at_index": stopped_at}
+              "status": status, "start_index": args.start_index, "stopped_at_index": stopped_at,
+              "next_index": next_index}  # resume a stopped or killed run with --start-index <next_index>
     write_json(output_file, {"config": config, "results": results})
     log_json("SAVE", {"status": status, "scenarios": len(results), "file": str(output_file)})
     if args.why:
@@ -250,13 +276,23 @@ def save(status, stopped_at=None):
 
 
 index = args.start_index
+next_index = args.start_index  # the --start-index to resume from: everything before it is saved
+
+
+def _terminate(signum, frame):  # `kill`, tmux/terminal closing: stop like Ctrl-C so the run is saved and a resume hint is printed
+    raise KeyboardInterrupt()
+
+
+signal.signal(signal.SIGTERM, _terminate)
 try:
     for index, scenario in enumerate(tqdm(scenario_list, desc=args.model, unit="scenario")):
         if index < args.start_index:
             continue
         if only_ids and scenario.id not in only_ids:
+            next_index = index + 1
             continue
         if scenario.id in results and all(t in results[scenario.id] for t in prompt_types):
+            next_index = index + 1
             continue  # already finished in the file we resumed from
 
         # Select one matching example from the entire dataset.
@@ -289,6 +325,7 @@ try:
         selected_examples[scenario.id] = example.id
         if scenario_whys:
             whys[scenario.id] = scenario_whys
+        next_index = index + 1
         save("running")
 except BaseException as e:
     save("stopped", stopped_at=index)

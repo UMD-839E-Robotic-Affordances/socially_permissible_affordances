@@ -4,16 +4,18 @@
 #
 #   rq1/scripts/run_all.sh [extra rq1_experiment.py args, applied to both models]
 #
-# Each run saves its results file after every scenario (rq1/results/rq1_results_<model>_<effort>_<git hash>.json) and
-# its follow-up "why" answers in a separate rq1_whys_*.json file next to it. If a run stops, the other model still
+# Each run saves its results file after every scenario (rq1/results/rq1_results_<model>_<effort>_seed42_structured_<RUN_TAG>.json,
+# RUN_TAG = git commit + start time, so runs never overwrite each other; an existing file is never replaced), its follow-up
+# "why" answers in a separate rq1_whys_*.json file next to it, and a full log of every request and response in rq1/logs/. If a run stops, the other model still
 # runs, and the summary at the end says which one to resume. To resume one model, run its own script with
-#   --tag <hash> --start-index <N>      e.g.  rq1/scripts/run_haiku.sh --tag 1a2b3c4 --start-index 59
+#   --tag <RUN_TAG> --start-index <N>   e.g.  rq1/scripts/run_haiku.sh --tag 1a2b3c4_20261116-153000 --start-index 59
 # One seed (42) is used. Projected total from small samples: about 1,430 calls per model, roughly 1.5 hours and $6.5.
 # Run it from a clean, committed branch, ideally inside tmux or nohup (it takes over an hour).
 set -uo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
 EXTRA=("$@")
 HASH="$(git -C "$ROOT" rev-parse --short HEAD)"
+export RUN_TAG="${HASH}_$(date +%Y%m%d-%H%M%S)"   # one tag for the whole run_all (the file names also carry model, effort and seed)
 stamp() { date '+%Y-%m-%d %H:%M:%S'; }
 declare -a SUMMARY=()
 FAILED=0
@@ -24,13 +26,13 @@ run_one() {  # run_one LABEL MODEL EFFORT
   echo
   echo "################ [$(stamp)] STARTED: $label ($model, effort $effort) ################"
   if ( set -e; run_and_analyze "$model" "$effort" "" $(why_args) $(structured_args) "${EXTRA[@]+"${EXTRA[@]}"}" ); then
-    t1=$(date +%s); mins=$(( (t1 - t0) / 60 )); file="rq1/results/rq1_results_${model}_${effort}_${HASH}.json"
+    t1=$(date +%s); mins=$(( (t1 - t0) / 60 )); file="$(ls -t "$ROOT"/rq1/results/rq1_results_${model}_${effort}_*_${RUN_TAG}.json 2>/dev/null | head -1)"
     echo "################ [$(stamp)] DONE: $label in ${mins} min ################"
     SUMMARY+=("DONE   $label (${mins} min)  results: $file  whys: ${file/rq1_results_/rq1_whys_}")
   else
     t1=$(date +%s); mins=$(( (t1 - t0) / 60 )); FAILED=1
     echo "################ [$(stamp)] STOPPED: $label after ${mins} min (partial results are saved) ################"
-    SUMMARY+=("STOPPED $label after ${mins} min: resume with its script and  --tag ${HASH} --start-index <N>")
+    SUMMARY+=("STOPPED $label after ${mins} min: resume with its script and  --tag ${RUN_TAG} --start-index <N>")
   fi
 }
 

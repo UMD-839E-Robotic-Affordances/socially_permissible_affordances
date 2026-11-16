@@ -19,14 +19,17 @@ confirm_cost() {  # confirm_cost "message"; skipped with YES=1 or when not run f
 run_and_analyze() {
   local model="$1" effort="$2" suffix="$3"; shift 3
   local hash; hash="$(git -C "$ROOT" rev-parse --short HEAD)"
+  # Every invocation gets its own tag (commit + start time) so runs never overwrite each other; run_all.sh sets RUN_TAG once
+  # so both models share it. To resume a run, pass its exact tag again with --tag (printed below).
+  local tag="${RUN_TAG:-${hash}_$(date +%Y%m%d-%H%M%S)}${suffix}"
   [ -z "$(git -C "$ROOT" status --porcelain -- rq1 dataset.json dataset_review)" ] || \
     echo "WARNING: uncommitted changes; the hash $hash does not describe the code being run."
   local out; out="$(mktemp)"
-  echo "== Experiment: model=$model effort=$effort tag=${hash}${suffix} =="
-  if ! "$PY" "$ROOT/rq1/rq1_experiment.py" --model "$model" --effort "$effort" --tag "${hash}${suffix}" "$@" | tee "$out"; then
+  echo "== Experiment: model=$model effort=$effort tag=${tag} =="
+  if ! "$PY" "$ROOT/rq1/rq1_experiment.py" --model "$model" --effort "$effort" --tag "${tag}" "$@" | tee "$out"; then
     rm -f "$out"
     echo "Experiment stopped. Everything finished so far is saved. To resume, run this script again with:"
-    echo "  --tag ${hash}${suffix} --start-index <N>      (N is printed above as 'Resume with ... --start-index N')"
+    echo "  --tag ${tag} --start-index <N>      (N is printed above as 'Resume with ... --start-index N')"
     exit 1
   fi
   local results; results="$(grep -a '^Results saved to ' "$out" | tail -1 | sed 's/^Results saved to //')"
