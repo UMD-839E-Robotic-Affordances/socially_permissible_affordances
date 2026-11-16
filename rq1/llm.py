@@ -15,6 +15,8 @@ to paste the key, which is saved there with mode 600 (see ensure_api_key).
 from __future__ import annotations
 
 import getpass
+import json
+import logging
 import os
 import random
 import re
@@ -24,6 +26,15 @@ from pathlib import Path
 from typing import Literal, get_args
 
 from pydantic import BaseModel, ValidationError
+
+log = logging.getLogger("rq1.llm")  # enabled by rq1_experiment.py --log-file; silent otherwise
+
+
+def log_json(tag: str, payload: dict) -> None:
+    """One DEBUG line `<tag> <json>`, built only when logging is on (so a normal run pays nothing)."""
+    if log.isEnabledFor(logging.DEBUG):
+        log.debug("%s %s", tag, json.dumps(payload, ensure_ascii=False, default=str))
+
 
 Verdict = Literal["accept", "reject", "uncertain"]
 Provider = Literal["anthropic", "openai", "mock"]
@@ -69,6 +80,7 @@ def build_system_prompt() -> str:
 
 def parse_judgment(text: str) -> Judgment:
     """Accept a bare verdict word or a JSON object; validate with pydantic."""
+    log_json("PARSE_INPUT", {"raw": text})
     text = text.strip()
     if m := re.search(r"\{.*?\}", text, re.DOTALL):
         try:
@@ -101,10 +113,12 @@ def ensure_api_key(provider: str, *, optional: bool = False) -> str | None:
     The key is never printed or logged.
     """
     if key := os.environ.get(ENV_VARS[provider]):
+        log.debug("API key for %s: from env var %s (value never logged)", provider, ENV_VARS[provider])
         return key
     path = key_path(provider)
     if path.exists():
         if key := path.read_text().strip():
+            log.debug("API key for %s: from %s (value never logged)", provider, path)
             return key
     if not sys.stdin.isatty():
         if optional:
@@ -192,6 +206,8 @@ class LLMProvider:
         self.system_prompt = system_prompt or build_system_prompt()
         self._rng = rng or random.Random()  # used by the mock provider only
         self._client = None  # created lazily so unused SDKs needn't be installed
+        log_json("LLM_INIT", {"model": model, "provider": self.provider, "effort": effort, "thinking": thinking,
+                              "max_tokens": max_tokens, "web_search": web_search, "system_prompt": self.system_prompt})
         if web_search and self.provider == "openai":
             raise NotImplementedError("web_search is only implemented for Claude models")
 
@@ -270,6 +286,8 @@ class LLMProvider:
         messages = base
         # Server-side tools can pause a long turn (pause_turn); resend to let it continue.
         for _ in range(MAX_PAUSE_TURNS + 1):
+            log_json("API_REQUEST", {"model": self.model, "max_tokens": self.max_tokens, "system": self.system_prompt,
+                                     "messages": messages, **kwargs})
             response = self._client.messages.create(
                 model=self.model,
                 max_tokens=self.max_tokens,
@@ -278,6 +296,9 @@ class LLMProvider:
                 **kwargs,
             )
             self._add_usage(response.usage)
+            log_json("API_RESPONSE", {"stop_reason": response.stop_reason,
+                                      "content": [{"type": b.type, "text": getattr(b, "text", None)} for b in response.content],
+                                      "usage": response.usage.model_dump() if hasattr(response.usage, "model_dump") else str(response.usage)})
             if response.stop_reason != "pause_turn":
                 break
             messages = [*base, {"role": "assistant", "content": response.content}]
@@ -301,6 +322,8 @@ class LLMProvider:
         kwargs: dict = {}
         if self.effort:
             kwargs["reasoning_effort"] = self.effort
+        log_json("API_REQUEST", {"model": self.model, "max_completion_tokens": self.max_tokens, "system": self.system_prompt,
+                                 "messages": messages, **kwargs})
         response = self._client.chat.completions.create(
             model=self.model,
             max_completion_tokens=self.max_tokens,

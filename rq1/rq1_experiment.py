@@ -1,5 +1,6 @@
 import argparse
 import json
+import logging
 import os
 import random
 import re
@@ -15,7 +16,7 @@ sys.path[:0] = [str(ROOT), str(ROOT / "rq1")]
 from tqdm import tqdm
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score
 
-from llm import LLMOutputError, LLMProvider
+from llm import LLMOutputError, LLMProvider, log_json
 
 # One stateful provider reused for every call. Default "mock" needs no API key.
 #   python rq1/rq1_experiment.py --model claude-haiku-5-5 --effort low
@@ -31,10 +32,22 @@ ap.add_argument("--why", action="store_true",
 ap.add_argument("--start-index", type=int, default=0,
                 help="resume: skip the first N scenarios (dataset order) and keep the results already saved in the "
                      "output file (use the same --model/--effort/--tag/--seed as the interrupted run)")
+ap.add_argument("--log-file", default=None,
+                help="write a DEBUG log of everything sent to and received from the model (off by default)")
 ap.add_argument("--seed", type=int, default=42,
                 help="seed for reproducible example selection")
 args = ap.parse_args()
 only_ids = set(args.ids.split(",")) if args.ids else None
+
+if args.log_file:  # only our own loggers are verbose; SDK/HTTP libraries stay quiet so request headers never reach the log
+    _h = logging.FileHandler(args.log_file, encoding="utf-8")
+    _h.setFormatter(logging.Formatter("%(asctime)s %(levelname)-7s %(name)s  %(message)s"))
+    _rq = logging.getLogger("rq1")
+    _rq.setLevel(logging.DEBUG)
+    _rq.addHandler(_h)
+    _rq.propagate = False
+log = logging.getLogger("rq1.experiment")
+log_json("RUN_ARGS", vars(args))
 llm = LLMProvider(args.model, effort=args.effort, web_search=args.web_search, max_searches=args.max_searches)
 
 
@@ -103,6 +116,8 @@ for _meta in _cats["categories"].values():
     for _k in REVIEWER_ONLY:
         _meta.pop(_k, None)
 taxonomy = json.dumps(_cats, indent=2, ensure_ascii=False)
+log_json("DATA", {"dataset_scenarios": len(scenario_list), "taxonomy_chars": len(taxonomy),
+                  "reviewer_only_fields_stripped": list(REVIEWER_ONLY), "reviewer_notes_in_taxonomy": "reviewer_notes" in taxonomy})
 
 has_tax_text = "Here is a taxonomy of decision parameters to determine your action. "
 # Tells the model how to use the examples, which scenario to judge, and which output format to use.
@@ -116,8 +131,7 @@ has_ex_nolabel_text = ("Below are examples of how to judge a scenario. Each show
                        "or the JSON object), not in the format used in the examples.")
 final_text = "Now judge this scenario:"
 
-# Few-shot examples come from the dataset itself (single source of truth). These
-# scenarios are excluded from scoring for every prompt type.
+# Each scenario gets one example drawn from the dataset itself (see select_example); every scenario is scored.
 
 
 def format_example(n, sc, with_labels=True):
@@ -202,6 +216,7 @@ if args.start_index > 0:
             with open(why_file, encoding="utf-8") as f:
                 whys = json.load(f)["whys"]
         print(f"Resuming: loaded {len(results)} finished scenarios from {output_file.name}")
+        log_json("RESUME", {"loaded_scenarios": len(results), "start_index": args.start_index})
     else:
         print(f"WARNING: --start-index {args.start_index} but {output_file.name} does not exist; starting with no earlier results.")
 
@@ -219,6 +234,7 @@ def save(status, stopped_at=None):
               "usage": usage, "seed": args.seed, "selected_examples": selected_examples,
               "status": status, "start_index": args.start_index, "stopped_at_index": stopped_at}
     write_json(output_file, {"config": config, "results": results})
+    log_json("SAVE", {"status": status, "scenarios": len(results), "file": str(output_file)})
     if args.why:
         write_json(why_file, {"config": {"model": llm.model, "effort": llm.effort, "seed": args.seed,
                                          "why_question": WHY_QUESTION, "results_file": output_file.name},
@@ -240,12 +256,19 @@ try:
         example = select_example(scenario, scenario_list, seed=args.seed)
 
         entry, scenario_whys = {}, {}
+        log_json("SCENARIO", {"index": index, "id": scenario.id, "context": scenario.context, "goal": scenario.goal,
+                              "action": scenario.action, "object": scenario.object,
+                              "gold_judgment (not sent to the model)": scenario.judgment, "tags (not sent)": scenario.tags,
+                              "example_id": example.id, "example_judgment": example.judgment})
         scenario_text = f"Scenario: {scenario.context} Goal: {scenario.goal}. Action: {scenario.action}. Relevant Object: {scenario.object}."
         for prompt_type in prompt_types:
             prompt = build_prompt(scenario_text, prompt_type, example=example)
+            log_json("PROMPT", {"scenario": scenario.id, "prompt_type": prompt_type, "chars": len(prompt), "prompt": prompt})
             before = dict(llm.usage)
             answer, why = ask(prompt)
             usage = {k: llm.usage[k] - before[k] for k in before}  # tokens for this prompt (judgment + why)
+            log_json("RESULT", {"scenario": scenario.id, "prompt_type": prompt_type, "answer": answer, "gold": scenario.judgment,
+                                "correct": answer == scenario.judgment, "why": why, "usage": usage})
             entry[prompt_type] = {
                 "answer": str(answer),
                 "correct": (answer == scenario.judgment),
@@ -282,7 +305,7 @@ for current_type in prompt_types:
     
     # Reconstruct the true labels and predictions for this specific experiment type
     for scenario in scenario_list:
-        if scenario.id not in results:  # skipped (used as few-shot examples)
+        if scenario.id not in results:  # not scored in this run (--ids filter)
             continue
         # Ground truth comes from the scenario object
         actual = scenario.judgment 
