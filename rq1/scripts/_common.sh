@@ -23,14 +23,23 @@ run_and_analyze() {
     echo "WARNING: uncommitted changes; the hash $hash does not describe the code being run."
   local out; out="$(mktemp)"
   echo "== Experiment: model=$model effort=$effort tag=${hash}${suffix} =="
-  "$PY" "$ROOT/rq1/rq1_experiment.py" --model "$model" --effort "$effort" --tag "${hash}${suffix}" "$@" | tee "$out"
+  if ! "$PY" "$ROOT/rq1/rq1_experiment.py" --model "$model" --effort "$effort" --tag "${hash}${suffix}" "$@" | tee "$out"; then
+    rm -f "$out"
+    echo "Experiment stopped. Everything finished so far is saved. To resume, run this script again with:"
+    echo "  --tag ${hash}${suffix} --start-index <N>      (N is printed above as 'Resume with ... --start-index N')"
+    exit 1
+  fi
   local results; results="$(grep -a '^Results saved to ' "$out" | tail -1 | sed 's/^Results saved to //')"
   rm -f "$out"
   [ -n "$results" ] || { echo "Could not find the results file in the experiment output."; exit 1; }
   echo
   echo "== Analysis: $results =="
-  "$PY" "$ROOT/rq1/analysis.py" "$results"
+  "$PY" "$ROOT/rq1/analysis.py" "$results" || echo "(The analysis step failed; the results file above is saved and complete.)"
 }
 
 # "--why" (a follow-up why question in the same conversation) is on by default; WHY=0 turns it off.
 why_args() { [ "${WHY:-1}" = "0" ] || echo "--why"; }
+
+# "--structured" (the API constrains the answer to the JSON object {"judgment": ...}, validated with pydantic; Sonnet 5.5
+# otherwise explains itself before its answer) is on by default for all models; STRUCTURED=0 turns it off.
+structured_args() { [ "${STRUCTURED:-1}" = "0" ] || echo "--structured"; }

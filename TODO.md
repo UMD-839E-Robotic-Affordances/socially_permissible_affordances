@@ -10,7 +10,8 @@ RQ1 experiment:
 
 - [ ] Re-run the experiment on the final dataset: the results in `rq1/results/deprecated/` and `dataset_with_whys.json` were produced on the dataset before the review was finished (114 scored scenarios; now 143, 715 calls per model without `--why`).
 - [ ] Optional: exclude scenarios with an identical context from the example selection (about 2 of 143 draw one per run, always with the opposite label).
-- [ ] Run the experiment with real models from `rq1/model_configs.py` and save results per model.
+- [ ] Run `rq1/scripts/run_all.sh` (Haiku 5.5 low, then Sonnet 5.5 low) on the final dataset; the results files are rewritten after every scenario and can be resumed with `--start-index`.
+- [ ] Run other models from `rq1/model_configs.py` and save results per model.
 - [ ] Support Sonnet 5.5's `between_tools` thinking mode in `LLMProvider` (`thinking` is currently a boolean).
 
 Done:

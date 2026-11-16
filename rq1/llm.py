@@ -15,6 +15,8 @@ to paste the key, which is saved there with mode 600 (see ensure_api_key).
 from __future__ import annotations
 
 import getpass
+import json
+import logging
 import os
 import random
 import re
@@ -24,6 +26,15 @@ from pathlib import Path
 from typing import Literal, get_args
 
 from pydantic import BaseModel, ValidationError
+
+log = logging.getLogger("rq1.llm")  # enabled by rq1_experiment.py --log-file; silent otherwise
+
+
+def log_json(tag: str, payload: dict) -> None:
+    """One DEBUG line `<tag> <json>`, built only when logging is on (so a normal run pays nothing)."""
+    if log.isEnabledFor(logging.DEBUG):
+        log.debug("%s %s", tag, json.dumps(payload, ensure_ascii=False, default=str))
+
 
 Verdict = Literal["accept", "reject", "uncertain"]
 Provider = Literal["anthropic", "openai", "mock"]
@@ -63,12 +74,25 @@ FORMAT_SPEC = (
 )
 
 
-def build_system_prompt() -> str:
-    return f"{SYSTEM_PROMPT}\n\n{FORMAT_SPEC}"
+# Structured-output mode (Claude only): the API constrains the reply to this JSON schema, so the answer is always the
+# same {"judgment": "<word>"} object our prompt allows, and pydantic (Judgment) validates it. Sonnet 5.5 otherwise often
+# writes an explanation before a plain-text answer. Only the format is constrained: no tool call is involved.
+JUDGMENT_SCHEMA = {
+    "type": "object",
+    "properties": {"judgment": {"type": "string", "enum": list(VERDICTS)}},
+    "required": ["judgment"],
+    "additionalProperties": False,
+}
+JSON_FORMAT_SPEC = 'Respond with a JSON object of the form {"judgment": "<word>"}, where <word> is one of "accept", "reject" or "uncertain".'
+
+
+def build_system_prompt(structured: bool = False) -> str:
+    return f"{SYSTEM_PROMPT}\n\n{JSON_FORMAT_SPEC if structured else FORMAT_SPEC}"
 
 
 def parse_judgment(text: str) -> Judgment:
     """Accept a bare verdict word or a JSON object; validate with pydantic."""
+    log_json("PARSE_INPUT", {"raw": text})
     text = text.strip()
     if m := re.search(r"\{.*?\}", text, re.DOTALL):
         try:
@@ -101,10 +125,12 @@ def ensure_api_key(provider: str, *, optional: bool = False) -> str | None:
     The key is never printed or logged.
     """
     if key := os.environ.get(ENV_VARS[provider]):
+        log.debug("API key for %s: from env var %s (value never logged)", provider, ENV_VARS[provider])
         return key
     path = key_path(provider)
     if path.exists():
         if key := path.read_text().strip():
+            log.debug("API key for %s: from %s (value never logged)", provider, path)
             return key
     if not sys.stdin.isatty():
         if optional:
@@ -178,6 +204,7 @@ class LLMProvider:
         rng: random.Random | None = None,
         web_search: bool = False,
         max_searches: int = 3,
+        structured: bool = False,
     ) -> None:
         self.model = model
         self.thinking = thinking
@@ -189,11 +216,17 @@ class LLMProvider:
         self.usage = {"calls": 0, "input_tokens": 0, "output_tokens": 0, "web_searches": 0,
                       "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0}
         self.provider: Provider = provider or _infer_provider(model)
-        self.system_prompt = system_prompt or build_system_prompt()
+        self.structured = structured
+        self.system_prompt = system_prompt or build_system_prompt(structured)
         self._rng = rng or random.Random()  # used by the mock provider only
         self._client = None  # created lazily so unused SDKs needn't be installed
+        log_json("LLM_INIT", {"model": model, "provider": self.provider, "effort": effort, "thinking": thinking,
+                              "max_tokens": max_tokens, "web_search": web_search, "structured": structured,
+                              "system_prompt": self.system_prompt})
         if web_search and self.provider == "openai":
             raise NotImplementedError("web_search is only implemented for Claude models")
+        if structured and self.provider == "openai":
+            raise NotImplementedError("structured is only implemented for Claude models")
 
     # -- public API ---------------------------------------------------------
 
@@ -210,21 +243,21 @@ class LLMProvider:
     def call_with_why(self, query: str, question: str) -> tuple[Judgment, str]:
         """Judgment, then a follow-up `question` (e.g. "why?") in the SAME conversation.
 
-        The API is stateless, so the follow-up request resends the first turn. For Claude the
-        first user message is marked cacheable, so the resend is billed at the cheap cache-read
-        rate (when the prompt is long enough to be cached; see usage["cache_read_input_tokens"]).
+        The API is stateless, so the follow-up request resends the first turn at the normal input
+        price (prompt caching is not used: in structured mode the follow-up has a different output
+        format, so it could never read the first call's cache).
         Raises LLMOutputError if the first answer is invalid (no follow-up is sent).
         """
         complete = self._complete()
         messages = [{"role": "user", "content": query}]
-        raw = complete(messages, cache_first=True)
+        raw = complete(messages)
         judgment = parse_judgment(raw)
         messages += [{"role": "assistant", "content": raw}, {"role": "user", "content": question}]
-        return judgment, complete(messages, cache_first=True)
+        return judgment, complete(messages, response_format=False)  # the follow-up is free text
 
     # -- providers ----------------------------------------------------------
 
-    def _complete_mock(self, messages: list[dict], cache_first: bool = False) -> str:
+    def _complete_mock(self, messages: list[dict], response_format: bool = True) -> str:
         """Random valid raw output, in either accepted format (bare word or JSON).
 
         No API needed. It goes through parse_judgment like real output; pass a
@@ -251,7 +284,7 @@ class LLMProvider:
         # Basic web search tool version; newer models also accept web_search_20260209.
         return [{"type": WEB_SEARCH_TOOL_TYPE, "name": "web_search", "max_uses": self.max_searches}]
 
-    def _complete_anthropic(self, messages: list[dict], cache_first: bool = False) -> str:
+    def _complete_anthropic(self, messages: list[dict], response_format: bool = True) -> str:
         if self._client is None:
             import anthropic
 
@@ -259,17 +292,20 @@ class LLMProvider:
         kwargs: dict = {}
         if self.thinking:
             kwargs["thinking"] = {"type": "adaptive"}
+        output_config: dict = {}
         if self.effort:
-            kwargs["output_config"] = {"effort": self.effort}
+            output_config["effort"] = self.effort
+        if self.structured and response_format:
+            output_config["format"] = {"type": "json_schema", "schema": JUDGMENT_SCHEMA}
+        if output_config:
+            kwargs["output_config"] = output_config
         if tools := self._web_search_tools():
             kwargs["tools"] = tools
-        base = [dict(m) for m in messages]
-        if cache_first:  # mark the first user message (and the system prompt before it) as cacheable
-            base[0]["content"] = [{"type": "text", "text": base[0]["content"],
-                                   "cache_control": {"type": "ephemeral"}}]
-        messages = base
+        base = list(messages)
         # Server-side tools can pause a long turn (pause_turn); resend to let it continue.
         for _ in range(MAX_PAUSE_TURNS + 1):
+            log_json("API_REQUEST", {"model": self.model, "max_tokens": self.max_tokens, "system": self.system_prompt,
+                                     "messages": messages, **kwargs})
             response = self._client.messages.create(
                 model=self.model,
                 max_tokens=self.max_tokens,
@@ -278,6 +314,9 @@ class LLMProvider:
                 **kwargs,
             )
             self._add_usage(response.usage)
+            log_json("API_RESPONSE", {"stop_reason": response.stop_reason,
+                                      "content": [{"type": b.type, "text": getattr(b, "text", None)} for b in response.content],
+                                      "usage": response.usage.model_dump() if hasattr(response.usage, "model_dump") else str(response.usage)})
             if response.stop_reason != "pause_turn":
                 break
             messages = [*base, {"role": "assistant", "content": response.content}]
@@ -293,7 +332,7 @@ class LLMProvider:
                 text_parts = []
         return "".join(text_parts)
 
-    def _complete_openai(self, messages: list[dict], cache_first: bool = False) -> str:
+    def _complete_openai(self, messages: list[dict], response_format: bool = True) -> str:
         if self._client is None:
             import openai
 
@@ -301,6 +340,8 @@ class LLMProvider:
         kwargs: dict = {}
         if self.effort:
             kwargs["reasoning_effort"] = self.effort
+        log_json("API_REQUEST", {"model": self.model, "max_completion_tokens": self.max_tokens, "system": self.system_prompt,
+                                 "messages": messages, **kwargs})
         response = self._client.chat.completions.create(
             model=self.model,
             max_completion_tokens=self.max_tokens,
