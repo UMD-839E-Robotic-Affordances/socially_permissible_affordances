@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import random
 import re
 import sys
@@ -27,6 +28,9 @@ ap.add_argument("--max-searches", type=int, default=3, help="max web searches pe
 ap.add_argument("--ids", default=None, help="comma-separated scenario ids to score (e.g. a pilot subset)")
 ap.add_argument("--why", action="store_true",
                 help="after each judgment, ask a follow-up 'why' question in the same conversation")
+ap.add_argument("--start-index", type=int, default=0,
+                help="resume: skip the first N scenarios (dataset order) and keep the results already saved in the "
+                     "output file (use the same --model/--effort/--tag/--seed as the interrupted run)")
 ap.add_argument("--seed", type=int, default=42,
                 help="seed for reproducible example selection")
 args = ap.parse_args()
@@ -168,51 +172,105 @@ def build_prompt(scenario_text, prompt_type, example=None):
     return "\n\n".join(parts) + "\n\n" + final_text + "\n" + scenario_text
 
 
-results = {}
-
-selected_examples = {}
-
-for scenario in tqdm(scenario_list, desc=args.model, unit="scenario"):
-    if only_ids and scenario.id not in only_ids:
-        continue
-
-    # Select one matching example from the entire dataset.
-    example = select_example(scenario, scenario_list, seed=args.seed)
-
-    selected_examples[scenario.id] = example.id
-    results[scenario.id] = {}
-    scenario_text = f"Scenario: {scenario.context} Goal: {scenario.goal}. Action: {scenario.action}. Relevant Object: {scenario.object}."
-    for prompt_type in prompt_types:
-        prompt = build_prompt(scenario_text, prompt_type, example=example)
-        before = dict(llm.usage)
-        answer, why = ask(prompt)
-        usage = {k: llm.usage[k] - before[k] for k in before}  # tokens for this prompt (judgment + why)
-        results[scenario.id][prompt_type] = {
-            "answer": str(answer),
-            "correct": (answer == scenario.judgment),
-            "prompt_chars": len(prompt),  # for later length-vs-accuracy analysis
-            "usage": usage,
-        }
-        if why is not None:
-            results[scenario.id][prompt_type]["why"] = why
-
-
 results_dir = ROOT / "rq1" / "results"
 results_dir.mkdir(exist_ok=True)
 tag = args.model + (f"_{args.effort}" if args.effort else "") + (f"_{args.tag}" if args.tag else "")
 output_file = results_dir / f"rq1_results_{tag}.json"
-config = {"provider": llm.provider, "model": llm.model, "effort": llm.effort, "thinking": llm.thinking,
-          "max_tokens": llm.max_tokens, "web_search": llm.web_search,
-          "max_searches": llm.max_searches if llm.web_search else None, "prompt_types": prompt_types, "prompt_parts": PROMPT_PARTS,
-          "n_scenarios": len(results), "scenario_ids_filter": sorted(only_ids) if only_ids else None,
-          "why_question": WHY_QUESTION if args.why else None,
-          "usage": llm.usage,
-          "seed": args.seed,
-          "selected_examples": selected_examples,}
-with open(output_file, "w") as f:
-    json.dump({"config": config, "results": results}, f, indent=4)
+why_file = results_dir / f"rq1_whys_{tag}.json"  # the follow-up "why" answers live here, not in the results file
+
+
+def write_json(path, obj):
+    """Atomic write, so an interrupted run never leaves a half-written file."""
+    tmp = path.with_name(path.name + ".tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(obj, f, indent=4)
+    os.replace(tmp, path)
+
+
+results = {}
+whys = {}  # scenario id -> prompt type -> {"raw", "parsed"}
+selected_examples = {}
+prev_usage = {}
+if args.start_index > 0:
+    if output_file.exists():
+        with open(output_file, encoding="utf-8") as f:
+            prev = json.load(f)
+        results = prev["results"]
+        selected_examples = prev["config"].get("selected_examples", {})
+        prev_usage = prev["config"].get("usage", {})
+        if why_file.exists():
+            with open(why_file, encoding="utf-8") as f:
+                whys = json.load(f)["whys"]
+        print(f"Resuming: loaded {len(results)} finished scenarios from {output_file.name}")
+    else:
+        print(f"WARNING: --start-index {args.start_index} but {output_file.name} does not exist; starting with no earlier results.")
+
+
+def save(status, stopped_at=None):
+    """Write the results file (and the whys file) with everything finished so far."""
+    usage = {k: prev_usage.get(k, 0) + llm.usage[k] for k in llm.usage}
+    config = {"provider": llm.provider, "model": llm.model, "effort": llm.effort, "thinking": llm.thinking,
+              "max_tokens": llm.max_tokens, "web_search": llm.web_search,
+              "max_searches": llm.max_searches if llm.web_search else None,
+              "prompt_types": prompt_types, "prompt_parts": PROMPT_PARTS,
+              "n_scenarios": len(results), "scenario_ids_filter": sorted(only_ids) if only_ids else None,
+              "why_question": WHY_QUESTION if args.why else None,
+              "why_file": why_file.name if args.why else None,
+              "usage": usage, "seed": args.seed, "selected_examples": selected_examples,
+              "status": status, "start_index": args.start_index, "stopped_at_index": stopped_at}
+    write_json(output_file, {"config": config, "results": results})
+    if args.why:
+        write_json(why_file, {"config": {"model": llm.model, "effort": llm.effort, "seed": args.seed,
+                                         "why_question": WHY_QUESTION, "results_file": output_file.name},
+                              "whys": whys})
+    return usage
+
+
+index = args.start_index
+try:
+    for index, scenario in enumerate(tqdm(scenario_list, desc=args.model, unit="scenario")):
+        if index < args.start_index:
+            continue
+        if only_ids and scenario.id not in only_ids:
+            continue
+        if scenario.id in results and all(t in results[scenario.id] for t in prompt_types):
+            continue  # already finished in the file we resumed from
+
+        # Select one matching example from the entire dataset.
+        example = select_example(scenario, scenario_list, seed=args.seed)
+
+        entry, scenario_whys = {}, {}
+        scenario_text = f"Scenario: {scenario.context} Goal: {scenario.goal}. Action: {scenario.action}. Relevant Object: {scenario.object}."
+        for prompt_type in prompt_types:
+            prompt = build_prompt(scenario_text, prompt_type, example=example)
+            before = dict(llm.usage)
+            answer, why = ask(prompt)
+            usage = {k: llm.usage[k] - before[k] for k in before}  # tokens for this prompt (judgment + why)
+            entry[prompt_type] = {
+                "answer": str(answer),
+                "correct": (answer == scenario.judgment),
+                "prompt_chars": len(prompt),  # for later length-vs-accuracy analysis
+                "usage": usage,
+            }
+            if why is not None:
+                scenario_whys[prompt_type] = why
+        # A scenario is stored only when all its prompt types are done, then the files are rewritten.
+        results[scenario.id] = entry
+        selected_examples[scenario.id] = example.id
+        if scenario_whys:
+            whys[scenario.id] = scenario_whys
+        save("running")
+except BaseException as e:
+    save("stopped", stopped_at=index)
+    tqdm.write(f"\nSTOPPED at scenario index {index} ({type(e).__name__}); {len(results)} scenarios are saved in {output_file}.")
+    tqdm.write(f"Resume with the same arguments plus: --start-index {index}")
+    raise
+
+total = save("complete")
 print(f"Results saved to {output_file}")
-print(f"Token usage: {llm.usage}")
+if args.why:
+    print(f"Whys saved to {why_file}")
+print(f"Token usage: {total}")
 
 print("\n--- PERFORMANCE COMPARISON ---")
 print(f"{'Experiment Type':<18} | {'Accuracy':<8} | {'Balanced Acc':<12} | {'F1-Macro':<8}")
