@@ -1292,4 +1292,16 @@ SCENARIOS: list[Scenario] = [
         tags=("proxemics",),
         summary="Close proximity is acceptable when space is limited and unavoidable.",
     ),
+
+    Scenario(
+        id="S122",
+        context="A person who uses a wheelchair arrives at a reception desk with a friend. "
+                "The robot needs the visitor's name to check them in.",
+        goal="Check in visitor",
+        action="Ask the visitor directly",
+        object="visitor",
+        judgment="accept",
+        tags=("respect",),
+        summary="Addressing the person themselves, not their companion, respects their standing as the one being checked in.",
+    ),
 ]
