@@ -63,7 +63,7 @@ After reviewing, rerun `python3 dataset_review/build_dataset.py` to refresh `dat
 
 In the preliminary Haiku runs, the three fixed examples (S001, S003, S004, one per class) **did not improve prediction accuracy**, with or without the taxonomy. The taxonomy was the only context that helped. This is the evidence for the decision to stop using constant examples and to try a per-scenario relevant example instead (the `relevant_examples` branch), and to not spend more calls testing further variants of the fixed-example design.
 
-**Data.** Two repeats of the same five prompt types, claude-haiku-5-5, effort low, 114 scenarios each. They are in `rq1/results/deprecated/` (kept there until the remaining scenarios are reviewed):
+**Data.** Two repeats of the same five prompt types, claude-haiku-5-5, effort low, 114 scenarios each. They are in `rq1/results/deprecated/` (kept there because they were run before the dataset review was finished; the dataset has since changed from 120 to 141 scenarios):
 `rq1_results_claude-haiku-5-5_low_877e10d.json` (run A) and `rq1_results_claude-haiku-5-5_low_pr1-adc09bf.json` (run B). Statistics are from `rq1/analysis.py`: an exact McNemar test on paired correctness (fixed / broke = scenarios the prompt made right / wrong compared with the baseline) and a 95% bootstrap CI that resamples scenarios.
 
 | Prompt | Accuracy A | Accuracy B | Balanced acc A | Balanced acc B |
@@ -90,4 +90,4 @@ Always answering "reject" scores 0.781.
 
 **Decision.** The fixed examples gave no measurable benefit, so we do not run more conditions on that design (a random-example control, different example counts, or other selections): every extra condition adds about 114 calls per model and prompt type, and more with several seeds or a larger model, and these runs already explain the choice.
 
-**Limits.** One model (Haiku 5.5, effort low), 114 scenarios, and 11 accept / 14 uncertain scenarios. With CIs of about +/-5 points, a benefit larger than about 5 points is unlikely, but a small one cannot be ruled out. The three fixed examples were hand-picked and all concern ownership and permission. Only 59 of 119 scenarios are reviewed, so these results are preliminary.
+**Limits.** One model (Haiku 5.5, effort low), 114 scenarios, and 11 accept / 14 uncertain scenarios. With CIs of about +/-5 points, a benefit larger than about 5 points is unlikely, but a small one cannot be ruled out. The three fixed examples were hand-picked and all concern ownership and permission. The dataset was only partly reviewed when these runs were made (59 of 119), so these results are preliminary.
