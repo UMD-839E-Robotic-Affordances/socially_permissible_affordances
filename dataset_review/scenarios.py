@@ -1280,4 +1280,28 @@ SCENARIOS: list[Scenario] = [
         tags=("execution_optimality", "efficiency"),
         summary="The robot could do this task faster by carrying multiple objects at once.",
     ),
+
+    Scenario(
+        id="S121",
+        context="A hotel elevator is crowded. The robot has just stepped in with a guest's luggage, "
+                "and the only free floor space is right beside other passengers.",
+        goal="Reach the guest's floor",
+        action="Stand close to other passengers",
+        object="other passengers",
+        judgment="accept",
+        tags=("proxemics",),
+        summary="Close proximity is acceptable when space is limited and unavoidable.",
+    ),
+
+    Scenario(
+        id="S122",
+        context="A person who uses a wheelchair arrives at a reception desk with a friend. "
+                "The robot needs the visitor's name to check them in.",
+        goal="Check in visitor",
+        action="Ask the visitor directly",
+        object="visitor",
+        judgment="accept",
+        tags=("respect",),
+        summary="Addressing the person themselves, not their companion, respects their standing as the one being checked in.",
+    ),
 ]

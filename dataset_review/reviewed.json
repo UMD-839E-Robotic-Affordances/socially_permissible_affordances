@@ -890,5 +890,35 @@
     "notes": "",
     "changed": true,
     "reviewed_at": "2026-11-05T01:31:47+00:00"
+  },
+  "S121": {
+    "id": "S121",
+    "context": "A hotel elevator is crowded. The robot has just stepped in with a guest's luggage, and the only free floor space is right beside other passengers.",
+    "goal": "Reach the guest's floor",
+    "action": "Stand close to other passengers",
+    "object": "other passengers",
+    "judgment": "accept",
+    "tags": [
+      "proxemics"
+    ],
+    "summary": "Close proximity is acceptable when space is limited and unavoidable.",
+    "notes": "Added as a proxemics partner for S080 (opposite label, limited space).",
+    "changed": false,
+    "reviewed_at": "2026-11-16T16:23:30+00:00"
+  },
+  "S122": {
+    "id": "S122",
+    "context": "A person who uses a wheelchair arrives at a reception desk with a friend. The robot needs the visitor's name to check them in.",
+    "goal": "Check in visitor",
+    "action": "Ask the visitor directly",
+    "object": "visitor",
+    "judgment": "accept",
+    "tags": [
+      "respect"
+    ],
+    "summary": "Addressing the person themselves, not their companion, respects their standing as the one being checked in.",
+    "notes": "Added as a respect partner for S081 (opposite label, different facet of respect).",
+    "changed": false,
+    "reviewed_at": "2026-11-16T16:24:37+00:00"
   }
 }
