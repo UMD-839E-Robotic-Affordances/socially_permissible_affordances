@@ -1,0 +1,400 @@
+{
+ "hypotheses": [
+  {
+   "name": "H1 hedging",
+   "hypothesis": "A why with hedging words signals an ambiguous case; ambiguous cases are answered wrongly more often.",
+   "expected_direction": -1,
+   "models": {
+    "haiku": {
+     "explore_auc": 0.36049107142857145,
+     "held_auc": 0.4042407660738715,
+     "n_explore": 216,
+     "n_held": 213,
+     "held_ci": [
+      0.28337608407166587,
+      0.5099685461323392
+     ]
+    },
+    "sonnet": {
+     "explore_auc": 0.36317536418956303,
+     "held_auc": 0.2138962569997053,
+     "n_explore": 216,
+     "n_held": 213,
+     "held_ci": [
+      0.07544163369135104,
+      0.3541860721639376
+     ]
+    }
+   },
+   "pooled_held_auc": 0.31955473624503683,
+   "pooled_ci": [
+    0.20643211308163598,
+    0.42944666841762674
+   ],
+   "verdict": "SUPPORTED"
+  },
+  {
+   "name": "H1b long reason",
+   "hypothesis": "A longer why signals a harder case; harder cases are answered wrongly more often.",
+   "expected_direction": -1,
+   "models": {
+    "haiku": {
+     "explore_auc": 0.3812624007936508,
+     "held_auc": 0.2794801641586867,
+     "n_explore": 216,
+     "n_held": 213,
+     "held_ci": [
+      0.17498193641618495,
+      0.3849039201692116
+     ]
+    },
+    "sonnet": {
+     "explore_auc": 0.3155080213903743,
+     "held_auc": 0.3521220159151194,
+     "n_explore": 216,
+     "n_held": 213,
+     "held_ci": [
+      0.25016677566037965,
+      0.46660383597883603
+     ]
+    }
+   },
+   "pooled_held_auc": 0.3120745887691435,
+   "pooled_ci": [
+    0.2315497539790526,
+    0.38833369880328256
+   ],
+   "verdict": "SUPPORTED"
+  },
+  {
+   "name": "H2 hedge but committed",
+   "hypothesis": "A why that hedges while the answer is accept/reject (not uncertain) is a doubt the model overrode.",
+   "expected_direction": -1,
+   "models": {
+    "haiku": {
+     "explore_auc": 0.5089285714285714,
+     "held_auc": 0.47462380300957596,
+     "n_explore": 216,
+     "n_held": 213,
+     "held_ci": [
+      0.3634199837975127,
+      0.5572059098559468
+     ]
+    },
+    "sonnet": {
+     "explore_auc": 0.5489581412502305,
+     "held_auc": 0.47126436781609204,
+     "n_explore": 216,
+     "n_held": 213,
+     "held_ci": [
+      0.3366694526700921,
+      0.5869946691821692
+     ]
+    }
+   },
+   "pooled_held_auc": 0.47514889393079973,
+   "pooled_ci": [
+    0.3741213124698226,
+    0.5654429957787855
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H3 risk talk on gold-accept",
+   "hypothesis": "On scenarios whose gold is accept, risk/danger words in the why explain over-caution (wrong).",
+   "expected_direction": -1,
+   "models": {
+    "haiku": {
+     "explore_auc": 0.2734567901234568,
+     "held_auc": 0.5425531914893617,
+     "n_explore": 69,
+     "n_held": 51,
+     "held_ci": [
+      0.5,
+      0.602156771799629
+     ]
+    },
+    "sonnet": {
+     "explore_auc": 0.22372881355932203,
+     "held_auc": 0.5146103896103896,
+     "n_explore": 69,
+     "n_held": 51,
+     "held_ci": [
+      0.15372340425531916,
+      0.7074949443882709
+     ]
+    }
+   },
+   "pooled_held_auc": 0.5064935064935064,
+   "pooled_ci": [
+    0.3071009574915825,
+    0.6157910783055199
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H4 mitigation talk on gold-accept",
+   "hypothesis": "On gold-accept scenarios, citing mitigating facts (alternatives, cheap, reversible) goes with the right answer.",
+   "expected_direction": 1,
+   "models": {
+    "haiku": {
+     "explore_auc": 0.5475308641975309,
+     "held_auc": 0.6382978723404256,
+     "n_explore": 69,
+     "n_held": 51,
+     "held_ci": [
+      0.5412414965986394,
+      0.7345652173913043
+     ]
+    },
+    "sonnet": {
+     "explore_auc": 0.5805084745762712,
+     "held_auc": 0.6818181818181819,
+     "n_explore": 69,
+     "n_held": 51,
+     "held_ci": [
+      0.5774786324786324,
+      0.8085106382978724
+     ]
+    }
+   },
+   "pooled_held_auc": 0.6593406593406593,
+   "pooled_ci": [
+    0.5670630081300814,
+    0.7641104868913857
+   ],
+   "verdict": "SUPPORTED"
+  },
+  {
+   "name": "H5 permission talk on gold-reject",
+   "hypothesis": "On gold-reject scenarios, citing permission/consent/ownership goes with the right answer.",
+   "expected_direction": 1,
+   "models": {
+    "haiku": {
+     "explore_auc": 0.533256880733945,
+     "held_auc": 0.5869565217391304,
+     "n_explore": 129,
+     "n_held": 135,
+     "held_ci": [
+      0.5348663287616775,
+      0.6460629088110812
+     ]
+    },
+    "sonnet": {
+     "explore_auc": 0.6386554621848739,
+     "held_auc": 0.5017709563164109,
+     "n_explore": 129,
+     "n_held": 135,
+     "held_ci": [
+      0.2950489239708288,
+      0.6297092013888889
+     ]
+    }
+   },
+   "pooled_held_auc": 0.5535892323030907,
+   "pooled_ci": [
+    0.4746232920538601,
+    0.6312638951905626
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H6 rule talk",
+   "hypothesis": "Citing an explicit rule makes the model rigid: wrong when the gold is uncertain or accept.",
+   "expected_direction": -1,
+   "models": {
+    "haiku": {
+     "explore_auc": 0.5323849878934624,
+     "held_auc": 0.4905138339920949,
+     "n_explore": 87,
+     "n_held": 78,
+     "held_ci": [
+      0.33327067669172933,
+      0.6009917982344453
+     ]
+    },
+    "sonnet": {
+     "explore_auc": 0.48413312693498456,
+     "held_auc": 0.490566037735849,
+     "n_explore": 87,
+     "n_held": 78,
+     "held_ci": [
+      0.33220811051693405,
+      0.6274283163572805
+     ]
+    }
+   },
+   "pooled_held_auc": 0.4913194444444444,
+   "pooled_ci": [
+    0.3622999115628549,
+    0.5952830321852061
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H7 contrast words",
+   "hypothesis": "A why that weighs a 'but/although' consideration is balancing, which goes with the right answer.",
+   "expected_direction": 1,
+   "models": {
+    "haiku": {
+     "explore_auc": 0.4729662698412699,
+     "held_auc": 0.3785225718194254,
+     "n_explore": 216,
+     "n_held": 213,
+     "held_ci": [
+      0.2643688081547148,
+      0.4840188412443773
+     ]
+    },
+    "sonnet": {
+     "explore_auc": 0.4462474645030426,
+     "held_auc": 0.3915414087827881,
+     "n_explore": 216,
+     "n_held": 213,
+     "held_ci": [
+      0.2864478421818437,
+      0.49102352851116393
+     ]
+    }
+   },
+   "pooled_held_auc": 0.38396908678389113,
+   "pooled_ci": [
+    0.28868579122807475,
+    0.46075453657353715
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H8 factor consistency across prompts",
+   "hypothesis": "If the factors named barely change across the five prompts, the model is sure, and right.",
+   "expected_direction": 1,
+   "models": {
+    "haiku": {
+     "explore_auc": 0.5807911706349207,
+     "held_auc": 0.7114911080711355,
+     "n_explore": 216,
+     "n_held": 213,
+     "held_ci": [
+      0.5967622371057828,
+      0.8164008444180858
+     ]
+    },
+    "sonnet": {
+     "explore_auc": 0.5593767287479255,
+     "held_auc": 0.6934129089301503,
+     "n_explore": 216,
+     "n_held": 213,
+     "held_ci": [
+      0.5620225107927692,
+      0.8281744301905591
+     ]
+    }
+   },
+   "pooled_held_auc": 0.7063244469653999,
+   "pooled_ci": [
+    0.6095022942412595,
+    0.8015538405875469
+   ],
+   "verdict": "SUPPORTED"
+  },
+  {
+   "name": "H9 scenario overlap",
+   "hypothesis": "A why that reuses the scenario's own words is grounded in its facts, and right.",
+   "expected_direction": 1,
+   "models": {
+    "haiku": {
+     "explore_auc": 0.5885416666666666,
+     "held_auc": 0.6858413132694938,
+     "n_explore": 216,
+     "n_held": 213,
+     "held_ci": [
+      0.5537414745253727,
+      0.8032407346587259
+     ]
+    },
+    "sonnet": {
+     "explore_auc": 0.6318458417849898,
+     "held_auc": 0.6668877099911582,
+     "n_explore": 216,
+     "n_held": 213,
+     "held_ci": [
+      0.5175758790530853,
+      0.8065951012831565
+     ]
+    }
+   },
+   "pooled_held_auc": 0.6667434770277934,
+   "pooled_ci": [
+    0.5422856818169318,
+    0.7782844480994153
+   ],
+   "verdict": "SUPPORTED"
+  },
+  {
+   "name": "H10 negation",
+   "hypothesis": "Negation-heavy reasons ('no permission', 'without asking') are reject-leaning and wrong on gold accept/uncertain.",
+   "expected_direction": -1,
+   "models": {
+    "haiku": {
+     "explore_auc": 0.45248184019370463,
+     "held_auc": 0.45612648221343877,
+     "n_explore": 87,
+     "n_held": 78,
+     "held_ci": [
+      0.29006007628461217,
+      0.6173422775199272
+     ]
+    },
+    "sonnet": {
+     "explore_auc": 0.4941950464396286,
+     "held_auc": 0.3033962264150943,
+     "n_explore": 87,
+     "n_held": 78,
+     "held_ci": [
+      0.11574157852257763,
+      0.5017592034981146
+     ]
+    }
+   },
+   "pooled_held_auc": 0.37567515432098764,
+   "pooled_ci": [
+    0.26203917625261164,
+    0.5156611344888423
+   ],
+   "verdict": "NOT SUPPORTED"
+  }
+ ],
+ "h12": {
+  "haiku": {
+   "hedge+length": 0.7670998632010944,
+   "consistency+overlap": 0.7439808481532147,
+   "all four": 0.8300957592339262
+  },
+  "sonnet": {
+   "hedge+length": 0.7773356911287945,
+   "consistency+overlap": 0.7012967875036842,
+   "all four": 0.7832301797819039
+  }
+ },
+ "hedge_accuracy": {
+  "haiku": {
+   "hedged": 0.6407766990291263,
+   "n_hedged": 103,
+   "not_hedged": 0.8343558282208589,
+   "n_not": 326
+  },
+  "sonnet": {
+   "hedged": 0.7235294117647059,
+   "n_hedged": 170,
+   "not_hedged": 0.918918918918919,
+   "n_not": 259
+  }
+ },
+ "supported": [
+  "H1 hedging",
+  "H1b long reason",
+  "H4 mitigation talk on gold-accept",
+  "H8 factor consistency across prompts",
+  "H9 scenario overlap"
+ ]
+}

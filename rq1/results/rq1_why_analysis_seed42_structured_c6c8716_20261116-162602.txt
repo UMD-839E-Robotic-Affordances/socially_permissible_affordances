@@ -1,0 +1,92 @@
+When does the 'why' go with a correct prediction? Hypothesis search (answers from prompts without the taxonomy: none, examples, examples_nolabel)
+AUC = chance a right answer has a HIGHER feature value than a wrong one (0.5 none; <0.5 higher value = wrong). EXPLORE = even-indexed scenarios, HELD-OUT = odd-indexed.
+
+== H1 hedging: A why with hedging words signals an ambiguous case; ambiguous cases are answered wrongly more often.
+   expected direction: higher value -> wrong (AUC < 0.5)
+   haiku   explore AUC=0.36 (n=216) | held-out AUC=0.40 (n=213, 170 right) bootstrap 95% CI [0.28,0.51]
+   sonnet  explore AUC=0.36 (n=216) | held-out AUC=0.21 (n=213, 174 right) bootstrap 95% CI [0.08,0.35]
+   pooled held-out (both models) AUC=0.32 bootstrap 95% CI [0.21,0.43]
+   -> SUPPORTED
+
+== H1b long reason: A longer why signals a harder case; harder cases are answered wrongly more often.
+   expected direction: higher value -> wrong (AUC < 0.5)
+   haiku   explore AUC=0.38 (n=216) | held-out AUC=0.28 (n=213, 170 right) bootstrap 95% CI [0.17,0.38]
+   sonnet  explore AUC=0.32 (n=216) | held-out AUC=0.35 (n=213, 174 right) bootstrap 95% CI [0.25,0.47]
+   pooled held-out (both models) AUC=0.31 bootstrap 95% CI [0.23,0.39]
+   -> SUPPORTED
+
+== H2 hedge but committed: A why that hedges while the answer is accept/reject (not uncertain) is a doubt the model overrode.
+   expected direction: higher value -> wrong (AUC < 0.5)
+   haiku   explore AUC=0.51 (n=216) | held-out AUC=0.47 (n=213, 170 right) bootstrap 95% CI [0.36,0.56]
+   sonnet  explore AUC=0.55 (n=216) | held-out AUC=0.47 (n=213, 174 right) bootstrap 95% CI [0.34,0.59]
+   pooled held-out (both models) AUC=0.48 bootstrap 95% CI [0.37,0.57]
+   -> NOT SUPPORTED
+
+== H3 risk talk on gold-accept: On scenarios whose gold is accept, risk/danger words in the why explain over-caution (wrong).
+   expected direction: higher value -> wrong (AUC < 0.5)
+   haiku   explore AUC=0.27 (n=69) | held-out AUC=0.54 (n=51, 47 right) bootstrap 95% CI [0.50,0.60]
+   sonnet  explore AUC=0.22 (n=69) | held-out AUC=0.51 (n=51, 44 right) bootstrap 95% CI [0.15,0.71]
+   pooled held-out (both models) AUC=0.51 bootstrap 95% CI [0.31,0.62]
+   -> NOT SUPPORTED
+
+== H4 mitigation talk on gold-accept: On gold-accept scenarios, citing mitigating facts (alternatives, cheap, reversible) goes with the right answer.
+   expected direction: higher value -> right (AUC > 0.5)
+   haiku   explore AUC=0.55 (n=69) | held-out AUC=0.64 (n=51, 47 right) bootstrap 95% CI [0.54,0.73]
+   sonnet  explore AUC=0.58 (n=69) | held-out AUC=0.68 (n=51, 44 right) bootstrap 95% CI [0.58,0.81]
+   pooled held-out (both models) AUC=0.66 bootstrap 95% CI [0.57,0.76]
+   -> SUPPORTED
+
+== H5 permission talk on gold-reject: On gold-reject scenarios, citing permission/consent/ownership goes with the right answer.
+   expected direction: higher value -> right (AUC > 0.5)
+   haiku   explore AUC=0.53 (n=129) | held-out AUC=0.59 (n=135, 115 right) bootstrap 95% CI [0.53,0.65]
+   sonnet  explore AUC=0.64 (n=129) | held-out AUC=0.50 (n=135, 121 right) bootstrap 95% CI [0.30,0.63]
+   pooled held-out (both models) AUC=0.55 bootstrap 95% CI [0.47,0.63]
+   -> NOT SUPPORTED
+
+== H6 rule talk: Citing an explicit rule makes the model rigid: wrong when the gold is uncertain or accept.
+   expected direction: higher value -> wrong (AUC < 0.5)
+   haiku   explore AUC=0.53 (n=87) | held-out AUC=0.49 (n=78, 55 right) bootstrap 95% CI [0.33,0.60]
+   sonnet  explore AUC=0.48 (n=87) | held-out AUC=0.49 (n=78, 53 right) bootstrap 95% CI [0.33,0.63]
+   pooled held-out (both models) AUC=0.49 bootstrap 95% CI [0.36,0.60]
+   -> NOT SUPPORTED
+
+== H7 contrast words: A why that weighs a 'but/although' consideration is balancing, which goes with the right answer.
+   expected direction: higher value -> right (AUC > 0.5)
+   haiku   explore AUC=0.47 (n=216) | held-out AUC=0.38 (n=213, 170 right) bootstrap 95% CI [0.26,0.48]
+   sonnet  explore AUC=0.45 (n=216) | held-out AUC=0.39 (n=213, 174 right) bootstrap 95% CI [0.29,0.49]
+   pooled held-out (both models) AUC=0.38 bootstrap 95% CI [0.29,0.46]
+   -> NOT SUPPORTED
+
+== H8 factor consistency across prompts: If the factors named barely change across the five prompts, the model is sure, and right.
+   expected direction: higher value -> right (AUC > 0.5)
+   haiku   explore AUC=0.58 (n=216) | held-out AUC=0.71 (n=213, 170 right) bootstrap 95% CI [0.60,0.82]
+   sonnet  explore AUC=0.56 (n=216) | held-out AUC=0.69 (n=213, 174 right) bootstrap 95% CI [0.56,0.83]
+   pooled held-out (both models) AUC=0.71 bootstrap 95% CI [0.61,0.80]
+   -> SUPPORTED
+
+== H9 scenario overlap: A why that reuses the scenario's own words is grounded in its facts, and right.
+   expected direction: higher value -> right (AUC > 0.5)
+   haiku   explore AUC=0.59 (n=216) | held-out AUC=0.69 (n=213, 170 right) bootstrap 95% CI [0.55,0.80]
+   sonnet  explore AUC=0.63 (n=216) | held-out AUC=0.67 (n=213, 174 right) bootstrap 95% CI [0.52,0.81]
+   pooled held-out (both models) AUC=0.67 bootstrap 95% CI [0.54,0.78]
+   -> SUPPORTED
+
+== H10 negation: Negation-heavy reasons ('no permission', 'without asking') are reject-leaning and wrong on gold accept/uncertain.
+   expected direction: higher value -> wrong (AUC < 0.5)
+   haiku   explore AUC=0.45 (n=87) | held-out AUC=0.46 (n=78, 55 right) bootstrap 95% CI [0.29,0.62]
+   sonnet  explore AUC=0.49 (n=87) | held-out AUC=0.30 (n=78, 53 right) bootstrap 95% CI [0.12,0.50]
+   pooled held-out (both models) AUC=0.38 bootstrap 95% CI [0.26,0.52]
+   -> NOT SUPPORTED
+
+== H12 incremental value: do consistency and overlap add to hedging + length? (logistic regression fit on EXPLORE scenarios, AUC on HELD-OUT) ==
+   haiku   held-out AUC: hedge+length=0.77, consistency+overlap=0.74, all four=0.83
+   haiku   correlations: hedge~length 0.20, length~overlap -0.22, hedge~consistency -0.03, consistency~overlap 0.19
+   sonnet  held-out AUC: hedge+length=0.78, consistency+overlap=0.70, all four=0.78
+   sonnet  correlations: hedge~length 0.39, length~overlap -0.28, hedge~consistency -0.07, consistency~overlap 0.20
+
+== Practical effect of the supported single-feature hypotheses (all five prompts and held-out scenarios, accuracy by feature) ==
+   haiku   hedging in the why: accuracy 0.64 (n=103) vs none 0.83 (n=326)
+   sonnet  hedging in the why: accuracy 0.72 (n=170) vs none 0.92 (n=259)
+
+Supported hypotheses: ['H1 hedging', 'H1b long reason', 'H4 mitigation talk on gold-accept', 'H8 factor consistency across prompts', 'H9 scenario overlap']
+Hypotheses tried: 11 (a lucky pass is likely at this count; hence held-out + both models + CI).
