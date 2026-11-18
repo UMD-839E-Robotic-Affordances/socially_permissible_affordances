@@ -1,0 +1,79 @@
+When does the 'why' go with a correct prediction? Hypothesis search (answers from prompts without the taxonomy: none, examples, examples_nolabel)
+Whys left out because they were not in the factors/reason format: {'gpt-6-luna': 11}
+AUC = chance a right answer has a HIGHER feature value than a wrong one (0.5 none; <0.5 higher value = wrong). EXPLORE = even-indexed scenarios, HELD-OUT = odd-indexed.
+
+== H1 hedging: A why with hedging words signals an ambiguous case; ambiguous cases are answered wrongly more often.
+   expected direction: higher value -> wrong (AUC < 0.5)
+   gpt-6-luna explore AUC=0.47 (n=212) | held-out AUC=0.40 (n=206, 174 right) bootstrap 95% CI [0.25,0.55]
+   pooled held-out (both models) AUC=0.40 bootstrap 95% CI [0.25,0.55]
+   -> NOT SUPPORTED
+
+== H1b long reason: A longer why signals a harder case; harder cases are answered wrongly more often.
+   expected direction: higher value -> wrong (AUC < 0.5)
+   gpt-6-luna explore AUC=0.44 (n=212) | held-out AUC=0.31 (n=206, 174 right) bootstrap 95% CI [0.18,0.43]
+   pooled held-out (both models) AUC=0.31 bootstrap 95% CI [0.18,0.43]
+   -> SUPPORTED
+
+== H2 hedge but committed: A why that hedges while the answer is accept/reject (not uncertain) is a doubt the model overrode.
+   expected direction: higher value -> wrong (AUC < 0.5)
+   gpt-6-luna explore AUC=0.54 (n=212) | held-out AUC=0.45 (n=206, 174 right) bootstrap 95% CI [0.32,0.59]
+   pooled held-out (both models) AUC=0.45 bootstrap 95% CI [0.32,0.59]
+   -> NOT SUPPORTED
+
+== H3 risk talk on gold-accept: On scenarios whose gold is accept, risk/danger words in the why explain over-caution (wrong).
+   expected direction: higher value -> wrong (AUC < 0.5)
+   gpt-6-luna explore AUC=0.03 (n=68) | held-out AUC=0.50 (n=45, 42 right) bootstrap 95% CI [0.50,0.50]
+   pooled held-out (both models) AUC=0.50 bootstrap 95% CI [0.50,0.50]
+   -> NOT SUPPORTED
+
+== H4 mitigation talk on gold-accept: On gold-accept scenarios, citing mitigating facts (alternatives, cheap, reversible) goes with the right answer.
+   expected direction: higher value -> right (AUC > 0.5)
+   gpt-6-luna explore AUC=0.41 (n=68) | held-out AUC=0.60 (n=45, 42 right) bootstrap 95% CI [0.52,0.67]
+   pooled held-out (both models) AUC=0.60 bootstrap 95% CI [0.52,0.67]
+   -> NOT SUPPORTED
+
+== H5 permission talk on gold-reject: On gold-reject scenarios, citing permission/consent/ownership goes with the right answer.
+   expected direction: higher value -> right (AUC > 0.5)
+   gpt-6-luna explore AUC=0.59 (n=126) | held-out AUC=0.57 (n=134, 125 right) bootstrap 95% CI [0.53,0.62]
+   pooled held-out (both models) AUC=0.57 bootstrap 95% CI [0.53,0.62]
+   -> SUPPORTED
+
+== H6 rule talk: Citing an explicit rule makes the model rigid: wrong when the gold is uncertain or accept.
+   expected direction: higher value -> wrong (AUC < 0.5)
+   gpt-6-luna explore AUC=0.51 (n=86) | held-out AUC=0.43 (n=72, 49 right) bootstrap 95% CI [0.30,0.52]
+   pooled held-out (both models) AUC=0.43 bootstrap 95% CI [0.30,0.52]
+   -> NOT SUPPORTED
+
+== H7 contrast words: A why that weighs a 'but/although' consideration is balancing, which goes with the right answer.
+   expected direction: higher value -> right (AUC > 0.5)
+   gpt-6-luna explore AUC=0.44 (n=212) | held-out AUC=0.50 (n=206, 174 right) bootstrap 95% CI [0.42,0.57]
+   pooled held-out (both models) AUC=0.50 bootstrap 95% CI [0.42,0.57]
+   -> NOT SUPPORTED
+
+== H8 factor consistency across prompts: If the factors named barely change across the five prompts, the model is sure, and right.
+   expected direction: higher value -> right (AUC > 0.5)
+   gpt-6-luna explore AUC=0.58 (n=212) | held-out AUC=0.62 (n=206, 174 right) bootstrap 95% CI [0.47,0.77]
+   pooled held-out (both models) AUC=0.62 bootstrap 95% CI [0.47,0.77]
+   -> NOT SUPPORTED
+
+== H9 scenario overlap: A why that reuses the scenario's own words is grounded in its facts, and right.
+   expected direction: higher value -> right (AUC > 0.5)
+   gpt-6-luna explore AUC=0.51 (n=212) | held-out AUC=0.60 (n=206, 174 right) bootstrap 95% CI [0.46,0.73]
+   pooled held-out (both models) AUC=0.60 bootstrap 95% CI [0.46,0.73]
+   -> NOT SUPPORTED
+
+== H10 negation: Negation-heavy reasons ('no permission', 'without asking') are reject-leaning and wrong on gold accept/uncertain.
+   expected direction: higher value -> wrong (AUC < 0.5)
+   gpt-6-luna explore AUC=0.45 (n=86) | held-out AUC=0.39 (n=72, 49 right) bootstrap 95% CI [0.22,0.54]
+   pooled held-out (both models) AUC=0.39 bootstrap 95% CI [0.22,0.54]
+   -> NOT SUPPORTED
+
+== H12 incremental value: do consistency and overlap add to hedging + length? (logistic regression fit on EXPLORE scenarios, AUC on HELD-OUT) ==
+   gpt-6-luna held-out AUC: hedge+length=0.68, consistency+overlap=0.63, all four=0.71
+   gpt-6-luna correlations: hedge~length 0.25, length~overlap -0.14, hedge~consistency 0.09, consistency~overlap 0.15
+
+== Practical effect of the supported single-feature hypotheses (all five prompts and held-out scenarios, accuracy by feature) ==
+   gpt-6-luna hedging in the why: accuracy 0.79 (n=121) vs none 0.87 (n=297)
+
+Supported hypotheses: ['H1b long reason', 'H5 permission talk on gold-reject']
+Hypotheses tried: 11 (a lucky pass is likely at this count; hence held-out + both models + CI).

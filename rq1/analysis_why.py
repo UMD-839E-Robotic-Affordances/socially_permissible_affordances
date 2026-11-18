@@ -46,6 +46,9 @@ LEX = {
 LEX = {k: set(v.split()) for k, v in LEX.items()}
 
 
+SKIPPED = {}  # model -> number of whys that came back unparsed (parsed: null) and are left out of every hypothesis
+
+
 def load(path):
     cfg_res = json.load(open(path))
     whys = json.load(open(str(path).replace("rq1_results_", "rq1_whys_")))["whys"]
@@ -56,17 +59,21 @@ def load(path):
     for idx, i in enumerate(ids):
         d = ds[i]
         scen = tok(" ".join([d["context"], d["action"], d["object"], d["goal"]]))
-        fsets = {t: tok(" ".join(map(str, whys[i][t]["parsed"]["factors"]))) for t in ALL_TYPES}
+        usable = lambda t: bool((whys[i][t].get("parsed") or {}).get("factors"))  # a why can come back unparsed (parsed: null)
+        fsets = {t: tok(" ".join(map(str, whys[i][t]["parsed"]["factors"]))) for t in ALL_TYPES if usable(t)}
         for t in ALL_TYPES:
+            if not usable(t):
+                SKIPPED[short] = SKIPPED.get(short, 0) + 1
+                continue  # skipped in every hypothesis; the number skipped is printed by main()
             p = whys[i][t]["parsed"]
             words = W(p["reason"]) + W(" ".join(map(str, p["factors"])))
             rs = tok(p["reason"])
-            others = [fsets[u] for u in ALL_TYPES if u != t]
+            others = [fsets[u] for u in ALL_TYPES if u != t and u in fsets]
             feat = {k: sum(w in lex for w in words) for k, lex in LEX.items()}
             feat.update(
                 length=len(p["reason"].split()), n_factors=len(p["factors"]),
                 digits=int(bool(re.search(r"\d", p["reason"]))),
-                factor_consistency=float(np.mean([len(fsets[t] & o) / max(len(fsets[t] | o), 1) for o in others])),
+                factor_consistency=float(np.mean([len(fsets[t] & o) / max(len(fsets[t] | o), 1) for o in others])) if others else 0.5,
                 scenario_overlap=len(rs & scen) / max(len(rs), 1),
                 hedge_but_not_uncertain=int(feat["hedge"] > 0 and cfg_res["results"][i][t]["answer"] != "uncertain"),
                 factor_tokens=fsets[t],
@@ -136,6 +143,7 @@ def main(paths):
         OUT.append(line)
 
     p("When does the 'why' go with a correct prediction? Hypothesis search (answers from prompts without the taxonomy: " + ", ".join(NT) + ")")
+    p("Whys left out because they were not in the factors/reason format:", {m: SKIPPED.get(m, 0) for m in models})
     p("AUC = chance a right answer has a HIGHER feature value than a wrong one (0.5 none; <0.5 higher value = wrong). EXPLORE = even-indexed scenarios, HELD-OUT = odd-indexed.\n")
     supported = []
     for name, text, fn, subset, direction in HYPS:

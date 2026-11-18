@@ -1,0 +1,276 @@
+{
+ "hypotheses": [
+  {
+   "name": "H1 hedging",
+   "hypothesis": "A why with hedging words signals an ambiguous case; ambiguous cases are answered wrongly more often.",
+   "expected_direction": -1,
+   "models": {
+    "gpt-6-luna": {
+     "explore_auc": 0.46510416666666665,
+     "held_auc": 0.4014008620689655,
+     "n_explore": 212,
+     "n_held": 206,
+     "held_ci": [
+      0.24974091602720294,
+      0.5455548768331583
+     ]
+    }
+   },
+   "pooled_held_auc": 0.4014008620689655,
+   "pooled_ci": [
+    0.24974091602720294,
+    0.5455548768331583
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H1b long reason",
+   "hypothesis": "A longer why signals a harder case; harder cases are answered wrongly more often.",
+   "expected_direction": -1,
+   "models": {
+    "gpt-6-luna": {
+     "explore_auc": 0.4421006944444445,
+     "held_auc": 0.3084590517241379,
+     "n_explore": 212,
+     "n_held": 206,
+     "held_ci": [
+      0.18367090514113246,
+      0.43369064929669415
+     ]
+    }
+   },
+   "pooled_held_auc": 0.3084590517241379,
+   "pooled_ci": [
+    0.18367090514113246,
+    0.43369064929669415
+   ],
+   "verdict": "SUPPORTED"
+  },
+  {
+   "name": "H2 hedge but committed",
+   "hypothesis": "A why that hedges while the answer is accept/reject (not uncertain) is a doubt the model overrode.",
+   "expected_direction": -1,
+   "models": {
+    "gpt-6-luna": {
+     "explore_auc": 0.5413194444444445,
+     "held_auc": 0.4516882183908046,
+     "n_explore": 212,
+     "n_held": 206,
+     "held_ci": [
+      0.3153452797202797,
+      0.5899431195175437
+     ]
+    }
+   },
+   "pooled_held_auc": 0.4516882183908046,
+   "pooled_ci": [
+    0.3153452797202797,
+    0.5899431195175437
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H3 risk talk on gold-accept",
+   "hypothesis": "On scenarios whose gold is accept, risk/danger words in the why explain over-caution (wrong).",
+   "expected_direction": -1,
+   "models": {
+    "gpt-6-luna": {
+     "explore_auc": 0.028125,
+     "held_auc": 0.5,
+     "n_explore": 68,
+     "n_held": 45,
+     "held_ci": [
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "pooled_held_auc": 0.5,
+   "pooled_ci": [
+    0.5,
+    0.5
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H4 mitigation talk on gold-accept",
+   "hypothesis": "On gold-accept scenarios, citing mitigating facts (alternatives, cheap, reversible) goes with the right answer.",
+   "expected_direction": 1,
+   "models": {
+    "gpt-6-luna": {
+     "explore_auc": 0.4145833333333333,
+     "held_auc": 0.5952380952380952,
+     "n_explore": 68,
+     "n_held": 45,
+     "held_ci": [
+      0.524390243902439,
+      0.6696022727272726
+     ]
+    }
+   },
+   "pooled_held_auc": 0.5952380952380952,
+   "pooled_ci": [
+    0.524390243902439,
+    0.6696022727272726
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H5 permission talk on gold-reject",
+   "hypothesis": "On gold-reject scenarios, citing permission/consent/ownership goes with the right answer.",
+   "expected_direction": 1,
+   "models": {
+    "gpt-6-luna": {
+     "explore_auc": 0.5862068965517241,
+     "held_auc": 0.572,
+     "n_explore": 126,
+     "n_held": 134,
+     "held_ci": [
+      0.53125,
+      0.6172616884689922
+     ]
+    }
+   },
+   "pooled_held_auc": 0.572,
+   "pooled_ci": [
+    0.53125,
+    0.6172616884689922
+   ],
+   "verdict": "SUPPORTED"
+  },
+  {
+   "name": "H6 rule talk",
+   "hypothesis": "Citing an explicit rule makes the model rigid: wrong when the gold is uncertain or accept.",
+   "expected_direction": -1,
+   "models": {
+    "gpt-6-luna": {
+     "explore_auc": 0.5124289772727273,
+     "held_auc": 0.42990239574090505,
+     "n_explore": 86,
+     "n_held": 72,
+     "held_ci": [
+      0.2995370796289946,
+      0.5232891727030118
+     ]
+    }
+   },
+   "pooled_held_auc": 0.42990239574090505,
+   "pooled_ci": [
+    0.2995370796289946,
+    0.5232891727030118
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H7 contrast words",
+   "hypothesis": "A why that weighs a 'but/although' consideration is balancing, which goes with the right answer.",
+   "expected_direction": 1,
+   "models": {
+    "gpt-6-luna": {
+     "explore_auc": 0.4423611111111111,
+     "held_auc": 0.4965876436781609,
+     "n_explore": 212,
+     "n_held": 206,
+     "held_ci": [
+      0.42390268711712814,
+      0.5710933123249299
+     ]
+    }
+   },
+   "pooled_held_auc": 0.4965876436781609,
+   "pooled_ci": [
+    0.42390268711712814,
+    0.5710933123249299
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H8 factor consistency across prompts",
+   "hypothesis": "If the factors named barely change across the five prompts, the model is sure, and right.",
+   "expected_direction": 1,
+   "models": {
+    "gpt-6-luna": {
+     "explore_auc": 0.579079861111111,
+     "held_auc": 0.6179058908045977,
+     "n_explore": 212,
+     "n_held": 206,
+     "held_ci": [
+      0.4671502976190477,
+      0.7749029819202125
+     ]
+    }
+   },
+   "pooled_held_auc": 0.6179058908045977,
+   "pooled_ci": [
+    0.4671502976190477,
+    0.7749029819202125
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H9 scenario overlap",
+   "hypothesis": "A why that reuses the scenario's own words is grounded in its facts, and right.",
+   "expected_direction": 1,
+   "models": {
+    "gpt-6-luna": {
+     "explore_auc": 0.5089409722222222,
+     "held_auc": 0.6032686781609196,
+     "n_explore": 212,
+     "n_held": 206,
+     "held_ci": [
+      0.46329014784752093,
+      0.7343611475439957
+     ]
+    }
+   },
+   "pooled_held_auc": 0.6032686781609196,
+   "pooled_ci": [
+    0.46329014784752093,
+    0.7343611475439957
+   ],
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "name": "H10 negation",
+   "hypothesis": "Negation-heavy reasons ('no permission', 'without asking') are reject-leaning and wrong on gold accept/uncertain.",
+   "expected_direction": -1,
+   "models": {
+    "gpt-6-luna": {
+     "explore_auc": 0.4506392045454546,
+     "held_auc": 0.3904170363797694,
+     "n_explore": 86,
+     "n_held": 72,
+     "held_ci": [
+      0.2201970443349754,
+      0.5375565087145969
+     ]
+    }
+   },
+   "pooled_held_auc": 0.3904170363797694,
+   "pooled_ci": [
+    0.2201970443349754,
+    0.5375565087145969
+   ],
+   "verdict": "NOT SUPPORTED"
+  }
+ ],
+ "h12": {
+  "gpt-6-luna": {
+   "hedge+length": 0.6767241379310346,
+   "consistency+overlap": 0.6298491379310345,
+   "all four": 0.7101293103448275
+  }
+ },
+ "hedge_accuracy": {
+  "gpt-6-luna": {
+   "hedged": 0.7933884297520661,
+   "n_hedged": 121,
+   "not_hedged": 0.8686868686868687,
+   "n_not": 297
+  }
+ },
+ "supported": [
+  "H1b long reason",
+  "H5 permission talk on gold-reject"
+ ]
+}
