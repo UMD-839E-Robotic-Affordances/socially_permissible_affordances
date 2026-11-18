@@ -225,8 +225,6 @@ class LLMProvider:
                               "system_prompt": self.system_prompt})
         if web_search and self.provider == "openai":
             raise NotImplementedError("web_search is only implemented for Claude models")
-        if structured and self.provider == "openai":
-            raise NotImplementedError("structured is only implemented for Claude models")
 
     # -- public API ---------------------------------------------------------
 
@@ -276,6 +274,15 @@ class LLMProvider:
             self.usage[k] += getattr(usage, k, 0) or 0
         server = getattr(usage, "server_tool_use", None)
         self.usage["web_searches"] += getattr(server, "web_search_requests", 0) or 0
+
+    def _add_usage_openai(self, usage) -> None:
+        """OpenAI usage -> the same fields as Claude. prompt_tokens includes cached tokens; we split them out so
+        input_tokens is always the full-price input. completion_tokens includes hidden reasoning tokens."""
+        cached = getattr(getattr(usage, "prompt_tokens_details", None), "cached_tokens", 0) or 0
+        self.usage["calls"] += 1
+        self.usage["input_tokens"] += (usage.prompt_tokens or 0) - cached
+        self.usage["output_tokens"] += usage.completion_tokens or 0
+        self.usage["cache_read_input_tokens"] += cached
 
     def _web_search_tools(self) -> list[dict]:
         """The `tools` list for the request: empty unless web search is enabled."""
@@ -340,6 +347,9 @@ class LLMProvider:
         kwargs: dict = {}
         if self.effort:
             kwargs["reasoning_effort"] = self.effort
+        if self.structured and response_format:  # the API constrains the reply to {"judgment": ...}; the follow-up is free text
+            kwargs["response_format"] = {"type": "json_schema",
+                                         "json_schema": {"name": "judgment", "strict": True, "schema": JUDGMENT_SCHEMA}}
         log_json("API_REQUEST", {"model": self.model, "max_completion_tokens": self.max_tokens, "system": self.system_prompt,
                                  "messages": messages, **kwargs})
         response = self._client.chat.completions.create(
@@ -349,6 +359,10 @@ class LLMProvider:
             **kwargs,
         )
         choice = response.choices[0]
+        self._add_usage_openai(response.usage)
+        log_json("API_RESPONSE", {"finish_reason": choice.finish_reason, "refusal": getattr(choice.message, "refusal", None),
+                                  "content": [{"type": "text", "text": choice.message.content}],
+                                  "usage": response.usage.model_dump() if hasattr(response.usage, "model_dump") else str(response.usage)})
         if getattr(choice.message, "refusal", None):
             raise LLMOutputError(f"{self.model} refused: {choice.message.refusal}")
         return choice.message.content or ""

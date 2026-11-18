@@ -34,6 +34,7 @@ MODEL_OPTIONS: dict[str, dict[str, dict]] = {
         "claude-sonnet-5-5": {"efforts": _ANTHROPIC_EFFORTS, "thinking": True},
     },
     "openai": {
+        "gpt-6-luna": {"efforts": ["none", "low", "medium", "high", "xhigh"]},  # probed 2026-11-18: 'minimal' is rejected
         "gpt-5.5": {"efforts": ["none", "low", "medium", "high", "xhigh"]},
         "gpt-5.4-mini": {"efforts": ["none", "low", "medium", "high", "xhigh"]},
         "gpt-5-mini": {"efforts": ["minimal", "low", "medium", "high"]},

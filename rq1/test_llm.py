@@ -71,8 +71,7 @@ def test_structured_mode_prompt_schema_and_openai():
     assert JSON_FORMAT_SPEC in build_system_prompt(True) and "Respond with exactly one" not in build_system_prompt(True)
     assert JUDGMENT_SCHEMA["properties"]["judgment"]["enum"] == list(VERDICTS)
     assert parse_judgment('{"judgment":"reject"}').judgment == "reject"
-    with pytest.raises(NotImplementedError):
-        LLMProvider("gpt-5-mini", structured=True)
+    assert LLMProvider("gpt-5-mini", structured=True).structured  # OpenAI now supports it too (json_schema response format)
 
 
 def test_web_search_not_supported_for_openai():
